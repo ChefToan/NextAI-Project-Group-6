@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+
+# next.js / build output
+.next/
+out/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# env files (keep .env.example tracked)
+.env
+.env.local
+.env*.local
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local tooling / caches
+.playwright-cli/
+.claude/settings.local.json
+
+# generated data snapshots / purge backups (may contain account data)
+scripts/*-snapshot.json
+scripts/g6-purge-backup-*.json
+
+# os
+.DS_Store
+Thumbs.db

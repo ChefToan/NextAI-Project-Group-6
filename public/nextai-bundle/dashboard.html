@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/nextai-bundle/922a6f39-c0b5-4995-93a9-bb0e83f2ad08.js"></script>
+<script src="/nextai-bundle/196236d3-0534-43bd-a6a2-bbc6a381dc7f.js"></script>
+<script src="/nextai-bundle/e0fda39e-9d64-4022-97d6-0c0b114f7e3f.js"></script>
+</head>
+<body>
+
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/1ae840d5-6c91-4496-9bac-d86ccd6060a4.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/fcfe1035-96a3-4399-8ca6-c9b90903aeb5.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/ba3a6a5a-b4ae-4c74-9270-73e5cf739123.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/dfb53719-62c2-4429-857f-b900bc68bf0a.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/d0d1b7e1-99b7-4484-ae79-81732a698054.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/cb2031e3-8ccf-478a-9ce3-cb49cc674f1b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/d804d374-38cd-43f2-8db6-4ec471e33d61.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/f94f582f-b51e-4440-9611-5f8a9726d5cb.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/4012bfaf-2390-469b-aa69-81405077b120.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/7573c06d-7242-4e61-ba17-0ca787b329f2.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/43ea44b8-9dd9-4d01-8773-c3cc5f482c4e.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/ba4820ac-8e6f-4346-82c4-0370e76acf5f.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/295a2cf8-56eb-4f35-99d1-c9368df15b1a.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/e3dbf7c3-e997-4735-b15a-c025ccd03919.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/b63da4ce-36ca-4fdf-ac08-c461929141fc.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/979c16e8-bc9b-43e9-8d8d-7da8e3c9579b.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/70dd5c77-f3d5-4c23-af62-3189009c7c3b.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/beca8bfd-cf9d-474d-be85-72fe241cf58c.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/e9fd8f4a-ffc4-488c-a659-bd2ceb612b60.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/effee4b0-bfc3-478f-9cc6-cc28152d9475.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/nextai-bundle/a748ad9d-c3df-4b13-a80f-cf7c6c0c4ce1.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/e9fd8f4a-ffc4-488c-a659-bd2ceb612b60.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/effee4b0-bfc3-478f-9cc6-cc28152d9475.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/nextai-bundle/a748ad9d-c3df-4b13-a80f-cf7c6c0c4ce1.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/e9fd8f4a-ffc4-488c-a659-bd2ceb612b60.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/effee4b0-bfc3-478f-9cc6-cc28152d9475.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/nextai-bundle/a748ad9d-c3df-4b13-a80f-cf7c6c0c4ce1.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/nextai-bundle/e9fd8f4a-ffc4-488c-a659-bd2ceb612b60.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/nextai-bundle/effee4b0-bfc3-478f-9cc6-cc28152d9475.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/nextai-bundle/a748ad9d-c3df-4b13-a80f-cf7c6c0c4ce1.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>/* fallback */
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/nextai-bundle/fef7c547-c168-4c25-9feb-ad61800f1ef2.woff2") format('woff2');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+</style>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:#eceef1;font-family:'Public Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(31,36,48,.14)}
+  input{font-family:inherit}
+  @keyframes shim{0%{opacity:.5}50%{opacity:.95}100%{opacity:.5}}
+  @keyframes ring{0%{opacity:.95}70%{opacity:.15}100%{opacity:.95}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes tdot{0%,75%,100%{opacity:.2;transform:translateY(0)}38%{opacity:1;transform:translateY(-2px)}}
+  @keyframes msgin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  @keyframes drwr{from{transform:translateX(102%)}to{transform:translateX(0)}}
+  @keyframes toastin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-thumb{background:#d2d6dd;border-radius:7px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:#bcc1cb;background-clip:content-box}
+  .railscroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);background-clip:content-box}
+</style>
+</helmet>
+
+<div data-screen-label="NextAI Operations Console — Overview (desktop)" style="height:100vh;width:100%;display:flex;background:#f5f6f8;color:#181b22;overflow:hidden;position:relative;font-size:13px">
+
+  <!-- ============================ LEFT NAV RAIL ============================ -->
+  <nav style="width:60px;flex-shrink:0;background:#fbfcfd;border-right:1px solid #e7e9ee;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:3px;z-index:6">
+    <div style="width:34px;height:34px;border-radius:9px;background:{{ ac_solid }};display:flex;align-items:center;justify-content:center;gap:2px;margin-bottom:14px;box-shadow:0 1px 2px rgba(16,19,31,.18)">
+      <div style="width:3px;height:13px;background:#fff;border-radius:2px;opacity:.95"></div>
+      <div style="width:3px;height:9px;background:#fff;border-radius:2px;opacity:.6;margin-top:4px"></div>
+    </div>
+    <a title="Overview" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#1b1e26;background:{{ ac_soft }};position:relative;cursor:pointer">
+      <div style="position:absolute;left:-12px;top:11px;width:3px;height:18px;border-radius:2px;background:{{ ac_solid }}"></div>
+      <span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' 1">space_dashboard</span>
+    </a>
+    <a title="Transactions" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">receipt_long</span></a>
+    <a title="Disputes" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer;position:relative" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">gavel</span><span style="position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#c0473d;border:1.5px solid #fbfcfd"></span></a>
+    <a title="Settlements" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">account_balance</span></a>
+    <a title="Processors" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">hub</span></a>
+    <a title="Reports" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">description</span></a>
+    <div style="flex:1"></div>
+    <a title="Settings" style="width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#7b828f;cursor:pointer" style-hover="background:#f0f1f4;color:#1b1e26"><span style="font-family:'Material Symbols Rounded';font-size:22px">settings</span></a>
+    <div style="width:30px;height:30px;border-radius:50%;background:#dfe2e8;color:#4a515e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-top:4px">RK</div>
+  </nav>
+
+  <!-- ============================ MAIN COLUMN ============================ -->
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column;position:relative;overflow:hidden">
+
+    <!-- ---------- HEADER ---------- -->
+    <header style="flex-shrink:0;padding:14px 22px 12px;border-bottom:1px solid #e7e9ee;background:#ffffff;display:flex;align-items:flex-start;gap:18px;z-index:5">
+      <div style="min-width:0;flex:1">
+        <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:#878f9d;margin-bottom:3px">
+          <span style="position:relative;cursor:pointer;color:#565e6c;font-weight:500" onclick="{{ openWs }}">NextAI<span style="font-family:'Material Symbols Rounded';font-size:15px;vertical-align:-3px">expand_more</span></span>
+          <span style="opacity:.5">/</span><span>Operations Console</span><span style="opacity:.5">/</span><span style="color:#181b22;font-weight:500">Overview</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <h1 style="margin:0;font-size:21px;font-weight:700;letter-spacing:-.3px">Overview</h1>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#565e6c;background:#f0f1f4;border:1px solid #e2e4ea;border-radius:5px;padding:2px 8px;font-weight:500">
+            <span style="width:6px;height:6px;border-radius:50%;background:#3a8a63"></span>Production · EU + US
+          </span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:7px;font-size:12px;color:#878f9d;font-family:'IBM Plex Mono',monospace">
+          <sc-if value="{{ refreshing }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:5px;color:#565e6c"><span style="font-family:'Material Symbols Rounded';font-size:14px;animation:spin .8s linear infinite;display:inline-block">progress_activity</span>Refreshing…</span></sc-if>
+          <sc-if value="{{ notRefreshing }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ isStale }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:5px;color:#97651a;background:#fbf3e3;border:1px solid #efdfba;border-radius:4px;padding:1px 7px"><span style="font-family:'Material Symbols Rounded';font-size:13px">update</span>Stale</span></sc-if>
+            <span>{{ updatedText }}</span>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <button onclick="{{ refresh }}" title="Refresh" style="width:34px;height:34px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#565e6c;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f5f6f8;color:#181b22"><span style="font-family:'Material Symbols Rounded';font-size:19px">refresh</span></button>
+
+        <!-- States prototype switcher -->
+        <div style="position:relative">
+          <button onclick="{{ openStates }}" style="height:34px;padding:0 11px;border:1px dashed #c2bfe0;background:#f6f5fc;border-radius:7px;color:#5b4fb0;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600" style-hover="background:#efeefb">
+            <span style="font-family:'Material Symbols Rounded';font-size:17px">science</span>States<span style="font-family:'Material Symbols Rounded';font-size:16px">expand_more</span>
+          </button>
+          <sc-if value="{{ menuStates }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:40px;right:0;width:236px;background:#fff;border:1px solid #e2e4ea;border-radius:10px;box-shadow:0 12px 30px rgba(16,19,31,.16);padding:8px;z-index:40">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.06em;color:#8a8fae;text-transform:uppercase;padding:4px 8px 6px">Prototype control — jump to any state</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#a4a9b5;text-transform:uppercase;padding:6px 8px 4px">Dashboard</div>
+              <sc-for list="{{ stateOpts }}" as="o" hint-placeholder-count="6">
+                <button onclick="{{ o.onClick }}" style="width:100%;display:flex;align-items:center;gap:9px;padding:7px 8px;border:0;background:transparent;border-radius:7px;cursor:pointer;color:#363c47;font-size:12.5px;text-align:left" style-hover="background:#f3f4f7">
+                  <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#878f9d">{{ o.icon }}</span>{{ o.label }}
+                </button>
+              </sc-for>
+              <div style="height:1px;background:#eef0f3;margin:5px 4px"></div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:#a4a9b5;text-transform:uppercase;padding:6px 8px 4px">AI assistant</div>
+              <sc-for list="{{ aiOpts }}" as="o" hint-placeholder-count="4">
+                <button onclick="{{ o.onClick }}" style="width:100%;display:flex;align-items:center;gap:9px;padding:7px 8px;border:0;background:transparent;border-radius:7px;cursor:pointer;color:#363c47;font-size:12.5px;text-align:left" style-hover="background:#f3f4f7">
+                  <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#878f9d">{{ o.icon }}</span>{{ o.label }}
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <button title="Export" style="width:34px;height:34px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#565e6c;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f5f6f8;color:#181b22"><span style="font-family:'Material Symbols Rounded';font-size:19px">ios_share</span></button>
+        <button onclick="{{ draftReport }}" style="height:34px;padding:0 14px;border:1px solid {{ ac_solid }};background:{{ ac_solid }};color:#fff;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600" style-hover="background:{{ ac_hover }}"><span style="font-family:'Material Symbols Rounded';font-size:18px">note_add</span>Create report</button>
+      </div>
+    </header>
+
+    <!-- ---------- INCIDENT BANNER ---------- -->
+    <sc-if value="{{ showIncident }}" hint-placeholder-val="{{ true }}">
+      <div style="flex-shrink:0;display:flex;align-items:center;flex-wrap:wrap;row-gap:8px;gap:12px;padding:9px 22px;background:#fcf0ef;border-bottom:1px solid #f1d6d2;position:relative">
+        <sc-if value="{{ hlIncident }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;border:2px solid {{ ac_solid }};box-shadow:0 0 0 3px rgba(31,36,48,.12);animation:ring 1s ease-in-out infinite;pointer-events:none"></div></sc-if>
+        <span style="display:inline-flex;align-items:center;gap:7px;font-weight:600;color:#9a352c;font-size:12.5px"><span style="width:8px;height:8px;border-radius:50%;background:#c0473d;box-shadow:0 0 0 3px rgba(192,71,61,.18)"></span>Active incident</span>
+        <span style="color:#7c4c47;font-size:12.5px;min-width:240px;flex:1">Authorization rate below baseline since <b style="font-family:'IBM Plex Mono',monospace;font-weight:600">14:10 UTC</b> · concentrated in <b>Visa · EU</b> · likely risk rule v3 deploy.</span>
+        <button onclick="{{ askWhy }}" style="height:28px;padding:0 11px;border:1px solid #e3b6b0;background:#fff;color:#9a352c;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;flex-shrink:0" style-hover="background:#fdf6f5">Ask assistant<span style="font-family:'Material Symbols Rounded';font-size:15px">north_east</span></button>
+        <button style="height:28px;padding:0 11px;border:1px solid #e3b6b0;background:#fff;color:#9a352c;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;flex-shrink:0" style-hover="background:#fdf6f5">View timeline</button>
+        <button onclick="{{ ackIncident }}" style="height:28px;padding:0 11px;border:0;background:#c0473d;color:#fff;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;flex-shrink:0" style-hover="background:#aa3d34">Acknowledge</button>
+      </div>
+    </sc-if>
+
+    <!-- ---------- FILTER BAR ---------- -->
+    <div style="flex-shrink:0;display:flex;align-items:center;flex-wrap:wrap;row-gap:8px;gap:9px;padding:10px 22px;border-bottom:1px solid #e7e9ee;background:#fafbfc;z-index:4">
+      <div style="position:relative;display:flex;align-items:center;flex:1;max-width:280px;height:32px;border:1px solid #d8dbe2;border-radius:7px;background:#fff;padding:0 10px;gap:7px">
+        <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#a4a9b5">search</span>
+        <input placeholder="Search txn ID, BIN, segment…" style="border:0;outline:0;flex:1;min-width:0;font-size:12.5px;background:transparent;color:#181b22">
+        <span style="font-size:10px;color:#b4b9c2;border:1px solid #e2e4ea;border-radius:4px;padding:1px 5px;font-family:'IBM Plex Mono',monospace">/</span>
+      </div>
+
+      <div style="position:relative">
+        <button onclick="{{ openRange }}" style="height:32px;padding:0 11px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#363c47;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500" style-hover="background:#f5f6f8"><span style="font-family:'Material Symbols Rounded';font-size:16px;color:#878f9d">calendar_today</span>{{ rangeLabel }}<span style="font-family:'Material Symbols Rounded';font-size:16px;color:#a4a9b5">expand_more</span></button>
+        <sc-if value="{{ menuRange }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:38px;left:0;width:180px;background:#fff;border:1px solid #e2e4ea;border-radius:9px;box-shadow:0 12px 30px rgba(16,19,31,.16);padding:6px;z-index:40">
+            <sc-for list="{{ rangeOpts }}" as="o" hint-placeholder-count="5"><button onclick="{{ o.onClick }}" style="width:100%;text-align:left;padding:7px 9px;border:0;background:transparent;border-radius:6px;cursor:pointer;font-size:12.5px;color:#363c47" style-hover="background:#f3f4f7">{{ o.label }}</button></sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="position:relative">
+        <button onclick="{{ openCmp }}" style="height:32px;padding:0 11px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#363c47;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500" style-hover="background:#f5f6f8">{{ cmpLabel }}<span style="font-family:'Material Symbols Rounded';font-size:16px;color:#a4a9b5">expand_more</span></button>
+        <sc-if value="{{ menuCmp }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:38px;left:0;width:170px;background:#fff;border:1px solid #e2e4ea;border-radius:9px;box-shadow:0 12px 30px rgba(16,19,31,.16);padding:6px;z-index:40">
+            <sc-for list="{{ cmpOpts }}" as="o" hint-placeholder-count="3"><button onclick="{{ o.onClick }}" style="width:100%;text-align:left;padding:7px 9px;border:0;background:transparent;border-radius:6px;cursor:pointer;font-size:12.5px;color:#363c47" style-hover="background:#f3f4f7">{{ o.label }}</button></sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="position:relative">
+        <button onclick="{{ openProc }}" style="height:32px;padding:0 11px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#363c47;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500" style-hover="background:#f5f6f8">{{ procLabel }}<span style="font-family:'Material Symbols Rounded';font-size:16px;color:#a4a9b5">expand_more</span></button>
+        <sc-if value="{{ menuProc }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:38px;left:0;width:185px;background:#fff;border:1px solid #e2e4ea;border-radius:9px;box-shadow:0 12px 30px rgba(16,19,31,.16);padding:6px;z-index:40">
+            <sc-for list="{{ procOpts }}" as="o" hint-placeholder-count="4"><button onclick="{{ o.onClick }}" style="width:100%;text-align:left;padding:7px 9px;border:0;background:transparent;border-radius:6px;cursor:pointer;font-size:12.5px;color:#363c47" style-hover="background:#f3f4f7">{{ o.label }}</button></sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- AI-applied filter chip -->
+      <sc-if value="{{ segmentOn }}" hint-placeholder-val="{{ false }}">
+        <span style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 6px 0 11px;border-radius:7px;background:{{ ac_soft }};border:1px solid {{ ac_ring }};color:{{ ac_text }};font-size:12px;font-weight:600">
+          <span style="font-family:'Material Symbols Rounded';font-size:15px">bolt</span>Visa · EU
+          <button onclick="{{ clearSegment }}" style="width:20px;height:20px;border:0;background:transparent;border-radius:5px;cursor:pointer;color:{{ ac_text }};display:flex;align-items:center;justify-content:center" style-hover="background:rgba(0,0,0,.06)"><span style="font-family:'Material Symbols Rounded';font-size:15px">close</span></button>
+        </span>
+      </sc-if>
+
+      <div style="flex:1"></div>
+
+      <button style="height:32px;padding:0 11px;border:1px solid #d8dbe2;background:#fff;border-radius:7px;color:#363c47;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500" style-hover="background:#f5f6f8"><span style="font-family:'Material Symbols Rounded';font-size:16px;color:#878f9d">bookmark</span>Saved: On-call<span style="font-family:'Material Symbols Rounded';font-size:16px;color:#a4a9b5">expand_more</span></button>
+    </div>
+
+    <!-- ---------- SCROLL CONTENT ---------- -->
+    <div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;position:relative">
+
+      <!-- ===== NORMAL / STALE ===== -->
+      <sc-if value="{{ isNormal }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:18px 22px 30px;max-width:1180px;opacity:{{ normalOpacity }}">
+
+          <sc-if value="{{ isStale }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 13px;background:#fbf3e3;border:1px solid #efdfba;border-radius:8px;margin-bottom:16px">
+              <span style="font-family:'Material Symbols Rounded';font-size:19px;color:#97651a">update</span>
+              <span style="font-size:12.5px;color:#7a5a18;flex:1"><b>Data delayed.</b> Last good snapshot <b style="font-family:'IBM Plex Mono',monospace">14 min ago</b> — feed usually updates &lt;1 min. Showing last known values; figures may have moved.</span>
+              <button onclick="{{ refresh }}" style="height:27px;padding:0 10px;border:1px solid #e3cf9c;background:#fff;color:#7a5a18;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">Retry now</button>
+            </div>
+          </sc-if>
+
+          <!-- SECTION: HEALTH (KPIs) -->
+          <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+            <h2 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8a929f">Health</h2>
+            <span style="font-size:11.5px;color:#a4a9b5">6 metrics · {{ cmpLabel }}</span>
+          </div>
+
+          <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px;margin-bottom:24px">
+            <sc-if value="{{ hlKpis }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-3px;border:2px solid {{ ac_solid }};border-radius:12px;box-shadow:0 0 0 3px rgba(31,36,48,.1);animation:ring 1s ease-in-out infinite;pointer-events:none;z-index:2"></div></sc-if>
+
+            <!-- AUTH RATE (primary) -->
+            <div style="position:relative;grid-column:span 1;background:#fff;border:1px solid #e7e9ee;border-radius:10px;border-top:3px solid #c0473d;padding:14px 15px;display:flex;flex-direction:column;gap:9px" onmouseenter="{{ hoverAuth }}" onmouseleave="{{ hoverNone }}">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font-size:12px;color:#565e6c;font-weight:600">Authorization rate</span>
+                <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9a352c;background:#fceceb;border-radius:4px;padding:2px 6px">Primary</span>
+              </div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1;color:#181b22">
+                    <sc-if value="{{ segmentOn }}" hint-placeholder-val="{{ false }}">88.2<span style="font-size:16px;color:#9aa0ac">%</span></sc-if>
+                    <sc-if value="{{ segmentOff }}" hint-placeholder-val="{{ true }}">92.4<span style="font-size:16px;color:#9aa0ac">%</span></sc-if>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+                    <span style="display:inline-flex;align-items:center;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#b23b32;background:#fbeeec;border-radius:5px;padding:2px 6px"><span style="font-family:'Material Symbols Rounded';font-size:14px">arrow_downward</span>1.8 pts</span>
+                    <span style="font-size:11px;color:#a4a9b5">{{ cmpShort }}</span>
+                  </div>
+                </div>
+                <svg viewBox="0 0 92 40" width="92" height="40" preserveAspectRatio="none" style="flex-shrink:0">
+                  <polygon points="0,40 0,12 12,9 23,11 35,8 46,10 58,9 69,22 81,30 92,27 92,40" fill="#fbeeec"></polygon>
+                  <polyline points="0,12 12,9 23,11 35,8 46,10 58,9 69,22 81,30 92,27" fill="none" stroke="#c0473d" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline>
+                  <circle cx="92" cy="27" r="2.6" fill="#c0473d"></circle>
+                </svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px">
+                <span style="width:7px;height:7px;border-radius:50%;background:#c0473d"></span>
+                <span style="font-size:11.5px;color:#7c828d">Below <b style="font-family:'IBM Plex Mono',monospace;color:#565e6c">94.0%</b> baseline · breaching since 14:10</span>
+              </div>
+            </div>
+
+            <!-- $ AT RISK -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+              <sc-if value="{{ hlRisk }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-2px;border:2px solid {{ ac_solid }};border-radius:11px;animation:ring 1s ease-in-out infinite;pointer-events:none"></div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:#565e6c;font-weight:600">Value at risk</span><span style="width:8px;height:8px;border-radius:50%;background:#c0473d"></span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1">$1.24<span style="font-size:16px;color:#9aa0ac">M</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="display:inline-flex;align-items:center;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#b23b32;background:#fbeeec;border-radius:5px;padding:2px 6px"><span style="font-family:'Material Symbols Rounded';font-size:14px">arrow_upward</span>18%</span></div>
+                </div>
+                <svg viewBox="0 0 92 40" width="92" height="40" preserveAspectRatio="none"><polyline points="0,30 12,29 23,28 35,27 46,26 58,22 69,16 81,9 92,7" fill="none" stroke="#c0473d" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline><circle cx="92" cy="7" r="2.6" fill="#c0473d"></circle></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px"><span style="font-size:11.5px;color:#7c828d">Declined / held auth value · 24h</span></div>
+            </div>
+
+            <!-- LATENCY p95 -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:#565e6c;font-weight:600">Auth latency p95</span><span style="width:8px;height:8px;border-radius:50%;background:#c08a2e"></span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1">480<span style="font-size:16px;color:#9aa0ac"> ms</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="display:inline-flex;align-items:center;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#97651a;background:#fbf3e3;border-radius:5px;padding:2px 6px"><span style="font-family:'Material Symbols Rounded';font-size:14px">arrow_upward</span>90 ms</span></div>
+                </div>
+                <svg viewBox="0 0 92 40" width="92" height="40" preserveAspectRatio="none"><polyline points="0,26 12,25 23,27 35,24 46,25 58,20 69,16 81,12 92,14" fill="none" stroke="#c08a2e" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline><circle cx="92" cy="14" r="2.6" fill="#c08a2e"></circle></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px"><span style="font-size:11.5px;color:#7c828d">SLA <b style="font-family:'IBM Plex Mono',monospace;color:#565e6c">400 ms</b> · Processor B elevated</span></div>
+            </div>
+
+            <!-- VOLUME -->
+            <div style="background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:#565e6c;font-weight:600">Authorized volume</span><span style="width:8px;height:8px;border-radius:50%;background:#c2c7d0"></span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1">1.83<span style="font-size:16px;color:#9aa0ac">M</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="display:inline-flex;align-items:center;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#565e6c;background:#f0f1f4;border-radius:5px;padding:2px 6px"><span style="font-family:'Material Symbols Rounded';font-size:14px">arrow_downward</span>3.0%</span></div>
+                </div>
+                <svg viewBox="0 0 92 40" width="92" height="40" preserveAspectRatio="none"><polyline points="0,16 12,14 23,18 35,15 46,17 58,16 69,20 81,18 92,22" fill="none" stroke="#9aa0ac" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px"><span style="font-size:11.5px;color:#7c828d">Approved auths · 24h · within range</span></div>
+            </div>
+
+            <!-- SETTLEMENT -->
+            <div style="background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:#565e6c;font-weight:600">Settlement success</span><span style="width:8px;height:8px;border-radius:50%;background:#3a8a63"></span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1">99.1<span style="font-size:16px;color:#9aa0ac">%</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="display:inline-flex;align-items:center;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#2f7d57;background:#eaf4ee;border-radius:5px;padding:2px 6px"><span style="font-family:'Material Symbols Rounded';font-size:14px">arrow_upward</span>0.1 pts</span></div>
+                </div>
+                <svg viewBox="0 0 92 40" width="92" height="40" preserveAspectRatio="none"><polyline points="0,20 12,18 23,17 35,16 46,15 58,14 69,12 81,11 92,10" fill="none" stroke="#3a8a63" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline><circle cx="92" cy="10" r="2.6" fill="#3a8a63"></circle></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px"><span style="font-size:11.5px;color:#7c828d">On target · captures settled</span></div>
+            </div>
+
+            <!-- DISPUTES SLA -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;display:flex;flex-direction:column;gap:9px;cursor:pointer" onclick="{{ openDrillMc }}">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:#565e6c;font-weight:600">Disputes SLA</span><span style="width:8px;height:8px;border-radius:50%;background:#c08a2e"></span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+                <div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:-1px;line-height:1">3<span style="font-size:15px;color:#9aa0ac"> breaching</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#97651a;background:#fbf3e3;border-radius:5px;padding:2px 6px">12 at risk</span></div>
+                </div>
+                <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#c2c7d0">chevron_right</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;border-top:1px solid #f0f1f4;padding-top:8px"><span style="font-size:11.5px;color:#7c828d">Respond within <b style="font-family:'IBM Plex Mono',monospace;color:#565e6c">24h</b> · oldest 2h left</span></div>
+            </div>
+          </div>
+
+          <!-- SECTION: DIAGNOSE -->
+          <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+            <h2 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8a929f">Diagnose</h2>
+            <span style="font-size:11.5px;color:#a4a9b5">why is auth down?</span>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);gap:12px;margin-bottom:24px">
+
+            <!-- AUTH CHART -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 16px 12px">
+              <sc-if value="{{ hlAuthChart }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-2px;border:2px solid {{ ac_solid }};border-radius:11px;box-shadow:0 0 0 3px rgba(31,36,48,.1);animation:ring 1s ease-in-out infinite;pointer-events:none;z-index:3"></div></sc-if>
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;color:#181b22">Authorization rate over time</div>
+                  <div style="font-size:11.5px;color:#9aa0ac;margin-top:1px">% of attempts approved · {{ rangeLabel }} · UTC</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:13px;font-size:11px;color:#7c828d">
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:14px;height:2px;background:#2a3140;border-radius:2px"></span>Today</span>
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px dashed #b9c0cc"></span>Prior 24h</span>
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:13px;height:9px;background:#eef1f5;border:1px solid #e2e6ec;border-radius:2px"></span>Baseline</span>
+                </div>
+              </div>
+
+              <div style="position:relative;height:200px;display:flex">
+                <!-- y axis -->
+                <div style="width:34px;flex-shrink:0;position:relative;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aeb3bd">
+                  <span style="position:absolute;top:-5px;right:6px">96%</span>
+                  <span style="position:absolute;top:31%;right:6px">94%</span>
+                  <span style="position:absolute;top:64%;right:6px">92%</span>
+                  <span style="position:absolute;bottom:14px;right:6px">90%</span>
+                </div>
+                <!-- plot -->
+                <div style="flex:1;position:relative;border-left:1px solid #eceef1;border-bottom:1px solid #eceef1">
+                  <svg viewBox="0 0 720 200" width="100%" height="186" preserveAspectRatio="none" style="display:block">
+                    <rect x="0" y="0" width="720" height="65.6" fill="#eef1f5"></rect>
+                    <line x1="0" y1="65.6" x2="720" y2="65.6" stroke="#e2e6ec" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="2 3"></line>
+                    <line x1="0" y1="131.1" x2="720" y2="131.1" stroke="#f0f2f5" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <line x1="{{ deployX }}" y1="0" x2="{{ deployX }}" y2="200" stroke="#c0473d" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="3 3" opacity="0.7"></line>
+                    <polygon points="{{ areaPts }}" fill="rgba(42,49,64,.06)"></polygon>
+                    <polyline points="{{ priorPts }}" fill="none" stroke="#b9c0cc" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"></polyline>
+                    <polyline points="{{ todayPts }}" fill="none" stroke="#2a3140" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                  </svg>
+                  <!-- deploy flag -->
+                  <div style="position:absolute;top:6px;left:{{ deployPct }}%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:#fff;border:1px solid #f1d6d2;border-radius:5px;padding:2px 7px;font-size:10.5px;color:#9a352c;font-weight:600;white-space:nowrap;box-shadow:0 1px 3px rgba(16,19,31,.08);cursor:pointer" onclick="{{ pulseIncident }}"><span style="width:5px;height:5px;border-radius:50%;background:#c0473d"></span>14:00 · risk rule v3</div>
+                  <!-- crosshair -->
+                  <sc-if value="{{ hoverActive }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:0;bottom:0;left:{{ hoverX }}%;width:1px;background:#c2c7d0;pointer-events:none"></div>
+                    <div style="position:absolute;left:{{ hoverX }}%;top:{{ hoverY }}%;width:8px;height:8px;border-radius:50%;background:#2a3140;border:2px solid #fff;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+                    <div style="position:absolute;left:{{ hoverX }}%;top:8px;transform:translateX(-50%);background:#181b22;color:#fff;border-radius:6px;padding:5px 8px;font-size:10.5px;white-space:nowrap;pointer-events:none;font-family:'IBM Plex Mono',monospace;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:4">
+                      {{ hoverTime }} · <b>{{ hoverVal }}%</b> <span style="opacity:.6">prior {{ hoverPrior }}%</span>
+                    </div>
+                  </sc-if>
+                  <!-- mouse overlay -->
+                  <div onmousemove="{{ onPlotMove }}" onmouseleave="{{ onPlotLeave }}" style="position:absolute;inset:0;cursor:crosshair"></div>
+                </div>
+              </div>
+              <!-- x axis -->
+              <div style="display:flex;justify-content:space-between;padding-left:34px;margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aeb3bd">
+                <span>−24h</span><span>−18h</span><span>−12h</span><span>−6h</span><span style="color:#7c828d;font-weight:600">now</span>
+              </div>
+            </div>
+
+            <!-- DECLINE REASONS -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 16px">
+              <sc-if value="{{ hlDecline }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-2px;border:2px solid {{ ac_solid }};border-radius:11px;box-shadow:0 0 0 3px rgba(31,36,48,.1);animation:ring 1s ease-in-out infinite;pointer-events:none;z-index:3"></div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+                <div><div style="font-size:13.5px;font-weight:600">Decline reasons</div><div style="font-size:11.5px;color:#9aa0ac;margin-top:1px">share of declines · 24h</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ declines }}" as="d" hint-placeholder-count="6">
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;gap:8px">
+                      <span style="font-size:12px;color:#3c4350;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ d.label }}</span>
+                      <span style="display:flex;align-items:center;gap:5px;flex-shrink:0">
+                        <sc-if value="{{ d.up }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Material Symbols Rounded';font-size:14px;color:#b23b32">trending_up</span></sc-if>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#181b22">{{ d.pct }}%</span>
+                      </span>
+                    </div>
+                    <div style="height:7px;background:#f0f1f4;border-radius:4px;overflow:hidden"><div style="height:100%;width:{{ d.w }}%;background:{{ d.color }};border-radius:4px"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:13px;padding-top:11px;border-top:1px solid #f0f1f4;font-size:11.5px;color:#7c828d;display:flex;gap:6px;align-items:flex-start">
+                <span style="font-family:'Material Symbols Rounded';font-size:15px;color:#c08a2e;flex-shrink:0">trending_up</span><span><b style="color:#3c4350">Risk holds</b> &amp; <b style="color:#3c4350">processor timeouts</b> are driving the spike.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION: ACT -->
+          <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+            <h2 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8a929f">Act</h2>
+            <span style="font-size:11.5px;color:#a4a9b5">work the queue</span>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">
+
+            <!-- DEGRADED SEGMENTS -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 16px">
+              <sc-if value="{{ hlSegments }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-2px;border:2px solid {{ ac_solid }};border-radius:11px;box-shadow:0 0 0 3px rgba(31,36,48,.1);animation:ring 1s ease-in-out infinite;pointer-events:none;z-index:3"></div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <div><div style="font-size:13.5px;font-weight:600">Degraded segments</div><div style="font-size:11.5px;color:#9aa0ac;margin-top:1px">ranked by auth impact × value</div></div>
+                <span style="font-size:11px;color:#a4a9b5">click to drill in</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <sc-for list="{{ segments }}" as="g" hint-placeholder-count="3">
+                  <div onclick="{{ g.onOpen }}" style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:8px;cursor:pointer;margin:0 -8px" style-hover="background:#f7f8fa">
+                    <span style="width:9px;height:9px;border-radius:50%;background:{{ g.dot }};flex-shrink:0"></span>
+                    <div style="min-width:0;flex:1">
+                      <div style="font-size:12.5px;font-weight:600;color:#23272f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+                      <div style="font-size:11px;color:#9aa0ac;margin-top:1px">{{ g.cause }}</div>
+                    </div>
+                    <div style="text-align:right;flex-shrink:0">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:{{ g.deltaColor }}">{{ g.delta }}</div>
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9aa0ac;margin-top:1px">{{ g.value }}</div>
+                    </div>
+                    <span style="font-family:'Material Symbols Rounded';font-size:19px;color:#c8ccd3;flex-shrink:0">chevron_right</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- DISPUTE QUEUE -->
+            <div style="position:relative;background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 16px">
+              <sc-if value="{{ hlDisputes }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-2px;border:2px solid {{ ac_solid }};border-radius:11px;animation:ring 1s ease-in-out infinite;pointer-events:none"></div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <div><div style="font-size:13.5px;font-weight:600">Dispute queue</div><div style="font-size:11.5px;color:#9aa0ac;margin-top:1px">SLA-sorted · respond &lt;24h</div></div>
+                <button style="height:26px;padding:0 9px;border:1px solid #d8dbe2;background:#fff;border-radius:6px;color:#565e6c;cursor:pointer;font-size:11.5px;font-weight:600" style-hover="background:#f5f6f8">View all 27</button>
+              </div>
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ disputes }}" as="q" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f3f4f6">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:22px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:{{ q.slaText }};background:{{ q.slaBg }}">{{ q.sla }}</span>
+                    <div style="min-width:0;flex:1">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#3c4350;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ q.id }}</div>
+                      <div style="font-size:11px;color:#9aa0ac;margin-top:1px">{{ q.reason }}</div>
+                    </div>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#23272f;flex-shrink:0">{{ q.amount }}</span>
+                    <button style="height:26px;padding:0 10px;border:1px solid #d8dbe2;background:#fff;border-radius:6px;color:#363c47;cursor:pointer;font-size:11.5px;font-weight:600;flex-shrink:0" style-hover="background:#f5f6f8">Respond</button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== LOADING ===== -->
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:18px 22px;max-width:1180px">
+          <div style="height:13px;width:90px;background:#e7e9ee;border-radius:5px;margin-bottom:14px;animation:shim 1.3s ease-in-out infinite"></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+            <sc-for list="{{ six }}" as="n" hint-placeholder-count="6"><div style="background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:14px 15px;animation:shim 1.3s ease-in-out infinite"><div style="height:11px;width:55%;background:#eceef1;border-radius:4px;margin-bottom:14px"></div><div style="height:26px;width:45%;background:#e7e9ee;border-radius:5px;margin-bottom:12px"></div><div style="height:8px;width:75%;background:#eef0f3;border-radius:4px"></div></div></sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1.85fr 1fr;gap:12px">
+            <div style="background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:16px;height:262px;animation:shim 1.3s ease-in-out infinite"><div style="height:12px;width:40%;background:#eceef1;border-radius:4px;margin-bottom:18px"></div><div style="height:175px;background:linear-gradient(180deg,#f4f5f7,#fafbfc);border-radius:6px"></div></div>
+            <div style="background:#fff;border:1px solid #e7e9ee;border-radius:10px;padding:16px;height:262px;animation:shim 1.3s ease-in-out infinite"><div style="height:12px;width:50%;background:#eceef1;border-radius:4px;margin-bottom:18px"></div><div style="display:flex;flex-direction:column;gap:14px"><div style="height:8px;background:#eef0f3;border-radius:4px"></div><div style="height:8px;width:80%;background:#eef0f3;border-radius:4px"></div><div style="height:8px;width:60%;background:#eef0f3;border-radius:4px"></div><div style="height:8px;width:45%;background:#eef0f3;border-radius:4px"></div></div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== EMPTY ===== -->
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="height:100%;min-height:440px;display:flex;align-items:center;justify-content:center;padding:30px">
+          <div style="text-align:center;max-width:380px">
+            <div style="width:52px;height:52px;border-radius:13px;background:#f0f1f4;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><span style="font-family:'Material Symbols Rounded';font-size:27px;color:#9aa0ac">database</span></div>
+            <div style="font-size:16px;font-weight:600;margin-bottom:6px">No data in this window</div>
+            <div style="font-size:13px;color:#7c828d;line-height:1.5;margin-bottom:18px">Production · EU + US returned <b style="font-family:'IBM Plex Mono',monospace">0 events</b> for the last 24h. That's unusual for this workspace — the ingestion feed may be paused.</div>
+            <div style="display:flex;gap:8px;justify-content:center"><button style="height:34px;padding:0 14px;border:1px solid #1f2430;background:#1f2430;color:#fff;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Check ingestion</button><button onclick="{{ goLive }}" style="height:34px;padding:0 14px;border:1px solid #d8dbe2;background:#fff;color:#363c47;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Switch range</button></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== ERROR ===== -->
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="height:100%;min-height:440px;display:flex;align-items:center;justify-content:center;padding:30px">
+          <div style="text-align:center;max-width:400px">
+            <div style="width:52px;height:52px;border-radius:13px;background:#fceceb;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><span style="font-family:'Material Symbols Rounded';font-size:27px;color:#c0473d">cloud_off</span></div>
+            <div style="font-size:16px;font-weight:600;margin-bottom:6px">Couldn't load Overview metrics</div>
+            <div style="font-size:13px;color:#7c828d;line-height:1.5;margin-bottom:6px"><span style="font-family:'IBM Plex Mono',monospace;background:#f3f4f6;border-radius:4px;padding:1px 6px;color:#9a352c">metrics-api · 503</span> — the service is unreachable. Your data is safe; nothing was lost.</div>
+            <div style="font-size:11.5px;color:#a4a9b5;margin-bottom:18px;font-family:'IBM Plex Mono',monospace">request-id 7f3a-c1e9 · 14:53:07 UTC</div>
+            <div style="display:flex;gap:8px;justify-content:center"><button onclick="{{ refresh }}" style="height:34px;padding:0 14px;border:1px solid #1f2430;background:#1f2430;color:#fff;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:17px">refresh</span>Retry</button><button style="height:34px;padding:0 14px;border:1px solid #d8dbe2;background:#fff;color:#363c47;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Status page</button></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== NO RESULTS ===== -->
+      <sc-if value="{{ isNoresults }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:18px 22px;max-width:1180px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+            <span style="font-size:12px;color:#7c828d">Filters:</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;border-radius:6px;background:#f0f1f4;border:1px solid #e2e4ea;font-size:11.5px;color:#3c4350;font-family:'IBM Plex Mono',monospace">amount &gt; $10,000</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;border-radius:6px;background:#f0f1f4;border:1px solid #e2e4ea;font-size:11.5px;color:#3c4350">declined</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;border-radius:6px;background:#f0f1f4;border:1px solid #e2e4ea;font-size:11.5px;color:#3c4350">Amex · UK</span>
+          </div>
+          <div style="min-height:340px;display:flex;align-items:center;justify-content:center">
+            <div style="text-align:center;max-width:360px">
+              <div style="width:52px;height:52px;border-radius:13px;background:#f0f1f4;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><span style="font-family:'Material Symbols Rounded';font-size:27px;color:#9aa0ac">search_off</span></div>
+              <div style="font-size:16px;font-weight:600;margin-bottom:6px">No records match these filters</div>
+              <div style="font-size:13px;color:#7c828d;line-height:1.5;margin-bottom:18px"><b style="font-family:'IBM Plex Mono',monospace">0 of 1.83M</b> transactions match. Try widening the date range or removing the amount filter.</div>
+              <div style="display:flex;gap:8px;justify-content:center"><button onclick="{{ goLive }}" style="height:34px;padding:0 14px;border:1px solid #1f2430;background:#1f2430;color:#fff;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Clear filters</button></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== DRILLDOWN DRAWER ===== -->
+      <sc-if value="{{ drillOpen }}" hint-placeholder-val="{{ false }}">
+        <div onclick="{{ closeDrill }}" style="position:absolute;inset:0;background:rgba(20,23,28,.18);z-index:20"></div>
+        <div style="position:absolute;top:0;right:0;bottom:0;width:486px;max-width:88%;background:#fff;border-left:1px solid #e2e4ea;box-shadow:-12px 0 40px rgba(16,19,31,.16);z-index:21;display:flex;flex-direction:column;animation:drwr .22s cubic-bezier(.22,.61,.36,1)">
+          <div style="padding:15px 18px;border-bottom:1px solid #eceef1;display:flex;align-items:flex-start;gap:12px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:9px;height:9px;border-radius:50%;background:{{ drill.dot }}"></span><div style="font-size:15px;font-weight:700">{{ drill.name }}</div></div>
+              <div style="font-size:12px;color:#9aa0ac;margin-top:3px">{{ drill.cause }}</div>
+            </div>
+            <button onclick="{{ closeDrill }}" style="width:30px;height:30px;border:1px solid #e2e4ea;background:#fff;border-radius:7px;cursor:pointer;color:#565e6c;display:flex;align-items:center;justify-content:center" style-hover="background:#f5f6f8"><span style="font-family:'Material Symbols Rounded';font-size:18px">close</span></button>
+          </div>
+          <div style="padding:15px 18px;display:flex;gap:10px;border-bottom:1px solid #eceef1">
+            <div style="flex:1;background:#fafbfc;border:1px solid #eceef1;border-radius:8px;padding:10px"><div style="font-size:11px;color:#9aa0ac">Auth impact</div><div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;color:{{ drill.deltaColor }};margin-top:3px">{{ drill.delta }}</div></div>
+            <div style="flex:1;background:#fafbfc;border:1px solid #eceef1;border-radius:8px;padding:10px"><div style="font-size:11px;color:#9aa0ac">Value at risk</div><div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;margin-top:3px">{{ drill.value }}</div></div>
+            <div style="flex:1;background:#fafbfc;border:1px solid #eceef1;border-radius:8px;padding:10px"><div style="font-size:11px;color:#9aa0ac">Affected</div><div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;margin-top:3px">{{ drill.count }}</div></div>
+          </div>
+          <div style="padding:13px 18px 6px;display:flex;align-items:center;justify-content:space-between"><div style="font-size:12px;font-weight:600;color:#3c4350">Affected records</div><div style="font-size:11px;color:#a4a9b5">{{ drill.shown }}</div></div>
+          <div style="flex:1;overflow-y:auto;padding:0 18px">
+            <div style="display:grid;grid-template-columns:54px 1fr 70px 86px;gap:8px;padding:7px 0;border-bottom:1px solid #eceef1;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#a4a9b5;position:sticky;top:0;background:#fff"><span>Time</span><span>Txn / reason</span><span style="text-align:right">Amount</span><span style="text-align:right">Status</span></div>
+            <sc-for list="{{ drill.rows }}" as="r" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:54px 1fr 70px 86px;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6;align-items:center" style-hover="background:#fafbfc">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9aa0ac">{{ r.time }}</span>
+                <div style="min-width:0"><div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#3c4350;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.id }}</div><div style="font-size:11px;color:#9aa0ac;margin-top:1px">{{ r.reason }}</div></div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-align:right;color:#23272f">{{ r.amount }}</span>
+                <span style="text-align:right"><span style="font-size:10.5px;font-weight:600;color:{{ r.statusColor }};background:{{ r.statusBg }};border-radius:4px;padding:2px 7px">{{ r.status }}</span></span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:13px 18px;border-top:1px solid #eceef1;display:flex;gap:8px">
+            <button onclick="{{ applyVisaEu }}" style="flex:1;height:34px;border:1px solid #1f2430;background:#1f2430;color:#fff;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Filter dashboard to segment</button>
+            <button style="height:34px;padding:0 13px;border:1px solid #d8dbe2;background:#fff;color:#363c47;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600">Export</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- click-away for header/filter menus -->
+    <sc-if value="{{ anyMenu }}" hint-placeholder-val="{{ false }}"><div onclick="{{ closeMenu }}" style="position:absolute;inset:0;z-index:30"></div></sc-if>
+
+    <!-- toast -->
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:9px;background:#181b22;color:#fff;border-radius:9px;padding:10px 15px;font-size:12.5px;font-weight:500;box-shadow:0 10px 30px rgba(16,19,31,.3);animation:toastin .2s ease"><span style="font-family:'Material Symbols Rounded';font-size:17px;color:#7fd0a3">check_circle</span>{{ toast }}</div>
+    </sc-if>
+  </main>
+
+  <!-- ============================ AI RAIL (DARK) ============================ -->
+  <aside data-screen-label="AI assistant rail" style="flex-shrink:0;width:{{ railW }}px;background:#14171c;color:#e9ecf2;border-left:1px solid #2a2f38;display:flex;flex-direction:column;transition:width .22s cubic-bezier(.22,.61,.36,1);overflow:hidden;position:relative;z-index:7">
+
+    <!-- collapsed launcher -->
+    <sc-if value="{{ railCollapsed }}" hint-placeholder-val="{{ false }}">
+      <div style="width:56px;display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:14px;height:100%">
+        <button onclick="{{ openRail }}" title="Open assistant" style="width:36px;height:36px;border-radius:10px;background:#222730;border:1px solid #2f343d;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative">
+          <div style="display:flex;gap:1.5px;align-items:flex-end"><div style="width:2.5px;height:11px;background:#cdd6e6;border-radius:2px"></div><div style="width:2.5px;height:7px;background:#8b94a6;border-radius:2px"></div></div>
+          <span style="position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:#c0473d;border:2px solid #14171c"></span>
+        </button>
+        <button onclick="{{ openRail }}" title="Open assistant" style="writing-mode:vertical-rl;transform:rotate(180deg);background:transparent;border:0;color:#9aa2b1;font-size:12px;font-weight:600;letter-spacing:.03em;cursor:pointer;padding:6px 0">Ask the assistant</button>
+        <div style="flex:1"></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#5b6673"></span>
+      </div>
+    </sc-if>
+
+    <!-- expanded panel -->
+    <sc-if value="{{ railOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="width:{{ railInner }}px;display:flex;flex-direction:column;height:100%">
+        <!-- header -->
+        <div style="flex-shrink:0;padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:30px;height:30px;border-radius:9px;background:#222831;border:1px solid #2f343d;display:flex;align-items:center;justify-content:center;gap:2px">
+              <div style="width:2.5px;height:12px;background:#cdd6e6;border-radius:2px"></div><div style="width:2.5px;height:8px;background:#8b94a6;border-radius:2px;margin-top:3px"></div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13px;font-weight:600;color:#f1f3f7">NextAI Assistant</div>
+              <div style="font-size:10.5px;color:#79808d;display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#5cab83"></span>Reading live Overview data</div>
+            </div>
+            <button onclick="{{ expandRail }}" title="Expand" style="width:28px;height:28px;border-radius:7px;background:transparent;border:1px solid rgba(255,255,255,.1);color:#aab2bf;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.06)"><span style="font-family:'Material Symbols Rounded';font-size:16px">{{ expandIcon }}</span></button>
+            <button onclick="{{ collapseRail }}" title="Collapse" style="width:28px;height:28px;border-radius:7px;background:transparent;border:1px solid rgba(255,255,255,.1);color:#aab2bf;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.06)"><span style="font-family:'Material Symbols Rounded';font-size:18px">last_page</span></button>
+          </div>
+          <!-- context chips -->
+          <div style="display:flex;align-items:center;gap:6px;margin-top:11px;flex-wrap:wrap">
+            <span style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;font-weight:600">Context</span>
+            <sc-for list="{{ ctxChips }}" as="c" hint-placeholder-count="3"><span style="display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:#c4cad4;background:#1e232b;border:1px solid #2c323b;border-radius:5px;padding:2px 7px;font-family:'IBM Plex Mono',monospace">{{ c.label }}</span></sc-for>
+            <button title="Edit context" style="width:20px;height:20px;border-radius:5px;background:transparent;border:1px solid #2c323b;color:#79808d;cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:13px">tune</span></button>
+          </div>
+        </div>
+
+        <!-- thread -->
+        <div class="railscroll" style="flex:1;min-height:0;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:14px">
+
+          <!-- EMPTY / suggested -->
+          <sc-if value="{{ aiEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:12.5px;color:#aab2bf;line-height:1.55">Hi — I can read this screen and configured Oracle context. Ask me to explain the auth drop, summarize the last 24h, or filter the dashboard. I'll cite the exact widgets I used.</div>
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin-bottom:9px">Suggested for this screen</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ prompts }}" as="p" hint-placeholder-count="4">
+                  <button onclick="{{ p.onAsk }}" style="text-align:left;background:#191d24;border:1px solid #262b34;border-radius:9px;padding:10px 12px;color:#dde2ea;cursor:pointer;font-size:12.5px;line-height:1.4;display:flex;align-items:center;gap:9px" style-hover="background:#1e232b;border-color:#333a45">
+                    <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#7f8a9b;flex-shrink:0">{{ p.icon }}</span>{{ p.text }}
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- THREAD -->
+          <sc-if value="{{ hasMessages }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ messages }}" as="m" hint-placeholder-count="0">
+
+              <sc-if value="{{ m.isUser }}">
+                <div style="align-self:flex-end;max-width:88%;background:transparent;border-radius:11px 11px 3px 11px;animation:msgin .25s ease">
+                  <div style="background:#2a313c;border:1px solid #353d49;border-radius:11px 11px 3px 11px;padding:9px 12px;font-size:12.5px;color:#eef1f6;line-height:1.45">{{ m.text }}</div>
+                  <div style="font-size:9.5px;color:#6b7280;text-align:right;margin-top:4px;font-family:'IBM Plex Mono',monospace">{{ m.time }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.isAnswer }}">
+                <div style="animation:msgin .25s ease">
+                  <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><div style="width:20px;height:20px;border-radius:6px;background:#222831;border:1px solid #2f343d;display:flex;align-items:center;justify-content:center;gap:1.5px"><div style="width:2px;height:8px;background:#cdd6e6;border-radius:1px"></div><div style="width:2px;height:5px;background:#8b94a6;border-radius:1px;margin-top:2px"></div></div><span style="font-size:11px;color:#79808d;font-weight:600">NextAI Assistant</span></div>
+                  <div style="font-size:13px;color:#eef1f6;line-height:1.5;font-weight:500;margin-bottom:11px">{{ m.verdict }}</div>
+                  <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:12px">
+                    <sc-for list="{{ m.bullets }}" as="b" hint-placeholder-count="0">
+                      <div style="display:flex;gap:8px;font-size:12px;color:#c4cad4;line-height:1.5">
+                        <span style="flex-shrink:0;margin-top:6px;width:4px;height:4px;border-radius:50%;background:#566273"></span>
+                        <span>{{ b.text }} <button onclick="{{ b.src.onClick }}" style="display:inline-flex;align-items:center;gap:2px;vertical-align:baseline;background:#1d232b;border:1px solid #2c323b;border-radius:4px;padding:0 5px;color:#9db4dd;cursor:pointer;font-size:10.5px;font-weight:600">{{ b.src.label }}<span style="font-family:'Material Symbols Rounded';font-size:12px">north_east</span></button></span>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <!-- expanded evidence -->
+                  <sc-if value="{{ railExpanded }}">
+                    <div style="background:#181d24;border:1px solid #262b34;border-radius:9px;padding:11px 12px;margin-bottom:12px">
+                      <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6b7280;margin-bottom:9px">Evidence · decline mix shift</div>
+                      <div style="display:flex;align-items:flex-end;gap:9px;height:64px">
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;display:flex;align-items:flex-end;gap:4px;height:46px"><div style="flex:1;background:#39414e;height:38%;border-radius:3px 3px 0 0"></div><div style="flex:1;background:#9db4dd;height:62%;border-radius:3px 3px 0 0"></div></div><span style="font-size:9px;color:#79808d;font-family:'IBM Plex Mono',monospace">Risk hold</span></div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;display:flex;align-items:flex-end;gap:4px;height:46px"><div style="flex:1;background:#39414e;height:30%;border-radius:3px 3px 0 0"></div><div style="flex:1;background:#9db4dd;height:44%;border-radius:3px 3px 0 0"></div></div><span style="font-size:9px;color:#79808d;font-family:'IBM Plex Mono',monospace">Timeout</span></div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;display:flex;align-items:flex-end;gap:4px;height:46px"><div style="flex:1;background:#39414e;height:55%;border-radius:3px 3px 0 0"></div><div style="flex:1;background:#9db4dd;height:50%;border-radius:3px 3px 0 0"></div></div><span style="font-size:9px;color:#79808d;font-family:'IBM Plex Mono',monospace">Insuff.</span></div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;display:flex;align-items:flex-end;gap:4px;height:46px"><div style="flex:1;background:#39414e;height:70%;border-radius:3px 3px 0 0"></div><div style="flex:1;background:#9db4dd;height:60%;border-radius:3px 3px 0 0"></div></div><span style="font-size:9px;color:#79808d;font-family:'IBM Plex Mono',monospace">Issuer</span></div>
+                      </div>
+                      <div style="display:flex;gap:13px;margin-top:9px;font-size:10px;color:#79808d"><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:#39414e;border-radius:2px"></span>Prior</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:#9db4dd;border-radius:2px"></span>Now</span></div>
+                    </div>
+                  </sc-if>
+
+                  <!-- confidence + sources -->
+                  <div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:#8a92a0;margin-bottom:10px"><span style="font-family:'Material Symbols Rounded';font-size:14px;color:#5cab83">verified</span>{{ m.confidence }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+                    <span style="font-size:10px;color:#6b7280;align-self:center">Sources</span>
+                    <sc-for list="{{ m.sources }}" as="sc" hint-placeholder-count="0"><button onclick="{{ sc.onClick }}" style="display:inline-flex;align-items:center;gap:4px;background:#191d24;border:1px solid #262b34;border-radius:5px;padding:3px 8px;color:#c4cad4;cursor:pointer;font-size:10.5px;font-weight:500" style-hover="border-color:#9db4dd;color:#dde2ea"><span style="font-family:'Material Symbols Rounded';font-size:13px;color:#7f8a9b">dataset</span>{{ sc.label }}</button></sc-for>
+                  </div>
+
+                  <!-- actions -->
+                  <div style="display:flex;flex-wrap:wrap;gap:7px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)">
+                    <sc-for list="{{ m.actions }}" as="act" hint-placeholder-count="0">
+                      <sc-if value="{{ act.isPrimary }}"><button onclick="{{ act.onClick }}" style="display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;border-radius:7px;background:#9db4dd;border:0;color:#13171d;cursor:pointer;font-size:12px;font-weight:600" style-hover="background:#aec0e4"><span style="font-family:'Material Symbols Rounded';font-size:15px">bolt</span>{{ act.label }}</button></sc-if>
+                      <sc-if value="{{ act.isGhost }}"><button onclick="{{ act.onClick }}" style="height:30px;padding:0 12px;border-radius:7px;background:transparent;border:1px solid #2f343d;color:#cdd3dc;cursor:pointer;font-size:12px;font-weight:500" style-hover="background:rgba(255,255,255,.05);border-color:#3a414c">{{ act.label }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ m.isReport }}">
+                <div style="animation:msgin .25s ease;background:#181d24;border:1px solid #262b34;border-radius:11px;padding:13px 14px">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#9db4dd">description</span><span style="font-size:12.5px;font-weight:600;color:#eef1f6">{{ m.title }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+                    <sc-for list="{{ m.lines }}" as="ln" hint-placeholder-count="0"><div style="font-size:11.5px;color:#aab2bf;font-family:'IBM Plex Mono',monospace;display:flex;gap:7px"><span style="color:#5cab83">·</span>{{ ln }}</div></sc-for>
+                  </div>
+                  <div style="display:flex;gap:7px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)">
+                    <sc-for list="{{ m.actions }}" as="act" hint-placeholder-count="0">
+                      <sc-if value="{{ act.isPrimary }}"><button onclick="{{ act.onClick }}" style="height:30px;padding:0 12px;border-radius:7px;background:#9db4dd;border:0;color:#13171d;cursor:pointer;font-size:12px;font-weight:600">{{ act.label }}</button></sc-if>
+                      <sc-if value="{{ act.isGhost }}"><button onclick="{{ act.onClick }}" style="height:30px;padding:0 12px;border-radius:7px;background:transparent;border:1px solid #2f343d;color:#cdd3dc;cursor:pointer;font-size:12px;font-weight:500">{{ act.label }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
+
+            <!-- thinking -->
+            <sc-if value="{{ aiThinking }}" hint-placeholder-val="{{ false }}">
+              <div style="animation:msgin .25s ease">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><div style="width:20px;height:20px;border-radius:6px;background:#222831;border:1px solid #2f343d;display:flex;align-items:center;justify-content:center;gap:1.5px"><div style="width:2px;height:8px;background:#cdd6e6;border-radius:1px"></div><div style="width:2px;height:5px;background:#8b94a6;border-radius:1px;margin-top:2px"></div></div><span style="font-size:11px;color:#79808d;font-weight:600">NextAI Assistant</span></div>
+                <div style="display:flex;align-items:center;gap:9px;background:#191d24;border:1px solid #262b34;border-radius:9px;padding:10px 12px">
+                  <span style="display:inline-flex;gap:3px"><span style="width:5px;height:5px;border-radius:50%;background:#9db4dd;animation:tdot 1.1s ease-in-out infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:#9db4dd;animation:tdot 1.1s ease-in-out .18s infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:#9db4dd;animation:tdot 1.1s ease-in-out .36s infinite"></span></span>
+                  <span style="font-size:11.5px;color:#8a92a0;font-family:'IBM Plex Mono',monospace">Reading auth_rate, decline_reasons…</span>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- error -->
+            <sc-if value="{{ aiError }}" hint-placeholder-val="{{ false }}">
+              <div style="animation:msgin .25s ease;background:#241b1b;border:1px solid #3e2a28;border-radius:11px;padding:12px 13px">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><span style="font-family:'Material Symbols Rounded';font-size:17px;color:#e8786e">error</span><span style="font-size:12px;font-weight:600;color:#f0d6d3">Couldn't reach the metrics service</span></div>
+                <div style="font-size:11.5px;color:#c2a9a6;line-height:1.5;margin-bottom:11px">The assistant timed out reading live data. Your dashboard is unaffected — the figures on the left are still current.</div>
+                <button onclick="{{ retryAsk }}" style="height:30px;padding:0 12px;border-radius:7px;background:#e8786e;border:0;color:#231312;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px"><span style="font-family:'Material Symbols Rounded';font-size:15px">refresh</span>Retry</button>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+
+        <!-- composer -->
+        <div style="flex-shrink:0;padding:11px 13px;border-top:1px solid rgba(255,255,255,.08)">
+          <div style="display:flex;align-items:flex-end;gap:8px;background:#1b2027;border:1px solid #2c323b;border-radius:10px;padding:8px 9px 8px 12px">
+            <input value="{{ composer }}" oninput="{{ onComposer }}" onkeydown="{{ onComposerKey }}" placeholder="Ask about NextAI operations…" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#eef1f6;font-size:12.5px;padding:3px 0">
+            <button onclick="{{ submitComposer }}" style="width:30px;height:30px;border-radius:7px;background:#9db4dd;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#13171d;flex-shrink:0" style-hover="background:#aec0e4"><span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_upward</span></button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:9px;font-size:10px;color:#6b7280;line-height:1.4">
+            <span style="font-family:'Material Symbols Rounded';font-size:13px;flex-shrink:0">lock</span>
+            <span>Reads live Overview data and Oracle context, read-only. Can be wrong — <b style="color:#8a92a0;font-weight:600">verify against the linked sources</b> before acting.</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate&quot;,&quot;options&quot;:[&quot;slate&quot;,&quot;indigo&quot;,&quot;teal&quot;,&quot;blue&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;incidentBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;aiRail&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;compact&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;expanded&quot;,&quot;collapsed&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = {
+    dash: 'normal',
+    rail: 'compact',
+    ai: 'idle',
+    messages: [],
+    segment: null,
+    drill: null,
+    hl: null,
+    hoverPt: null,
+    menu: null,
+    composer: '',
+    refreshing: false,
+    toast: null,
+    incidentAck: false,
+    updated: 47,
+    rangeLabel: 'Last 24h',
+    cmpLabel: 'vs prior 24h',
+    procLabel: 'All processors',
+    oracleSummary: null,
+  };
+
+  componentDidMount() {
+    if (this.props && this.props.aiRail && this.props.aiRail !== this.state.rail) this.setState({ rail: this.props.aiRail });
+    this.fetchOracleSummary();
+    this._tick = setInterval(() => { if (this.state.dash !== 'stale') this.setState(s => ({ updated: s.updated + 5 })); }, 5000);
+  }
+  componentWillUnmount() { clearInterval(this._tick); clearTimeout(this._ask); clearTimeout(this._hl); clearTimeout(this._rf); clearTimeout(this._toastT); }
+
+  async fetchOracleSummary() {
+    try {
+      const res = await fetch('/api/dashboard/summary');
+      const oracleSummary = await res.json();
+      this.setState({ oracleSummary });
+    } catch (err) {
+      this.toast('Oracle summary is unavailable');
+    }
+  }
+
+  now() { return '18:30 UTC'; }
+  timeAt(i) {
+    let mins = (18 * 60 + 30) - 1440 + Math.round(i / 24 * 1440);
+    mins = ((mins % 1440) + 1440) % 1440;
+    const hh = Math.floor(mins / 60), mm = mins % 60;
+    return (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm);
+  }
+  toast(t) { this.setState({ toast: t }); clearTimeout(this._toastT); this._toastT = setTimeout(() => this.setState({ toast: null }), 2300); }
+
+  setMenu(m) { this.setState(s => ({ menu: s.menu === m ? null : m })); }
+  closeMenu() { this.setState({ menu: null }); }
+
+  setDash(d) { this.setState({ dash: d, menu: null, drill: null }); if (d !== 'stale') this.setState({ updated: 6 }); }
+  goLive() { this.setState({ dash: 'normal', menu: null }); }
+
+  setAi(phase) {
+    if (phase === 'answered') this.seedThread('diagnose');
+    else if (phase === 'thinking') this.setState(s => ({ ai: 'thinking', menu: null, rail: s.rail === 'collapsed' ? 'compact' : s.rail, messages: [{ id: Date.now(), role: 'user', isUser: true, text: 'Why did authorization rate drop?', time: this.now() }] }));
+    else if (phase === 'error') this.setState(s => ({ ai: 'error', menu: null, rail: s.rail === 'collapsed' ? 'compact' : s.rail, messages: [{ id: Date.now(), role: 'user', isUser: true, text: 'Summarize the last 24 hours', time: this.now() }] }));
+    else this.setState({ ai: 'idle', messages: [], menu: null });
+  }
+
+  collapseRail() { this.setState({ rail: 'collapsed' }); }
+  openRail() { this.setState({ rail: 'compact' }); }
+  expandRail() { this.setState(s => ({ rail: s.rail === 'expanded' ? 'compact' : 'expanded' })); }
+
+  onComposer(e) { this.setState({ composer: e.target.value }); }
+  onComposerKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault && e.preventDefault(); this.submitComposer(); } }
+  submitComposer() { const t = (this.state.composer || '').trim(); if (!t) return; this.setState({ composer: '' }); this.ask(t); }
+
+  intentOf(t) {
+    t = (t || '').toLowerCase();
+    if (/summar|handoff|recap|last 24|brief/.test(t)) return 'summary';
+    if (/anomal|spike|deploy|root cause|14:/.test(t)) return 'anomaly';
+    if (/segment|degrad|which|where/.test(t)) return 'segments';
+    if (/report|incident note|draft/.test(t)) return 'report';
+    return 'diagnose';
+  }
+
+  chatContext() {
+    const s = this.state;
+    const m = (s.oracleSummary && s.oracleSummary.metrics) || {};
+    return {
+      rangeLabel: s.rangeLabel,
+      comparison: s.cmpLabel,
+      processor: s.procLabel,
+      segment: s.segment,
+      updatedText: this.renderVals().updatedText,
+      incident: 'No verified incident is assumed. The assistant should answer from Oracle BRM aggregate metrics when present.',
+      kpis: {
+        accountTotal: m.account_total || 'Loading from Oracle',
+        activeAccounts: m.account_active_10100 || 'Loading from Oracle',
+        inactiveAccounts: m.account_inactive_10102 || 'Loading from Oracle',
+        closedAccounts: m.account_closed_10103 || 'Loading from Oracle',
+        recentAccounts: m.account_created_last_7d_from_latest || 'Loading from Oracle',
+        billinfoTotal: m.billinfo_total || 'Loading from Oracle',
+        serviceTotal: m.service_total || 'Loading from Oracle',
+        itemTotal: m.item_total || 'Loading from Oracle',
+        eventTotal: m.event_total || 'Loading from Oracle',
+        latestAccountCreatedAtUtc: m.latest_account_created_at_utc || 'Loading from Oracle'
+      },
+      oracleSummary: s.oracleSummary
+    };
+  }
+
+  answerFromApi(payload, intent) {
+    if (!payload || !payload.verdict) return this.buildAnswer(intent);
+    const src = (label, key) => ({ label: label || 'Dashboard source', key: key || 'kpis', onClick: () => this.pulse(key || 'kpis') });
+    const actionFor = (label) => {
+      const t = String(label || '').toLowerCase();
+      if (/filter/.test(t)) return { label, onClick: () => this.applySegment('visa-eu'), isPrimary: true, isGhost: false };
+      if (/affected|record/.test(t)) return { label, onClick: () => this.openDrill('visa-eu'), isPrimary: false, isGhost: true };
+      if (/explain|anomaly/.test(t)) return { label, onClick: () => this.ask('Explain the anomaly'), isPrimary: false, isGhost: true };
+      if (/report|incident note|create|draft/.test(t)) return { label, onClick: () => this.draftReport(), isPrimary: false, isGhost: true };
+      return { label, onClick: () => this.toast('Action queued'), isPrimary: false, isGhost: true };
+    };
+    return {
+      id: Date.now() + Math.random(),
+      role: 'assistant',
+      isAnswer: true,
+      time: this.now(),
+      verdict: payload.verdict,
+      bullets: (payload.bullets || []).slice(0, 5).map(b => ({ text: b.text || String(b), src: src(b.sourceLabel, b.sourceKey) })),
+      confidence: payload.confidence || (payload.configured ? 'AI response based on dashboard context' : 'Local fallback - configure Gemini for live AI'),
+      sources: (payload.sources || []).slice(0, 5).map(s => src(s.label, s.key)),
+      actions: (payload.actions || ['Filter dashboard to Visa EU', 'Show affected records']).slice(0, 4).map(actionFor)
+    };
+  }
+
+  async ask(text) {
+    const intent = this.intentOf(text);
+    const userMsg = { id: Date.now(), role: 'user', isUser: true, text, time: this.now() };
+    this.setState(s => ({ ai: 'thinking', menu: null, rail: s.rail === 'collapsed' ? 'compact' : s.rail, messages: [...s.messages, userMsg] }));
+    clearTimeout(this._ask);
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message: text, dashboardContext: this.chatContext() })
+      });
+      const payload = await res.json();
+      const a = this.answerFromApi(payload, intent);
+      this.setState(s => ({ ai: 'answered', messages: [...s.messages, a] }));
+      if (payload && payload.error) this.toast('Assistant used fallback: ' + payload.error.slice(0, 80));
+    } catch (err) {
+      const a = this.buildAnswer(intent);
+      this.setState(s => ({ ai: 'answered', messages: [...s.messages, a] }));
+      this.toast('Assistant is offline; showing local answer');
+    }
+  }
+  retryAsk() { this.ask('Why did authorization rate drop?'); }
+
+  seedThread(intent) {
+    const u = { id: Date.now() - 1, role: 'user', isUser: true, text: intent === 'summary' ? 'Summarize the last 24 hours for handoff' : 'Why did authorization rate drop?', time: this.now() };
+    const a = this.buildAnswer(intent || 'diagnose');
+    this.setState(s => ({ ai: 'answered', menu: null, rail: s.rail === 'collapsed' ? 'compact' : s.rail, messages: [u, a] }));
+  }
+
+  buildAnswer(intent) {
+    const id = Date.now() + Math.random();
+    const src = (label, key) => ({ label, key, onClick: () => this.pulse(key) });
+    const A = (label, onClick, primary) => ({ label, onClick, isPrimary: !!primary, isGhost: !primary });
+    if (intent === 'summary') {
+      return { id, role: 'assistant', isAnswer: true, time: this.now(),
+        verdict: 'On-call handoff — last 24h, Production · EU + US:',
+        bullets: [
+          { text: '1 active incident — auth rate below baseline since 14:10 UTC, isolated to Visa · EU (risk rule v3).', src: src('Incident', 'incident') },
+          { text: '$1.24M declined value at risk, up 18% vs prior day.', src: src('Value at risk', 'kpi-risk') },
+          { text: 'Disputes — 3 breaching SLA, 12 at risk; respond within 24h.', src: src('Dispute queue', 'disputes') },
+          { text: 'Settlement healthy (99.1%); latency p95 elevated to 480 ms on Processor B.', src: src('KPIs', 'kpis') },
+        ],
+        confidence: 'High confidence · 4 dashboard sources · as of 18:30 UTC',
+        sources: [src('KPI summary', 'kpis'), src('Dispute queue', 'disputes'), src('Degraded segments', 'segments')],
+        actions: [A('Create report', () => this.draftReport(), true), A('Copy for handoff', () => this.toast('Handoff summary copied')), A('Filter to incident', () => this.applySegment('visa-eu'))] };
+    }
+    if (intent === 'report') return this.reportMsg(id);
+    if (intent === 'segments') {
+      return { id, role: 'assistant', isAnswer: true, time: this.now(),
+        verdict: 'Three segments are below baseline — impact is concentrated in the first:',
+        bullets: [
+          { text: 'Visa · EU — auth −4.2 pts, $610k at risk. Risk rule v3 began holding more auths after the 14:00 deploy.', src: src('Visa · EU', 'segments') },
+          { text: 'Mastercard · US — auth −2.1 pts from Processor B timeouts (p95 720 ms).', src: src('Processor B', 'segments') },
+          { text: 'Amex · UK — auth −0.6 pts, within normal variance.', src: src('Segments', 'segments') },
+        ],
+        confidence: 'High confidence · 2 dashboard sources · as of 18:30 UTC',
+        sources: [src('Degraded segments', 'segments'), src('Decline reasons', 'decline')],
+        actions: [A('Filter to Visa · EU', () => this.applySegment('visa-eu'), true), A('Show affected records', () => this.openDrill('visa-eu')), A('Explain the anomaly', () => this.ask('Explain the anomaly'))] };
+    }
+    if (intent === 'anomaly') {
+      return { id, role: 'assistant', isAnswer: true, time: this.now(),
+        verdict: 'Most likely root cause: the 14:00 UTC deploy of risk rule v3.',
+        bullets: [
+          { text: 'Auth held at ~95.6% until 14:00, then fell to 91.0% by 14:18 — only on Visa · EU.', src: src('Auth trend', 'authChart') },
+          { text: '“Suspected fraud / risk hold” declines rose 11% → 18% of all declines in the same window.', src: src('Decline reasons', 'decline') },
+          { text: 'No matching change in volume, processor health, or issuer codes — points to a rule change, not an outage.', src: src('Segments', 'segments') },
+        ],
+        confidence: 'Medium-high · correlation, not confirmed causation · as of 18:30 UTC',
+        sources: [src('Auth trend', 'authChart'), src('Decline reasons', 'decline'), src('Risk rule v3 change', 'incident')],
+        actions: [A('Filter to Visa · EU', () => this.applySegment('visa-eu'), true), A('Show affected records', () => this.openDrill('visa-eu')), A('Draft incident note', () => this.draftReport())] };
+    }
+    return { id, role: 'assistant', isAnswer: true, time: this.now(),
+      verdict: 'Authorization rate fell 1.8 pts to 92.4% at ~14:10 UTC. The drop is concentrated in one segment, not platform-wide.',
+      bullets: [
+        { text: '~92% of the added declines come from Visa · EU, where risk rule v3 started holding more auths after the 14:00 deploy.', src: src('Decline reasons', 'decline') },
+        { text: '“Suspected fraud / risk hold” rose from 11% → 18% of declines in 40 minutes.', src: src('Decline reasons', 'decline') },
+        { text: 'A smaller, separate issue: Processor B timeouts on Mastercard · US (p95 720 ms).', src: src('Segments', 'segments') },
+      ],
+      confidence: 'High confidence · 3 dashboard sources · as of 18:30 UTC',
+      sources: [src('Decline reasons', 'decline'), src('Visa · EU segment', 'segments'), src('Risk rule v3 change', 'incident')],
+      actions: [A('Filter dashboard to Visa · EU', () => this.applySegment('visa-eu'), true), A('Explain the anomaly', () => this.ask('Explain the anomaly')), A('Show affected records', () => this.openDrill('visa-eu')), A('Draft incident note', () => this.draftReport())] };
+  }
+
+  reportMsg(id) {
+    return { id: id || Date.now() + Math.random(), role: 'assistant', isReport: true, time: this.now(),
+      title: 'Incident summary — Visa · EU auth degradation',
+      lines: ['Window: 14:10–18:30 UTC (ongoing)', 'Impact: auth −4.2 pts · $610k at risk', 'Suspected cause: risk rule v3 deploy (14:00)', 'Affected: Visa · EU — 4,182 declined auths'],
+      actions: [{ label: 'Open in Reports', onClick: () => this.toast('Opening in Reports…'), isPrimary: true, isGhost: false }, { label: 'Copy', onClick: () => this.toast('Report copied'), isPrimary: false, isGhost: true }] };
+  }
+  draftReport() { this.setState(s => ({ ai: 'answered', rail: s.rail === 'collapsed' ? 'compact' : s.rail, messages: [...s.messages, this.reportMsg()] })); this.toast('Drafted incident note'); }
+
+  applySegment(seg) { this.setState({ segment: seg, hl: 'multi', menu: null }); this.toast('Filtered dashboard to Visa · EU'); clearTimeout(this._hl); this._hl = setTimeout(() => this.setState({ hl: null }), 2600); }
+  clearSegment() { this.setState({ segment: null }); }
+
+  segData(key) {
+    if (key === 'mc-us') {
+      return { key, name: 'Mastercard · US', cause: 'Processor B timeouts · p95 720 ms', dot: '#c08a2e', delta: '−2.1 pts', deltaColor: '#97651a', value: '$310k', count: '1,940', shown: 'Showing 6 of 1,940',
+        rows: [
+          { time: '18:24', id: 'auth_9f21c0', reason: 'Processor timeout', amount: '$4,210', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+          { time: '18:19', id: 'auth_9f1e7b', reason: 'Processor timeout', amount: '$880', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+          { time: '18:11', id: 'auth_9f0a45', reason: 'Retry succeeded', amount: '$2,150', status: 'Recovered', statusColor: '#2f7d57', statusBg: '#eaf4ee' },
+          { time: '18:03', id: 'auth_9ef933', reason: 'Processor timeout', amount: '$640', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+          { time: '17:56', id: 'auth_9ee71a', reason: 'Processor timeout', amount: '$1,775', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+          { time: '17:48', id: 'auth_9ed002', reason: 'Retry succeeded', amount: '$5,090', status: 'Recovered', statusColor: '#2f7d57', statusBg: '#eaf4ee' },
+        ] };
+    }
+    return { key: 'visa-eu', name: 'Visa · EU', cause: 'Risk rule v3 holding auths · since 14:00 UTC', dot: '#c0473d', delta: '−4.2 pts', deltaColor: '#b23b32', value: '$610k', count: '4,182', shown: 'Showing 6 of 4,182',
+      rows: [
+        { time: '18:28', id: 'auth_a73f10', reason: 'Suspected fraud / risk hold', amount: '$1,240', status: 'Held', statusColor: '#97651a', statusBg: '#fbf3e3' },
+        { time: '18:22', id: 'auth_a73b9e', reason: 'Suspected fraud / risk hold', amount: '$96', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+        { time: '18:15', id: 'auth_a7390a', reason: 'Suspected fraud / risk hold', amount: '$612', status: 'Held', statusColor: '#97651a', statusBg: '#fbf3e3' },
+        { time: '18:07', id: 'auth_a736c2', reason: 'Do not honor (issuer)', amount: '$1,890', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+        { time: '17:59', id: 'auth_a7331b', reason: 'Suspected fraud / risk hold', amount: '$340', status: 'Held', statusColor: '#97651a', statusBg: '#fbf3e3' },
+        { time: '17:51', id: 'auth_a72ff7', reason: 'Suspected fraud / risk hold', amount: '$1,025', status: 'Declined', statusColor: '#b23b32', statusBg: '#fbeeec' },
+      ] };
+  }
+  openDrill(key) { this.setState({ drill: this.segData(key), menu: null }); }
+  closeDrill() { this.setState({ drill: null }); }
+
+  pulse(key) { this.setState({ hl: key }); clearTimeout(this._hl); this._hl = setTimeout(() => this.setState({ hl: null }), 2600); }
+  pulseIncident() { this.pulse('incident'); }
+  askWhy() { this.setState(s => ({ rail: s.rail === 'collapsed' ? 'compact' : s.rail })); this.ask('Why did authorization rate drop?'); }
+  ackIncident() { this.setState({ incidentAck: true }); this.toast('Incident acknowledged'); }
+  refresh() { this.setState({ refreshing: true, menu: null }); clearTimeout(this._rf); this._rf = setTimeout(() => this.setState({ refreshing: false, dash: this.state.dash === 'stale' ? 'normal' : this.state.dash, updated: 2 }), 1100); }
+
+  series() {
+    return {
+      today: [95.8, 95.9, 95.7, 96.0, 95.6, 95.8, 95.9, 95.6, 95.8, 95.9, 95.7, 95.6, 95.8, 95.7, 95.9, 95.7, 95.8, 95.6, 95.7, 94.2, 91.4, 91.0, 91.8, 92.2, 92.4],
+      prior: [95.6, 95.7, 95.5, 95.8, 95.4, 95.6, 95.7, 95.5, 95.6, 95.7, 95.5, 95.6, 95.7, 95.5, 95.6, 95.7, 95.5, 95.6, 95.4, 95.5, 95.6, 95.5, 95.6, 95.5, 95.6],
+    };
+  }
+  vy(v) { const lo = 90.5, hi = 96.4; return (1 - (v - lo) / (hi - lo)) * 200; }
+  ptsOf(arr) { return arr.map((v, i) => (i / 24 * 720).toFixed(1) + ',' + this.vy(v).toFixed(1)).join(' '); }
+
+  onPlotMove(e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    const i = Math.round(pct * 24);
+    const s = this.series();
+    this.setState({ hoverPt: { i, val: s.today[i], prior: s.prior[i] } });
+  }
+  onPlotLeave() { this.setState({ hoverPt: null }); }
+
+  renderVals() {
+    const s = this.state, p = this.props || {};
+    const accents = {
+      slate: { solid: '#1f2430', hover: '#2b3140', soft: '#eceff4', text: '#2f3645', ring: '#1f2430' },
+      indigo: { solid: '#4f46e5', hover: '#4338ca', soft: '#eef0fe', text: '#4f46e5', ring: '#4f46e5' },
+      teal: { solid: '#0e7490', hover: '#0c6378', soft: '#e6f3f6', text: '#0e7490', ring: '#0e7490' },
+      blue: { solid: '#2f6df6', hover: '#245fe0', soft: '#eaf1fe', text: '#2f6df6', ring: '#2f6df6' },
+    };
+    const ac = accents[p.accent] || accents.slate;
+    ac.hover = (p.accent === 'slate' || !p.accent) ? '#2b3140' : ac.hover;
+    const dash = s.dash;
+    const railW = s.rail === 'collapsed' ? 56 : s.rail === 'expanded' ? 624 : 376;
+
+    const declines = [
+      { label: 'Issuer declined — do not honor', pct: 34, w: 100, color: '#3a4456', up: false },
+      { label: 'Insufficient funds', pct: 21, w: 62, color: '#586377', up: false },
+      { label: 'Suspected fraud / risk hold', pct: 18, w: 53, color: '#b23b32', up: true },
+      { label: 'Expired card', pct: 9, w: 27, color: '#7e8798', up: false },
+      { label: 'Processor timeout', pct: 8, w: 24, color: '#c08a2e', up: true },
+      { label: 'Other', pct: 10, w: 30, color: '#cdd1d9', up: false },
+    ];
+    const segments = [
+      { name: 'Visa · EU', cause: 'Risk rule v3 holding auths', dot: '#c0473d', delta: '−4.2 pts', deltaColor: '#b23b32', value: '$610k', onOpen: () => this.openDrill('visa-eu') },
+      { name: 'Mastercard · US', cause: 'Processor B timeouts', dot: '#c08a2e', delta: '−2.1 pts', deltaColor: '#97651a', value: '$310k', onOpen: () => this.openDrill('mc-us') },
+      { name: 'Amex · UK', cause: 'Within normal variance', dot: '#c2c7d0', delta: '−0.6 pts', deltaColor: '#7c828d', value: '$48k', onOpen: () => this.openDrill('mc-us') },
+    ];
+    const disputes = [
+      { sla: '2h', slaText: '#b23b32', slaBg: '#fbeeec', id: 'dsp_5521 · chargeback', reason: 'Product not received', amount: '$2,400' },
+      { sla: '6h', slaText: '#97651a', slaBg: '#fbf3e3', id: 'dsp_5519 · retrieval', reason: 'Unrecognized charge', amount: '$890' },
+      { sla: '11h', slaText: '#97651a', slaBg: '#fbf3e3', id: 'dsp_5514 · chargeback', reason: 'Duplicate processing', amount: '$1,150' },
+      { sla: '1d', slaText: '#565e6c', slaBg: '#f0f1f4', id: 'dsp_5508 · inquiry', reason: 'Subscription canceled', amount: '$59' },
+    ];
+    const prompts = [
+      { text: 'How many active, inactive, and closed BRM accounts are in Oracle?', icon: 'help', onAsk: () => this.ask('How many active, inactive, and closed BRM accounts are in Oracle, and what changed in the latest 7-day window?') },
+      { text: 'Summarize the Oracle BRM account and billing snapshot', icon: 'summarize', onAsk: () => this.ask('Summarize the Oracle BRM account and billing snapshot') },
+      { text: 'How many services, items, and events are visible?', icon: 'leaderboard', onAsk: () => this.ask('How many services, items, and events are visible in Oracle?') },
+      { text: 'Draft a BRM operations handoff note', icon: 'edit_note', onAsk: () => this.ask('Draft a BRM operations handoff note from the Oracle metrics') },
+    ];
+    const ctxChips = [{ label: 'Oracle BRM' }, { label: 'PIN/orclpdb' }, { label: s.oracleSummary && s.oracleSummary.connected ? 'DB connected' : 'DB loading' }];
+
+    const mkOpt = (label, icon, fn) => ({ label, icon, onClick: fn });
+    const stateOpts = [
+      mkOpt('Live data', 'bolt', () => this.setDash('normal')),
+      mkOpt('Loading', 'progress_activity', () => this.setDash('loading')),
+      mkOpt('Stale data', 'update', () => this.setDash('stale')),
+      mkOpt('No results', 'search_off', () => this.setDash('noresults')),
+      mkOpt('Empty', 'database', () => this.setDash('empty')),
+      mkOpt('Error', 'error', () => this.setDash('error')),
+    ];
+    const aiOpts = [
+      mkOpt('Empty / prompts', 'forum', () => this.setAi('idle')),
+      mkOpt('Thinking', 'more_horiz', () => this.setAi('thinking')),
+      mkOpt('Answered', 'check_circle', () => this.setAi('answered')),
+      mkOpt('Error', 'error', () => this.setAi('error')),
+    ];
+    const rangeOpts = ['Last 1h', 'Last 6h', 'Last 24h', 'Last 7d', 'Custom…'].map(l => ({ label: l, onClick: () => this.setState({ rangeLabel: l === 'Custom…' ? 'Custom' : l, menu: null }) }));
+    const cmpOpts = ['vs prior 24h', 'vs prior 7d', 'vs baseline', 'No comparison'].map(l => ({ label: l, onClick: () => this.setState({ cmpLabel: l, menu: null }) }));
+    const procOpts = ['All processors', 'Processor A', 'Processor B', 'Processor C'].map(l => ({ label: l, onClick: () => this.setState({ procLabel: l, menu: null }) }));
+
+    return {
+      ac_solid: ac.solid, ac_hover: ac.hover, ac_soft: ac.soft, ac_text: ac.text, ac_ring: ac.ring,
+      isNormal: dash === 'normal' || dash === 'stale', isStale: dash === 'stale', isLoading: dash === 'loading',
+      isEmpty: dash === 'empty', isError: dash === 'error', isNoresults: dash === 'noresults',
+      normalOpacity: dash === 'stale' ? 0.82 : 1,
+      refreshing: s.refreshing, notRefreshing: !s.refreshing,
+      updatedText: dash === 'stale' ? 'Delayed — last good snapshot 14 min ago' : ('Updated ' + (s.updated < 60 ? s.updated + 's' : Math.floor(s.updated / 60) + 'm') + ' ago · auto-refresh 60s'),
+      showIncident: (p.incidentBanner !== false) && !s.incidentAck && (dash === 'normal' || dash === 'stale'),
+      segment: s.segment, segmentOn: !!s.segment, segmentOff: !s.segment,
+      rangeLabel: s.rangeLabel, cmpLabel: s.cmpLabel, cmpShort: 'vs prior', procLabel: s.procLabel,
+      rail: s.rail, railW, railInner: railW - 0, railCollapsed: s.rail === 'collapsed', railOpen: s.rail !== 'collapsed', railExpanded: s.rail === 'expanded',
+      expandIcon: s.rail === 'expanded' ? 'close_fullscreen' : 'open_in_full',
+      aiEmpty: s.messages.length === 0, hasMessages: s.messages.length > 0, aiThinking: s.ai === 'thinking', aiError: s.ai === 'error',
+      messages: s.messages, prompts, ctxChips, composer: s.composer,
+      menu: s.menu, anyMenu: !!s.menu, menuStates: s.menu === 'states', menuRange: s.menu === 'range', menuCmp: s.menu === 'cmp', menuProc: s.menu === 'proc',
+      stateOpts, aiOpts, rangeOpts, cmpOpts, procOpts,
+      drill: s.drill, drillOpen: !!s.drill,
+      toast: s.toast, six: [1, 2, 3, 4, 5, 6],
+      todayPts: this.ptsOf(this.series().today), priorPts: this.ptsOf(this.series().prior),
+      areaPts: '0,200 ' + this.ptsOf(this.series().today) + ' 720,200',
+      deployX: (19.5 / 24 * 720).toFixed(1), deployPct: (19.5 / 24 * 100).toFixed(1),
+      hoverActive: !!s.hoverPt, hoverX: s.hoverPt ? (s.hoverPt.i / 24 * 100).toFixed(2) : 0,
+      hoverY: s.hoverPt ? (this.vy(s.hoverPt.val) / 200 * 93 + 0).toFixed(2) : 0,
+      hoverVal: s.hoverPt ? s.hoverPt.val.toFixed(1) : '', hoverPrior: s.hoverPt ? s.hoverPt.prior.toFixed(1) : '', hoverTime: s.hoverPt ? this.timeAt(s.hoverPt.i) : '',
+      hlAuthChart: s.hl === 'authChart' || s.hl === 'multi', hlDecline: s.hl === 'decline' || s.hl === 'multi', hlSegments: s.hl === 'segments' || s.hl === 'multi',
+      hlKpis: s.hl === 'kpis', hlDisputes: s.hl === 'disputes', hlRisk: s.hl === 'kpi-risk', hlIncident: s.hl === 'incident',
+      declines, segments, disputes,
+      openStates: () => this.setMenu('states'), openRange: () => this.setMenu('range'), openCmp: () => this.setMenu('cmp'), openProc: () => this.setMenu('proc'), openWs: () => this.setMenu('ws'), closeMenu: () => this.closeMenu(),
+      refresh: () => this.refresh(), draftReport: () => this.draftReport(), askWhy: () => this.askWhy(), ackIncident: () => this.ackIncident(),
+      clearSegment: () => this.clearSegment(), applyVisaEu: () => this.applySegment('visa-eu'),
+      openDrillMc: () => this.openDrill('mc-us'), closeDrill: () => this.closeDrill(), goLive: () => this.goLive(),
+      hoverAuth: () => {}, hoverNone: () => {}, pulseIncident: () => this.pulseIncident(),
+      onPlotMove: (e) => this.onPlotMove(e), onPlotLeave: () => this.onPlotLeave(),
+      collapseRail: () => this.collapseRail(), openRail: () => this.openRail(), expandRail: () => this.expandRail(),
+      onComposer: (e) => this.onComposer(e), onComposerKey: (e) => this.onComposerKey(e), submitComposer: () => this.submitComposer(), retryAsk: () => this.retryAsk(),
+    };
+  }
+}
+</script>
+
+
+</body></html>
