@@ -23,11 +23,19 @@ export function DateRangePicker({ min, max }: { min: string; max: string }) {
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
 
+  function normalizeRange(f?: string, t?: string) {
+    if (f && t && /^\d{4}-\d{2}-\d{2}$/.test(f) && /^\d{4}-\d{2}-\d{2}$/.test(t) && f > t) {
+      return { from: t, to: f };
+    }
+    return { from: f, to: t };
+  }
+
   function apply(f?: string, t?: string) {
+    const normalized = normalizeRange(f, t);
     const sp = new URLSearchParams(Array.from(params.entries()));
-    if (f) sp.set("from", f);
+    if (normalized.from) sp.set("from", normalized.from);
     else sp.delete("from");
-    if (t) sp.set("to", t);
+    if (normalized.to) sp.set("to", normalized.to);
     else sp.delete("to");
     navigate(`${pathname}${sp.toString() ? `?${sp.toString()}` : ""}`);
     setOpen(false);
@@ -44,7 +52,7 @@ export function DateRangePicker({ min, max }: { min: string; max: string }) {
       </button>
       {open ? (
         <div className="picker-menu" role="menu" style={{ width: 256 }}>
-          <div className="picker-head">Billing period</div>
+          <div className="picker-head">Usage period</div>
           <button className="picker-row" onClick={() => apply()}>
             All available data
             {min && max ? <span className="picker-row-sub">{min} → {max}</span> : null}

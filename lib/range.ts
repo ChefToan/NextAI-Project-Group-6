@@ -15,6 +15,11 @@ export function parseRange(from: string | null, to: string | null): DateRange {
   const r: DateRange = {};
   if (from) r.from = /^\d{4}-/.test(from) ? dayToEpoch(from, false) : Number(from) || undefined;
   if (to) r.to = /^\d{4}-/.test(to) ? dayToEpoch(to, true) : Number(to) || undefined;
+  if (r.from != null && r.to != null && r.from > r.to) {
+    const originalFrom = r.from;
+    r.from = /^\d{4}-/.test(to ?? "") ? dayToEpoch(to as string, false) : r.to;
+    r.to = /^\d{4}-/.test(from ?? "") ? dayToEpoch(from as string, true) : originalFrom;
+  }
   return r;
 }
 

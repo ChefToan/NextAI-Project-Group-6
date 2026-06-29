@@ -15,6 +15,10 @@ const G6_ACCOUNTS = `select distinct a.poid_id0 from account_t a join service_t 
 const USAGE_FROM = `event_t e join EVENT_SESSION_USAGE2_G6 u on u.OBJ_ID0 = e.poid_id0`;
 const USAGE_WHERE = `where e.poid_type = '/event/session/usagegr6'`;
 const USAGE_REV_JOIN = `join event_bal_impacts_t bi on bi.obj_id0 = e.poid_id0 and bi.resource_id = 840`;
+const USAGE_CACHE_TTL_MS = 60_000;
+const SLOW_QUERY_MS = 2_000;
+
+const usageCache = new Map<string, { expiresAt: number; value: Group6Usage }>();
 
 export type ModelKey = "3.0" | "3.5";
 
@@ -142,18 +146,40 @@ function parsePrice(descr: string): string {
   return m ? m[0].replace(/\s+/g, " ").trim() : "";
 }
 
+function queryLabel(sql: string) {
+  return sql.trim().split(/\r?\n/, 1)[0].replace(/\s+/g, " ").slice(0, 120);
+}
+
 async function rows(sql: string, max = 500): Promise<Row[]> {
+  const started = Date.now();
   const r = await runReadOnlyQuery(sql, max);
+  const elapsed = Date.now() - started;
+  const label = queryLabel(sql);
+  if (process.env.NODE_ENV !== "production") {
+    console.info(`[group6-usage] ${elapsed}ms ${label}`);
+  }
+  if (elapsed > SLOW_QUERY_MS) {
+    console.warn(`[group6-usage] slow query ${elapsed}ms ${label}`);
+  }
   return (r?.rows ?? []) as Row[];
 }
 
 export type UsageRange = { from?: number; to?: number };
 
 export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usage> {
+  const started = Date.now();
   const generatedAt = new Date().toISOString();
   // Optional billing-period filter on real session start time (epoch seconds).
   const from = Number.isFinite(range.from) ? Math.floor(range.from as number) : null;
   const to = Number.isFinite(range.to) ? Math.floor(range.to as number) : null;
+  const cacheKey = `${from ?? ""}:${to ?? ""}`;
+  const cached = usageCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    if (process.env.NODE_ENV !== "production") {
+      console.info(`[group6-usage] cache hit ${cacheKey}`);
+    }
+    return cached.value;
+  }
   const rangeClause = `${from != null ? ` and e.start_t >= ${from}` : ""}${to != null ? ` and e.start_t <= ${to}` : ""}`;
   const W = `${USAGE_WHERE}${rangeClause}`;
   const empty: Group6Usage = {
@@ -259,6 +285,8 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
   const acctRows = await rows(
     `select e.account_obj_id0 acct, max(u.model_code2_g6) model,
             sum(case when e.rum_name = 'PromptG6' then 1 else 0 end) prompts,
+            sum(u.input_tokens2_g6) input_tokens,
+            sum(u.output_tokens2_g6) output_tokens,
             sum(u.input_tokens2_g6 + u.output_tokens2_g6) tokens
        from ${USAGE_FROM} ${W} group by e.account_obj_id0`,
     1000,
@@ -331,28 +359,25 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     .sort((a, b) => b.revenueDue - a.revenueDue);
 
   // ---- token breakdown by product (token-billed products carry tokens) ----
-  // Input/output split lives at event grain, so join account->product at that grain.
-  const tokByProdRows = await rows(
-    `select pmap.product, u.model_code2_g6 model,
-            sum(u.input_tokens2_g6) in_tok, sum(u.output_tokens2_g6) out_tok
-       from ${USAGE_FROM}
-       join (select s.account_obj_id0 acct, min(p.name) product
-               from service_t s
-               join purchased_product_t pp on pp.service_obj_id0 = s.poid_id0
-               join product_t p on p.poid_id0 = pp.product_obj_id0
-              where s.poid_type = '${SERVICE_TYPE}'
-              group by s.account_obj_id0) pmap on pmap.acct = e.account_obj_id0
-      ${W}
-      group by pmap.product, u.model_code2_g6
-      having sum(u.input_tokens2_g6 + u.output_tokens2_g6) > 0
-      order by sum(u.input_tokens2_g6 + u.output_tokens2_g6) desc`,
+  // Avoid the slow event-grain product join: account-level token totals and
+  // account->product mapping are already available and preserve the same chart shape.
+  const tokenByProductMap = new Map<string, { product: string; model: string; inputTokens: number; outputTokens: number }>();
+  for (const r of acctRows) {
+    const acct = n(r.ACCT);
+    const product = acctProduct[acct] ?? "Unmapped product";
+    const model = s(r.MODEL) || (product.includes("3.5") ? "3.5" : "3.0");
+    const inputTokensForAcct = n(r.INPUT_TOKENS);
+    const outputTokensForAcct = n(r.OUTPUT_TOKENS);
+    if (inputTokensForAcct + outputTokensForAcct <= 0) continue;
+    const key = `${product}\u0000${model}`;
+    const cur = tokenByProductMap.get(key) ?? { product, model, inputTokens: 0, outputTokens: 0 };
+    cur.inputTokens += inputTokensForAcct;
+    cur.outputTokens += outputTokensForAcct;
+    tokenByProductMap.set(key, cur);
+  }
+  const tokenByProduct = [...tokenByProductMap.values()].sort(
+    (a, b) => b.inputTokens + b.outputTokens - (a.inputTokens + a.outputTokens),
   );
-  const tokenByProduct = tokByProdRows.map((r) => ({
-    product: s(r.PRODUCT),
-    model: s(r.MODEL),
-    inputTokens: n(r.IN_TOK),
-    outputTokens: n(r.OUT_TOK),
-  }));
 
   // ---- temporal assembly ----
   const hourMap = new Map<number, { m30: number; m35: number }>();
@@ -504,13 +529,34 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     .map((p) => ({ ...p, revenueDue: Math.round(p.revenueDue * 100) / 100 }))
     .sort((a, b) => b.users - a.users || b.revenueDue - a.revenueDue);
 
-  const exRows = await rows(
-    `select 'unrated' k, to_char(count(*)) v from ${USAGE_FROM} ${W} and not exists (select 1 from event_bal_impacts_t bi where bi.obj_id0 = e.poid_id0)
-     union all select 'orphan', to_char(count(*)) from ${USAGE_FROM} ${W} and e.account_obj_id0 not in (select poid_id0 from account_t)
-     union all select 'overdue', to_char((select count(*) from bill_t where account_obj_id0 in (${G6_ACCOUNTS}) and total_due > 0 and nvl(recvd,0) < total_due)) from dual`, 5);
-  const EX: Record<string, number> = {};
-  for (const r of exRows) EX[s(r.K)] = n(r.V);
-  const exceptions = { unratedUsage: EX.unrated ?? 0, orphanUsage: EX.orphan ?? 0, failedTxns: EX.overdue ?? 0, suspendedSubs };
+  const ratedEventRows = await rows(
+    `select count(distinct e.poid_id0) rated
+       from ${USAGE_FROM}
+       join event_bal_impacts_t bi on bi.obj_id0 = e.poid_id0
+      ${W}`,
+    2,
+  );
+  const orphanRows = await rows(
+    `select count(*) orphan
+       from ${USAGE_FROM}
+       left join account_t a on a.poid_id0 = e.account_obj_id0
+      ${W} and a.poid_id0 is null`,
+    2,
+  );
+  const overdueRows = await rows(
+    `select count(*) overdue
+       from bill_t
+      where account_obj_id0 in (${G6_ACCOUNTS})
+        and total_due > 0
+        and nvl(recvd,0) < total_due`,
+    2,
+  );
+  const exceptions = {
+    unratedUsage: Math.max(0, usageEvents - n(ratedEventRows[0]?.RATED)),
+    orphanUsage: n(orphanRows[0]?.ORPHAN),
+    failedTxns: n(overdueRows[0]?.OVERDUE),
+    suspendedSubs,
+  };
 
   const taxRows = await rows(
     `select 'base' k, to_char(round(nvl(sum(bi.amount),0),2)) v from event_bal_impacts_t bi where bi.account_obj_id0 in (${G6_ACCOUNTS}) and bi.resource_id = 840 and bi.tax_code = 'AIT'
@@ -576,7 +622,7 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     };
   });
 
-  return {
+  const result: Group6Usage = {
     connected: true,
     generatedAt,
     windowUtc: { min: H.window_min ?? "", max: H.window_max ?? "", days: n(H.window_days) },
@@ -634,6 +680,12 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
       "Revenue KPI is billed total due from BILL_T; time-resolved revenue uses rated usage impacts (USD resource 840).",
     ],
   };
+
+  usageCache.set(cacheKey, { expiresAt: Date.now() + USAGE_CACHE_TTL_MS, value: result });
+  if (process.env.NODE_ENV !== "production") {
+    console.info(`[group6-usage] total ${Date.now() - started}ms ${cacheKey}`);
+  }
+  return result;
 }
 
 // Helper: format an hour list like [12,13,14] as "12:00, 13:00, 14:00".

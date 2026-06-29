@@ -22,15 +22,23 @@ import {
 } from "recharts";
 import { compact, intGroup, money } from "@/lib/format";
 
-const M30 = "#0d9488";
-const M35 = "#4f46e5";
-const BRAND = "#4f46e5";
-const TOK_IN = "#4338ca";
-const TOK_OUT = "#a8b0f0";
-const GRID = "#eceef1";
-const AXIS = "#9aa0ac";
-const INK = "#181b22";
-const INK2 = "#3c4350";
+const M30 = "var(--m30)";
+const M35 = "var(--m35)";
+const BRAND = "var(--brand)";
+const TOK_IN = "var(--tok-in)";
+const TOK_OUT = "var(--tok-out)";
+const GRID = "var(--chart-grid)";
+const AXIS = "var(--chart-axis)";
+const INK = "var(--ink)";
+const INK2 = "var(--ink-2)";
+const MUTED = "var(--muted)";
+const TOOLTIP_BG = "var(--chart-tooltip-bg)";
+const TOOLTIP_BD = "var(--chart-tooltip-bd)";
+const CURSOR = "var(--chart-cursor)";
+const HOVER = "var(--chart-hover)";
+const DOT_STROKE = "var(--chart-dot-stroke)";
+const BACKFILL = "var(--chart-backfill)";
+const BACKFILL_SWATCH = "var(--chart-backfill-swatch)";
 const MONO = "'IBM Plex Mono', monospace";
 const CHART_REVEAL_GAP_MS = 130;
 
@@ -96,7 +104,7 @@ function ChartReveal({ height, children }: { height: number; children: ReactNode
 
 function TipCard({ children }: { children: ReactNode }) {
   return (
-    <div style={{ background: "#fff", border: "1px solid #e7e9ee", borderRadius: 8, boxShadow: "0 10px 24px rgba(16,19,31,.14)", padding: "8px 10px", fontSize: 11.5, fontFamily: "Inter, sans-serif" }}>
+    <div style={{ background: TOOLTIP_BG, border: `1px solid ${TOOLTIP_BD}`, borderRadius: 8, boxShadow: "var(--sh-pop)", padding: "8px 10px", fontSize: 11.5, fontFamily: "Inter, sans-serif" }}>
       {children}
     </div>
   );
@@ -104,7 +112,7 @@ function TipCard({ children }: { children: ReactNode }) {
 
 function TipRow({ color, name, value }: { color: string; name: string; value: string }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 7, color: "#565e6c", lineHeight: 1.7 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 7, color: MUTED, lineHeight: 1.7 }}>
       <span style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />
       <span>{name}</span>
       <b style={{ marginLeft: "auto", paddingLeft: 14, color: INK, fontFamily: MONO }}>{value}</b>
@@ -172,7 +180,7 @@ export function UsageLineChart({
       <div className="legend" style={{ marginBottom: 8 }}>
         <span><span className="ln" style={{ background: M35 }} />Prompts / day</span>
         <span><span className="ln" style={{ background: M30 }} />Token blocks / day</span>
-        {bfStart ? <span><span className="sw" style={{ background: "#f1d6d2" }} />backfill</span> : null}
+        {bfStart ? <span><span className="sw" style={{ background: BACKFILL_SWATCH }} />backfill</span> : null}
       </div>
       <ChartReveal height={210}>
         <ResponsiveContainer width="100%" height="100%">
@@ -186,10 +194,10 @@ export function UsageLineChart({
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={GRID} />
             <XAxis dataKey="date" tickLine={false} axisLine={false} minTickGap={26} tick={{ fontSize: 10, fill: AXIS, fontFamily: MONO }} />
             <YAxis tickLine={false} axisLine={false} width={42} tickFormatter={(v) => compact(v)} tick={{ fontSize: 10, fill: AXIS, fontFamily: MONO }} />
-            {bfStart ? <ReferenceArea x1={bfStart} x2={chartData[chartData.length - 1].date} fill="#c0473d" fillOpacity={0.06} /> : null}
-            <Tooltip cursor={{ stroke: "#c2c7d0", strokeWidth: 1 }} content={<LineTip />} />
-            <Area type="monotone" dataKey="prompts" name="Prompts" stroke={M35} strokeWidth={2} fill="url(#up-prompts)" dot={false} activeDot={{ r: 3.5, strokeWidth: 1.5, stroke: "#fff" }} isAnimationActive animationDuration={850} animationEasing="ease-out" />
-            <Line type="monotone" dataKey="blocks" name="Token blocks" stroke={M30} strokeWidth={2} dot={false} activeDot={{ r: 3.5, strokeWidth: 1.5, stroke: "#fff" }} isAnimationActive animationBegin={140} animationDuration={850} animationEasing="ease-out" />
+            {bfStart ? <ReferenceArea x1={bfStart} x2={chartData[chartData.length - 1].date} fill={BACKFILL} /> : null}
+            <Tooltip cursor={{ stroke: CURSOR, strokeWidth: 1 }} content={<LineTip />} />
+            <Area type="monotone" dataKey="prompts" name="Prompts" stroke={M35} strokeWidth={2} fill="url(#up-prompts)" dot={false} activeDot={{ r: 3.5, strokeWidth: 1.5, stroke: DOT_STROKE }} isAnimationActive animationDuration={850} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="blocks" name="Token blocks" stroke={M30} strokeWidth={2} dot={false} activeDot={{ r: 3.5, strokeWidth: 1.5, stroke: DOT_STROKE }} isAnimationActive animationBegin={140} animationDuration={850} animationEasing="ease-out" />
           </ComposedChart>
         </ResponsiveContainer>
       </ChartReveal>
@@ -205,7 +213,7 @@ function ScatterTip({ active, payload }: any) {
   return (
     <TipCard>
       <div style={{ fontWeight: 600, marginBottom: 3, color: INK }}>{p.product}</div>
-      <div style={{ color: "#565e6c", fontFamily: MONO }}>{intGroup(p.prompts)} prompts · {p.tokenBlocks} blocks · {money(p.revenue)}</div>
+      <div style={{ color: MUTED, fontFamily: MONO }}>{intGroup(p.prompts)} prompts · {p.tokenBlocks} blocks · {money(p.revenue)}</div>
     </TipCard>
   );
 }
@@ -234,9 +242,9 @@ export function RelationScatter({
             </XAxis>
             <YAxis type="number" dataKey="prompts" name="Prompts" tickLine={false} axisLine={false} width={40} tick={{ fontSize: 10, fill: AXIS, fontFamily: MONO }} tickFormatter={(v) => compact(v)} />
             <ZAxis type="number" dataKey="revenue" range={[40, 430]} name="Revenue" />
-            <Tooltip cursor={{ strokeDasharray: "3 3", stroke: "#c2c7d0" }} content={<ScatterTip />} />
-            <Scatter data={d30} fill={M30} fillOpacity={0.6} stroke="#fff" strokeWidth={1} isAnimationActive={animate} animationDuration={520} animationEasing="ease-out" />
-            <Scatter data={d35} fill={M35} fillOpacity={0.6} stroke="#fff" strokeWidth={1} isAnimationActive={animate} animationBegin={80} animationDuration={520} animationEasing="ease-out" />
+            <Tooltip cursor={{ strokeDasharray: "3 3", stroke: CURSOR }} content={<ScatterTip />} />
+            <Scatter data={d30} fill={M30} fillOpacity={0.6} stroke={DOT_STROKE} strokeWidth={1} isAnimationActive={animate} animationDuration={520} animationEasing="ease-out" />
+            <Scatter data={d35} fill={M35} fillOpacity={0.6} stroke={DOT_STROKE} strokeWidth={1} isAnimationActive={animate} animationBegin={80} animationDuration={520} animationEasing="ease-out" />
           </ScatterChart>
         </ResponsiveContainer>
       </ChartReveal>
@@ -259,7 +267,7 @@ function BarTip({ active, payload, label, unit, aLabel, bLabel }: any) {
       {payload.map((p: any) => (
         <TipRow key={p.dataKey} color={p.color || p.fill} name={p.dataKey === "a" ? aLabel : bLabel} value={intGroup(p.value)} />
       ))}
-      <div style={{ borderTop: "1px solid #eceef1", marginTop: 4, paddingTop: 4 }}>
+      <div style={{ borderTop: `1px solid ${GRID}`, marginTop: 4, paddingTop: 4 }}>
         <TipRow color="transparent" name={`Total ${unit}`} value={intGroup(total)} />
       </div>
     </TipCard>
@@ -288,7 +296,7 @@ export function VBars({
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={GRID} />
           <XAxis dataKey="axisLabel" tickLine={false} axisLine={false} interval={labelEvery - 1} tick={{ fontSize: 9.5, fill: AXIS, fontFamily: MONO }} />
           <YAxis hide />
-          <Tooltip cursor={{ fill: "rgba(79,70,229,0.06)" }} content={<BarTip unit={unit} aLabel={colors.aLabel ?? "A"} bLabel={colors.bLabel ?? "B"} />} />
+          <Tooltip cursor={{ fill: HOVER }} content={<BarTip unit={unit} aLabel={colors.aLabel ?? "A"} bLabel={colors.bLabel ?? "B"} />} />
           <Bar dataKey="a" stackId="s" fill={colors.a} radius={stacked ? [0, 0, 0, 0] : [3, 3, 0, 0]} isAnimationActive={animate} animationDuration={560} animationEasing="ease-out">
             {data.map((d, i) => (
               <Cell key={i} fill={colors.a} stroke={d.hot ? BRAND : undefined} strokeWidth={d.hot ? 1.5 : 0} />
@@ -314,7 +322,7 @@ function HBarTip({ active, payload }: any) {
   return (
     <TipCard>
       <div style={{ fontWeight: 600, color: INK }}>{p.label}</div>
-      <div style={{ color: "#565e6c", fontFamily: MONO, marginTop: 2 }}>{p.valueLabel}{p.sub ? ` · ${p.sub}` : ""}</div>
+      <div style={{ color: MUTED, fontFamily: MONO, marginTop: 2 }}>{p.valueLabel}{p.sub ? ` · ${p.sub}` : ""}</div>
     </TipCard>
   );
 }
@@ -338,7 +346,7 @@ export function HBars({
         <BarChart layout="vertical" data={rows} margin={{ top: 0, right: rightPadding, bottom: 0, left: 0 }} barCategoryGap="28%">
           <XAxis type="number" hide />
           <YAxis type="category" dataKey="label" width={labelWidth} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: INK2 }} tickFormatter={(v) => truncate(String(v), 24)} />
-          <Tooltip cursor={{ fill: "rgba(79,70,229,0.06)" }} content={<HBarTip />} />
+          <Tooltip cursor={{ fill: HOVER }} content={<HBarTip />} />
           <Bar dataKey="value" radius={[0, 4, 4, 0]} isAnimationActive={animate} animationDuration={560} animationEasing="ease-out" maxBarSize={16}>
             {rows.map((r, i) => (
               <Cell key={i} fill={r.color ?? color} />
@@ -386,7 +394,7 @@ export function HStackBars({
         <BarChart layout="vertical" data={data} margin={{ top: 0, right: rightPadding, bottom: 0, left: 0 }} barCategoryGap="26%">
           <XAxis type="number" hide />
           <YAxis type="category" dataKey="label" width={labelWidth} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: INK2 }} tickFormatter={(v) => truncate(String(v), 24)} />
-          <Tooltip cursor={{ fill: "rgba(79,70,229,0.06)" }} content={<HStackTip unit={unit} />} />
+          <Tooltip cursor={{ fill: HOVER }} content={<HStackTip unit={unit} />} />
           <Bar dataKey="a" stackId="t" fill={colors.a} radius={[4, 0, 0, 4]} isAnimationActive={animate} animationDuration={560} animationEasing="ease-out" maxBarSize={18} />
           <Bar dataKey="b" stackId="t" fill={colors.b} radius={[0, 4, 4, 0]} isAnimationActive={animate} animationBegin={80} animationDuration={560} animationEasing="ease-out" maxBarSize={18}>
             <LabelList dataKey="totalLabel" position="right" style={{ fontSize: 11, fill: INK, fontFamily: MONO, fontWeight: 600 }} />

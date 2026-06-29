@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:tunnel": "powershell -ExecutionPolicy Bypass -File ./scripts/start-db-tunnel.ps1",
-    "db:health": "node ./scripts/check-db-health.mjs"
+    "db:health": "node ./scripts/check-db-health.mjs",
+    "export:g6": "node ./scripts/export-group6-customer-usage.mjs"
   },
   "dependencies": {
     "next": "15.5.19",

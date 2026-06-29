@@ -1,6 +1,7 @@
 ﻿import type { ReactNode } from "react";
 import { AssistantDrawer } from "@/app/components/AssistantDrawer";
 import { NavLoadingProvider } from "@/app/components/NavLoading";
+import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 type NavKey = "overview" | "report";
 
@@ -93,6 +94,7 @@ export function Shell({
             </div>
           </div>
           <div className="top-actions">
+            <ThemeToggle />
             <a className="icon-btn" href="/api/group6/usage" title="View raw usage JSON" target="_blank" rel="noreferrer">
               <span className="ms">data_object</span>
             </a>
