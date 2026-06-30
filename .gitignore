@@ -32,3 +32,6 @@ scripts/g6-purge-backup-*.json
 # os
 .DS_Store
 Thumbs.db
+
+# docs
+docs/
