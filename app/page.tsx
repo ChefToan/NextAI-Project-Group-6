@@ -44,7 +44,7 @@ export default async function OverviewPage({
 
   if (!usage.connected) {
     return (
-      <Shell active="overview" title="Overview" crumb="Overview" updatedText="Not connected" windowLabel="—" toolbar={toolbar} assistant={<Group6Assistant data={dash} />}>
+      <Shell active="overview" title="Overview" crumb="Overview" updatedText="Not connected" windowLabel="—" toolbar={toolbar} assistant={<Group6Assistant data={dash} range={range} rangeLabel="No usage in selected period" />}>
         <DisconnectedState />
       </Shell>
     );
@@ -70,7 +70,7 @@ export default async function OverviewPage({
   }));
 
   return (
-    <Shell active="overview" title="Overview" crumb="Overview" updatedText={`Updated ${updated}`} windowLabel={windowLabel} toolbar={toolbar} assistant={<Group6Assistant data={dash} />}>
+    <Shell active="overview" title="Overview" crumb="Overview" updatedText={`Updated ${updated}`} windowLabel={windowLabel} toolbar={toolbar} assistant={<Group6Assistant data={dash} range={range} rangeLabel={windowLabel} />}>
       {/* KPI strip */}
       <div className="section-head first">
         <h2 className="eyebrow">Health</h2>

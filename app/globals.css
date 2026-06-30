@@ -460,7 +460,32 @@ table.tbl td.num, table.tbl th.num { text-align: right; font-family: var(--mono)
 .assistant-message ul { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
 .assistant-message li { color: var(--ink-2); }
 .assistant-message li span { display: block; font-size: 10.5px; color: var(--muted-2); font-family: var(--mono); margin-top: 2px; }
+.assistant-message.has-error { border-color: var(--bad-bd); background: var(--bad-soft); }
+.assistant-status { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11.5px; margin: 2px 0 8px; }
+.assistant-status .ms { font-size: 14px; animation: spin .8s linear infinite; }
+.assistant-notes { display: flex; flex-direction: column; gap: 5px; margin-top: 9px; font-size: 11px; line-height: 1.4; }
+.assistant-notes span { border-radius: 6px; padding: 6px 7px; }
+.assistant-notes.warn span { color: var(--warn-ink); background: var(--warn-soft); border: 1px solid var(--warn-bd); }
+.assistant-notes.error span { color: var(--bad-ink); background: var(--bad-soft); border: 1px solid var(--bad-bd); }
+.assistant-sources { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.source-chip {
+  display: inline-flex; align-items: center; max-width: 100%; min-height: 22px; padding: 2px 7px;
+  border: 1px solid var(--brand-bd); border-radius: 999px; background: var(--brand-soft); color: var(--brand-ink);
+  font-size: 10.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.source-chip.warn { border-color: var(--warn-bd); background: var(--warn-soft); color: var(--warn-ink); }
+.source-chip.neutral { border-color: var(--border); background: var(--track); color: var(--muted); }
+.assistant-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.assistant-action {
+  min-height: 28px; padding: 0 9px; border: 1px solid var(--control-bd); border-radius: 7px;
+  background: var(--control); color: var(--ink-2); display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 600; cursor: pointer;
+}
+.assistant-action:hover { background: var(--control-hover); color: var(--ink); }
+.assistant-action:disabled { opacity: .55; cursor: default; }
+.assistant-action .ms { font-size: 14px; }
 .confidence { margin-top: 8px; font-size: 10.5px; color: var(--muted-2); font-family: var(--mono); }
+.provider-line { margin-top: 3px; font-size: 10.5px; color: var(--faint); font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .composer { display: flex; gap: 7px; padding: 12px 14px; border-top: 1px solid var(--border); }
 .composer input { flex: 1; min-width: 0; height: 36px; border: 1px solid var(--control-bd); border-radius: 8px; padding: 0 11px; font-size: 12.5px; outline: 0; background: var(--control); color: var(--ink); }
 .composer input:focus { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }

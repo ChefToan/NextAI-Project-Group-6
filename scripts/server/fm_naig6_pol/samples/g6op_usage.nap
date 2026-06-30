@@ -1,0 +1,13 @@
+r << X 1
+0 PIN_FLD_POID              POID [0] 0.0.0.1 /account -1 0
+0 PIN_FLD_LOGIN              STR [0] "g6_opcode_test_001"
+0 PIN_FLD_RUM_NAME           STR [0] "PromptG6"
+0 PIN_FLD_QUANTITY       DECIMAL [0] 1
+0 PIN_FLD_MODEL_CODE_G6      STR [0] "3.0"
+0 PIN_FLD_INPUT_TOKENS2_G6   INT [0] 0
+0 PIN_FLD_OUTPUT_TOKENS_G6   INT [0] 0
+0 PIN_FLD_TRANSACTION_ID_G6  STR [0] "g6op_p001"
+0 PIN_FLD_PROMPT_TXT_G6      STR [0] "opcode prompt usage"
+X
+xop 600002 0 1
+q

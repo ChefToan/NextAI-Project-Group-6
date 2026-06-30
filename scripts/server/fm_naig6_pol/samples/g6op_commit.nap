@@ -1,0 +1,11 @@
+r << X 1
+0 PIN_FLD_POID            POID [0] 0.0.0.1 /account -1 0
+0 PIN_FLD_LOGIN            STR [0] "g6_opcode_test_001"
+0 PIN_FLD_CODE             STR [0] "NextAI Oddisey 3.0 Pay as You Go Group 6"
+0 PIN_FLD_PASSWD_CLEAR     STR [0] "Welcome123!"
+0 PIN_FLD_FIRST_NAME       STR [0] "G6 OpcodeTest"
+0 PIN_FLD_LAST_NAME        STR [0] "NextAI Oddisey 3.0 Pay as You Go Group 6"
+0 PIN_FLD_STATE            STR [0] "VA"
+X
+xop 600001 0 1
+q

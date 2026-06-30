@@ -54,7 +54,7 @@ export default async function ReportPage({
 
   if (!usage.connected) {
     return (
-      <Shell active="report" title="Statistics & Report" crumb="Statistics & Report" updatedText="Not connected" windowLabel="—" toolbar={toolbar} assistant={<Group6Assistant data={dash} />}>
+      <Shell active="report" title="Statistics & Report" crumb="Statistics & Report" updatedText="Not connected" windowLabel="—" toolbar={toolbar} assistant={<Group6Assistant data={dash} range={range} rangeLabel="No usage in selected period" />}>
         <div className="panel"><div className="state-box"><span className="ms">cloud_off</span><div className="state-title">Oracle BRM is not reachable</div><div className="state-sub">Start the SSH tunnel and refresh.</div></div></div>
       </Shell>
     );
@@ -90,7 +90,7 @@ export default async function ReportPage({
   const st = usage.statusBreakdown;
 
   return (
-    <Shell active="report" title="Statistics & Report" crumb="Statistics & Report" updatedText={`Updated ${new Date(usage.generatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`} windowLabel={windowLabel} toolbar={toolbar} assistant={<Group6Assistant data={dash} />}>
+    <Shell active="report" title="Statistics & Report" crumb="Statistics & Report" updatedText={`Updated ${new Date(usage.generatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`} windowLabel={windowLabel} toolbar={toolbar} assistant={<Group6Assistant data={dash} range={range} rangeLabel={windowLabel} />}>
       {/* models */}
       <div className="section-head first"><h2 className="eyebrow">Models</h2><span className="section-sub">Odyssey 3.0 vs 3.5</span></div>
       <div className="tbl-wrap mb-24">
@@ -268,4 +268,3 @@ export default async function ReportPage({
     </Shell>
   );
 }
-
