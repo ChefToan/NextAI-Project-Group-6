@@ -1,10 +1,9 @@
-﻿// Client-side report-section visibility preferences (persisted in localStorage)
+// Client-side report-section visibility preferences (persisted in localStorage)
 // so users can show/hide dense report sections.
 export type MetricGroup =
   | "tokenBreakdown"
   | "relationship"
   | "resourceAllocation"
-  | "usageTiers"
   | "customers"
   | "dataQuality"
   | "tax"
@@ -15,17 +14,16 @@ export const METRIC_GROUPS: { id: MetricGroup; label: string }[] = [
   { id: "tokenBreakdown", label: "Token breakdown" },
   { id: "relationship", label: "Relationship" },
   { id: "resourceAllocation", label: "Resource allocation" },
-  { id: "usageTiers", label: "Usage intensity" },
   { id: "customers", label: "Customers" },
   { id: "dataQuality", label: "Data quality & exceptions" },
-  { id: "tax", label: "Tax · AIT" },
+  { id: "tax", label: "Tax - AIT" },
   { id: "ar", label: "Accounts receivable" },
   { id: "pricing", label: "Pricing" },
 ];
 
 // Default report view keeps the operational sections visible and leaves deeper
 // audit sections available from Customize.
-const DEFAULT_ON: MetricGroup[] = ["tokenBreakdown", "relationship", "resourceAllocation", "usageTiers", "customers"];
+const DEFAULT_ON: MetricGroup[] = ["tokenBreakdown", "relationship", "resourceAllocation", "customers"];
 const KEY = "g6.metricPrefs.v2";
 export const PREFS_EVENT = "g6:metricprefs";
 

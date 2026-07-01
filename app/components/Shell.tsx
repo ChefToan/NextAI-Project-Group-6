@@ -1,4 +1,4 @@
-﻿import type { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { AssistantDrawer } from "@/app/components/AssistantDrawer";
 import { NavLoadingProvider } from "@/app/components/NavLoading";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
@@ -61,11 +61,6 @@ export function Shell({
         <NavItem href="/" title="Dashboard" icon="space_dashboard" active={active === "overview"} label="Dashboard" />
         <NavItem href="/report" title="Statistics" icon="monitoring" active={active === "report"} label="Statistics" />
         <div className="nav-spacer" />
-        <a className="nav-item" href="#" title="Settings" aria-label="Settings">
-          <span className="ms">settings</span>
-          <span className="nav-label">Settings</span>
-        </a>
-        <div className="nav-avatar" title="Group 6 operator">G6</div>
       </nav>
 
       <main className="main">
@@ -97,10 +92,6 @@ export function Shell({
             <ThemeToggle />
             <a className="icon-btn" href="/api/group6/usage" title="View raw usage JSON" target="_blank" rel="noreferrer">
               <span className="ms">data_object</span>
-            </a>
-            <a className="btn" href="/report#export">
-              <span className="ms">ios_share</span>
-              Export
             </a>
           </div>
         </header>

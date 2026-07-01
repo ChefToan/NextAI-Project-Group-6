@@ -1,4 +1,4 @@
-﻿import { getGroup6Dashboard } from "@/lib/brm-group6";
+import { getGroup6Dashboard } from "@/lib/brm-group6";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

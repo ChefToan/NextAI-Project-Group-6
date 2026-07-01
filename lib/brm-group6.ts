@@ -1,5 +1,6 @@
-﻿import "server-only";
+import "server-only";
 import { runReadOnlyQuery } from "@/lib/oracle";
+import { GROUP6_SERVICE_TYPE, group6ServiceWhere } from "@/lib/group6-scope";
 
 type Row = Record<string, unknown>;
 
@@ -44,7 +45,9 @@ export type Group6Dashboard = {
   suggestedQuestion: string;
 };
 
-const SERVICE_TYPE = "/service/nextaig6";
+const SERVICE_TYPE = GROUP6_SERVICE_TYPE;
+const G6_SERVICE_WHERE = group6ServiceWhere("s");
+const G6_SERVICE_WHERE_UNALIASED = group6ServiceWhere("");
 
 function asString(value: unknown, fallback = "") {
   return value == null ? fallback : String(value);
@@ -86,7 +89,7 @@ export async function getGroup6Dashboard(): Promise<Group6Dashboard> {
               a.created_t
          from account_t a
          join service_t s on s.account_obj_id0 = a.poid_id0
-        where s.poid_type = '${SERVICE_TYPE}'
+        where ${G6_SERVICE_WHERE}
      ),
      latest as (
        select max(created_t) max_created_t from group6_accounts
@@ -100,8 +103,8 @@ export async function getGroup6Dashboard(): Promise<Group6Dashboard> {
        union all select 'group6_closed_users', to_char(sum(case when status = 10103 then 1 else 0 end)) from group6_accounts
        union all select 'group6_created_last_7d_from_latest', to_char(count(*)) from group6_accounts cross join latest where created_t >= latest.max_created_t - 604800
        union all select 'latest_group6_account_created_at_utc', to_char(date '1970-01-01' + max_created_t / 86400, 'YYYY-MM-DD HH24:MI:SS') from latest
-       union all select 'group6_service_total', to_char(count(*)) from service_t where poid_type = '${SERVICE_TYPE}'
-       union all select 'group6_purchased_product_total', to_char(count(*)) from purchased_product_t pp join service_t s on s.poid_id0 = pp.service_obj_id0 where s.poid_type = '${SERVICE_TYPE}'
+       union all select 'group6_service_total', to_char(count(*)) from service_t where ${G6_SERVICE_WHERE_UNALIASED}
+       union all select 'group6_purchased_product_total', to_char(count(*)) from purchased_product_t pp join service_t s on s.poid_id0 = pp.service_obj_id0 where ${G6_SERVICE_WHERE}
        union all select 'group6_product_catalog_total', to_char(count(*)) from product_t where permitted = '${SERVICE_TYPE}' or lower(name) like '%group 6%'
        union all select 'group6_plan_catalog_total', to_char(count(*)) from plan_t where lower(name) like '%group 6%' or lower(descr) like '%group 6%'
      )
@@ -124,7 +127,7 @@ export async function getGroup6Dashboard(): Promise<Group6Dashboard> {
                   to_char(date '1970-01-01' + s.created_t / 86400, 'YYYY-MM-DD HH24:MI:SS') service_created_at_utc
              from account_t a
              join service_t s on s.account_obj_id0 = a.poid_id0
-            where s.poid_type = '${SERVICE_TYPE}'
+            where ${G6_SERVICE_WHERE}
             order by a.created_t desc, a.poid_id0 desc
          )
         where rownum <= 6
@@ -186,7 +189,7 @@ export async function getGroup6Dashboard(): Promise<Group6Dashboard> {
          on pp.account_obj_id0 = a.poid_id0
         and pp.service_obj_id0 = s.poid_id0
        left join product_t p on p.poid_id0 = pp.product_obj_id0
-      where s.poid_type = '${SERVICE_TYPE}'
+      where ${G6_SERVICE_WHERE}
       group by nvl(p.name, 'No purchased product')
       order by users desc, product_name
       fetch first 8 rows only`,

@@ -1,4 +1,4 @@
-﻿import "server-only";
+import "server-only";
 import type { Group6Usage } from "@/lib/group6-usage";
 import { formatHours, formatHourRanges } from "@/lib/group6-usage";
 import { money } from "@/lib/format";

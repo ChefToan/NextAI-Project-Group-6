@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { METRIC_GROUPS, readPrefs, writePrefs, type MetricGroup } from "@/lib/metric-prefs";

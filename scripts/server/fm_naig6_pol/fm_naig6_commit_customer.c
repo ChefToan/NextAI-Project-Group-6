@@ -44,6 +44,12 @@ static void search_plan(
         poid_t                  **plan_poid,
         pin_errbuf_t            *ebufp);
 
+static void read_plan(
+        pcm_context_t           *ctxp,
+        poid_t                  *plan_poid,
+        pin_flist_t             **plan_flistp,
+        pin_errbuf_t            *ebufp);
+
 /* Return the field value if present, else the supplied default. */
 static char *
 get_str(pin_flist_t *fl, int32 fld, char *dflt, pin_errbuf_t *ebufp)
@@ -85,6 +91,36 @@ op_naig6_commit_customer(
         PIN_ERR_LOG_FLIST(PIN_ERR_LEVEL_DEBUG,
                 "op_naig6_commit_customer input", i_flistp);
 
+        /* If the caller provides a full PCM_OP_CUST_COMMIT_CUSTOMER flist
+         * (plan object with SERVICES/DEALS/DEAL_INFO already present), pass it
+         * through. This lets generated G6 catalog templates use custom opcode
+         * 600001 while preserving BRM's exact validated commit shape. */
+        pin_flist_t *full_svc = PIN_FLIST_ELEM_GET(i_flistp, PIN_FLD_SERVICES, 0, 1, ebufp);
+        PIN_ERR_CLEAR_ERR(ebufp);
+        if (full_svc != NULL) {
+                pin_flist_t *ret = NULL;
+                PCM_OP(ctxp, PCM_OP_CUST_COMMIT_CUSTOMER, flags, i_flistp, &ret, ebufp);
+
+                *r_flistpp = PIN_FLIST_CREATE(ebufp);
+                if (PIN_ERR_IS_ERR(ebufp)) {
+                        PIN_ERR_LOG_EBUF(PIN_ERR_LEVEL_ERROR,
+                                "naig6 full PCM_OP_CUST_COMMIT_CUSTOMER error", ebufp);
+                        PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_CODE, (void *)"1", ebufp);
+                        PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_DESCR,
+                                (void *)"Full PCM_OP_CUST_COMMIT_CUSTOMER failed", ebufp);
+                } else {
+                        poid_t *cp = PIN_FLIST_FLD_GET(ret, PIN_FLD_POID, 1, ebufp);
+                        PIN_ERR_CLEAR_ERR(ebufp);
+                        if (cp != NULL)
+                                PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_POID, (void *)cp, ebufp);
+                        PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_CODE, (void *)"0", ebufp);
+                        PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_DESCR,
+                                (void *)"Group 6 full customer committed", ebufp);
+                }
+                PIN_FLIST_DESTROY_EX(&ret, NULL);
+                return;
+        }
+
         /* Required: login + plan code. */
         char *login = (char *)PIN_FLIST_FLD_GET(i_flistp, PIN_FLD_LOGIN, 1, ebufp);
         char *code  = (char *)PIN_FLIST_FLD_GET(i_flistp, PIN_FLD_CODE,  1, ebufp);
@@ -105,7 +141,7 @@ op_naig6_commit_customer(
         char *last    = get_str(i_flistp, PIN_FLD_LAST_NAME,     code,         ebufp);
         char *first   = get_str(i_flistp, PIN_FLD_FIRST_NAME,    "Group 6",    ebufp);
         char *email   = get_str(i_flistp, PIN_FLD_EMAIL_ADDR,    "",           ebufp);
-        char *country = get_str(i_flistp, PIN_FLD_COUNTRY,       "USA",        ebufp);
+        char *country = get_str(i_flistp, PIN_FLD_COUNTRY,       "US",         ebufp);
         char *zip     = get_str(i_flistp, PIN_FLD_ZIP,           "22032",      ebufp);
         char *state   = get_str(i_flistp, PIN_FLD_STATE,         "VA",         ebufp);
         char *city    = get_str(i_flistp, PIN_FLD_CITY,          "Test",       ebufp);
@@ -131,17 +167,40 @@ op_naig6_commit_customer(
                 return;
         }
 
-        /* 2) Build the commit_customer flist. Plan POID at level 0 => the opcode
-         *    purchases the plan (deals/products) and builds the balance group. */
-        pin_flist_t *cust = PIN_FLIST_CREATE(ebufp);
-        PIN_FLIST_FLD_SET(cust, PIN_FLD_POID, (void *)plan_poid, ebufp);
+        /* 2) Start from the full /plan object. PCM_OP_CUST_COMMIT_CUSTOMER needs
+         *    the plan's SERVICES/DEALS/DEAL_INFO product structures, not just the
+         *    /plan POID, otherwise it creates the account without purchases. */
+        pin_flist_t *cust = NULL;
+        read_plan(ctxp, plan_poid, &cust, ebufp);
+        if (cust == NULL || PIN_ERR_IS_ERR(ebufp)) {
+                PIN_ERR_CLEAR_ERR(ebufp);
+                *r_flistpp = PIN_FLIST_CREATE(ebufp);
+                PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_POID,
+                        PIN_POID_CREATE(1, "/error", -1, ebufp), ebufp);
+                PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_CODE, (void *)"4", ebufp);
+                PIN_FLIST_FLD_SET(*r_flistpp, PIN_FLD_ERROR_DESCR,
+                        (void *)"Unable to read full plan object", ebufp);
+                return;
+        }
 
-        /* SERVICES[0] -> /service/nextaig6 with login/password. */
-        pin_flist_t *svc = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_SERVICES, 0, ebufp);
+        /* SERVICES[0] -> /service/nextaig6 with login/password. Preserve the
+         * plan's DEALS/DEAL_INFO children and only overlay customer-specific data. */
+        pin_flist_t *svc = PIN_FLIST_ELEM_GET(cust, PIN_FLD_SERVICES, 0, 1, ebufp);
+        PIN_ERR_CLEAR_ERR(ebufp);
+        if (svc == NULL)
+                svc = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_SERVICES, 0, ebufp);
         pdp = PIN_POID_CREATE(db, "/service/nextaig6", neg_one, ebufp);
         PIN_FLIST_FLD_PUT(svc, PIN_FLD_SERVICE_OBJ, (void *)pdp, ebufp);
         PIN_FLIST_FLD_SET(svc, PIN_FLD_LOGIN,        (void *)login,  ebufp);
         PIN_FLIST_FLD_SET(svc, PIN_FLD_PASSWD_CLEAR, (void *)passwd, ebufp);
+        PIN_FLIST_FLD_SET(svc, PIN_FLD_SERVICE_ID,   (void *)"", ebufp);
+        int32 zero_i = 0;
+        PIN_FLIST_FLD_SET(svc, PIN_FLD_SUBSCRIPTION_INDEX, &zero_i, ebufp);
+        PIN_FLIST_FLD_SET(svc, PIN_FLD_BAL_INFO_INDEX, &zero_i, ebufp);
+        PIN_FLIST_FLD_PUT(svc, PIN_FLD_SUBSCRIPTION_OBJ,
+                (void *)PIN_POID_CREATE(0, "/", 0, ebufp), ebufp);
+        pin_flist_t *svc_code = PIN_FLIST_ELEM_ADD(svc, PIN_FLD_SERVICE_CODES, 0, ebufp);
+        PIN_FLIST_FLD_SET(svc_code, PIN_FLD_STATE_ID, &zero_i, ebufp);
 
         /* NAMEINFO[1] (Primary contact). */
         pin_flist_t *ni = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_NAMEINFO, 1, ebufp);
@@ -163,10 +222,14 @@ op_naig6_commit_customer(
         PIN_FLIST_FLD_SET(pay, PIN_FLD_NAME, (void *)"Invoice1", ebufp);
         int32 paytype = 10001;
         PIN_FLIST_FLD_SET(pay, PIN_FLD_PAY_TYPE, &paytype, ebufp);
+        int32 inv_type = 257;
+        int32 one_i = 1;
+        PIN_FLIST_FLD_SET(pay, PIN_FLD_INV_TYPE, &inv_type, ebufp);
+        PIN_FLIST_FLD_SET(pay, PIN_FLD_FLAGS, &one_i, ebufp);
 
-        pin_flist_t *in_info = PIN_FLIST_ELEM_ADD(pay, PIN_FLD_INHERITED_INFO, 0, ebufp);
+        pin_flist_t *in_info = PIN_FLIST_SUBSTR_ADD(pay, PIN_FLD_INHERITED_INFO, ebufp);
         pin_flist_t *inv = PIN_FLIST_ELEM_ADD(in_info, PIN_FLD_INV_INFO, 0, ebufp);
-        int64 inv_zero = 0;
+        int32 inv_zero = 0;
         PIN_FLIST_FLD_SET(inv, PIN_FLD_DELIVERY_PREFER, &inv_zero, ebufp);
         PIN_FLIST_FLD_SET(inv, PIN_FLD_NAME,    (void *)last,    ebufp);
         PIN_FLIST_FLD_SET(inv, PIN_FLD_INV_TERMS, &inv_zero,     ebufp);
@@ -181,10 +244,29 @@ op_naig6_commit_customer(
         pdp = PIN_POID_CREATE(db, "/account", neg_one, ebufp);
         PIN_FLIST_FLD_PUT(ai, PIN_FLD_POID, (void *)pdp, ebufp);
         PIN_FLIST_FLD_SET(ai, PIN_FLD_BAL_INFO, NULL, ebufp);
-        int64 currency = 840;
+        int32 currency = 840;
         PIN_FLIST_FLD_SET(ai, PIN_FLD_CURRENCY, &currency, ebufp);
         int32 btype = 1;
         PIN_FLIST_FLD_SET(ai, PIN_FLD_BUSINESS_TYPE, &btype, ebufp);
+
+        /* Root BAL_INFO and BILLINFO arrays are expected by the standard commit
+         * customer path to wire billinfo/payinfo/balance-group relationships. */
+        pin_flist_t *bi = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_BAL_INFO, 0, ebufp);
+        pdp = PIN_POID_CREATE(db, "/balance_group", neg_one, ebufp);
+        PIN_FLIST_FLD_PUT(bi, PIN_FLD_POID, (void *)pdp, ebufp);
+        PIN_FLIST_FLD_SET(bi, PIN_FLD_NAME, (void *)"Balance Group<Account>", ebufp);
+        PIN_FLIST_ELEM_ADD(bi, PIN_FLD_BILLINFO, 0, ebufp);
+
+        pin_flist_t *billinfo = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_BILLINFO, 0, ebufp);
+        pdp = PIN_POID_CREATE(db, "/billinfo", neg_one, ebufp);
+        PIN_FLIST_FLD_PUT(billinfo, PIN_FLD_POID, (void *)pdp, ebufp);
+        PIN_FLIST_FLD_SET(billinfo, PIN_FLD_BILLINFO_ID, (void *)"Bill Unit(1)", ebufp);
+        PIN_FLIST_FLD_SET(billinfo, PIN_FLD_PAY_TYPE, &paytype, ebufp);
+        PIN_FLIST_ELEM_ADD(billinfo, PIN_FLD_PAYINFO, 0, ebufp);
+        PIN_FLIST_ELEM_ADD(billinfo, PIN_FLD_BAL_INFO, 0, ebufp);
+
+        pin_flist_t *locale = PIN_FLIST_ELEM_ADD(cust, PIN_FLD_LOCALES, 1, ebufp);
+        PIN_FLIST_FLD_SET(locale, PIN_FLD_LOCALE, (void *)"en_US", ebufp);
 
         PIN_ERR_LOG_FLIST(PIN_ERR_LEVEL_DEBUG, "naig6 commit flist", cust);
 
@@ -212,6 +294,28 @@ op_naig6_commit_customer(
         PIN_FLIST_DESTROY_EX(&cust, NULL);
         PIN_FLIST_DESTROY_EX(&ret, NULL);
         return;
+}
+
+/*******************************************************************
+ * read_plan: PCM_OP_READ_OBJ on the selected /plan so commit_customer sees the
+ * full plan/deal/product structure.
+ *******************************************************************/
+static void
+read_plan(
+        pcm_context_t   *ctxp,
+        poid_t          *plan_poid,
+        pin_flist_t     **plan_flistp,
+        pin_errbuf_t    *ebufp)
+{
+        pin_flist_t *in = NULL;
+
+        if (PIN_ERR_IS_ERR(ebufp)) return;
+        PIN_ERR_CLEAR_ERR(ebufp);
+
+        in = PIN_FLIST_CREATE(ebufp);
+        PIN_FLIST_FLD_SET(in, PIN_FLD_POID, (void *)plan_poid, ebufp);
+        PCM_OP(ctxp, PCM_OP_READ_OBJ, 0, in, plan_flistp, ebufp);
+        PIN_FLIST_DESTROY_EX(&in, NULL);
 }
 
 /*******************************************************************

@@ -40,59 +40,44 @@ const DOT_STROKE = "var(--chart-dot-stroke)";
 const BACKFILL = "var(--chart-backfill)";
 const BACKFILL_SWATCH = "var(--chart-backfill-swatch)";
 const MONO = "'IBM Plex Mono', monospace";
-const CHART_REVEAL_GAP_MS = 130;
-
-let nextChartRevealAt = 0;
-
-function queueChartReveal(callback: () => void) {
-  const now = window.performance?.now?.() ?? Date.now();
-  const delay = Math.max(0, nextChartRevealAt - now);
-  nextChartRevealAt = now + delay + CHART_REVEAL_GAP_MS;
-  return window.setTimeout(callback, delay);
-}
 
 function truncate(s: string, n: number) {
   return s.length > n ? `${s.slice(0, n - 1)}…` : s;
 }
 
+// Defers mounting a chart until it's near the viewport, so off-screen charts
+// don't pay layout/animation cost. Charts already in view render immediately —
+// there is no shared timer/stagger, so a chart can never get stuck blank.
 function ChartReveal({ height, children }: { height: number; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    if (ready) return;
     const element = ref.current;
-    if (!element || ready) return;
-    let timer: number | undefined;
-    const reveal = () => {
-      if (timer != null) return;
-      timer = queueChartReveal(() => setReady(true));
+    if (!element) return;
+
+    const nearViewport = () => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight + 320 && rect.bottom > -320;
     };
 
-    const rect = element.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 320) {
-      reveal();
-      return () => window.clearTimeout(timer);
-    }
-
-    if (!("IntersectionObserver" in window)) {
-      reveal();
-      return () => window.clearTimeout(timer);
+    if (nearViewport() || !("IntersectionObserver" in window)) {
+      setReady(true);
+      return;
     }
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        reveal();
-        observer.disconnect();
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setReady(true);
+          observer.disconnect();
+        }
       },
       { root: null, rootMargin: "240px 0px 160px", threshold: 0.01 },
     );
-
     observer.observe(element);
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(timer);
-    };
+    return () => observer.disconnect();
   }, [ready]);
 
   return (

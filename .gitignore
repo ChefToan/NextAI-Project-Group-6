@@ -23,7 +23,8 @@ pnpm-debug.log*
 
 # local tooling / caches
 .playwright-cli/
-.claude/settings.local.json
+.claude/
+.codex/
 
 # generated data snapshots / purge backups (may contain account data)
 scripts/*-snapshot.json
@@ -35,3 +36,13 @@ Thumbs.db
 
 # docs
 docs/
+
+# agent instruction docs (personal, not app code)
+/CLAUDE.md
+/AGENTS.md
+
+# knowledge graph output (generated)
+graphify-out/
+
+# local data snapshots (may contain account data)
+data/

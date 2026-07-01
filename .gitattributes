@@ -1,0 +1,10 @@
+# Normalize line endings and treat source as UTF-8 text.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.xlsx binary
+*.key binary
