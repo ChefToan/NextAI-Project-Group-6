@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "NextAI Group 6 Billing"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d4b170ea-35ea-4a4b-ac6a-10c845f7a19b"
+  }
+}

@@ -1,0 +1,168 @@
+table fact_group6_usage_daily
+	lineageTag: 76c928c9-b862-447c-9235-e4c47fc775c3
+
+	measure 'Usage Events' = SUM(fact_group6_usage_daily[EVENT_COUNT])
+		formatString: #,##0
+		lineageTag: 7f951733-c1a0-43d7-8054-3e34b22c4e00
+
+	measure 'Active Accounts' = DISTINCTCOUNT(dim_group6_account_service[ACCOUNT_ID])
+		formatString: #,##0
+		lineageTag: 76426af9-949a-4280-aa56-4c9b0f351536
+
+	measure 'Prompt Count' = SUM(fact_group6_usage_daily[PROMPTS])
+		formatString: #,##0
+		lineageTag: d8003894-a33c-45a4-ba96-13db5246ef2f
+
+	measure 'Input Token Count' = SUM(fact_group6_usage_daily[INPUT_TOKENS])
+		formatString: #,##0
+		lineageTag: a7cf0b08-2144-4ca7-af9e-aca162fa24fe
+
+	measure 'Output Token Count' = SUM(fact_group6_usage_daily[OUTPUT_TOKENS])
+		formatString: #,##0
+		lineageTag: 163ad751-7a92-4892-830c-e7a803c697b9
+
+	measure 'Total Token Count' = SUM(fact_group6_usage_daily[TOTAL_TOKENS])
+		formatString: #,##0
+		lineageTag: 185680bb-222e-41b2-846d-fdbf0c6ebe1e
+
+	measure 'Token Block Count' = SUM(fact_group6_usage_daily[TOKEN_BLOCKS])
+		formatString: #,##0.00
+		lineageTag: 71e506dd-ad9f-4b48-a9c6-6c82c3d5dcb9
+
+	measure 'Usage Revenue USD' = SUM(fact_group6_usage_daily[USAGE_REVENUE])
+		formatString: $#,##0.00
+		lineageTag: 41041c3d-6a78-4f71-96df-42db129b3f94
+
+	measure 'Revenue per 1K Tokens' = DIVIDE([Usage Revenue USD], [Token Block Count])
+		formatString: $#,##0.00
+		lineageTag: ffd977ae-1772-4170-87e1-943af2610e7b
+
+	measure 'Average Tokens per Event' = DIVIDE([Total Token Count], [Usage Events])
+		formatString: #,##0.0
+		lineageTag: 7fdd104a-7478-45f6-bfac-72a41588944a
+
+	/// Revenue associated with GL_ID 0 for exception review.
+	measure 'Unmapped GL Revenue USD' = CALCULATE([Usage Revenue USD], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+		formatString: $#,##0.00
+		displayFolder: FinanceExceptions
+		lineageTag: dd3d327c-15bc-4de5-a60c-c46d2f4254f2
+
+	/// Usage event count associated with GL_ID 0.
+	measure 'Unmapped GL Usage Events' = CALCULATE([Usage Events], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+		formatString: #,##0
+		displayFolder: FinanceExceptions
+		lineageTag: 664e8374-d424-41e4-ab5d-c779777a8010
+
+	/// Token count associated with GL_ID 0.
+	measure 'Unmapped GL Token Count' = CALCULATE([Total Token Count], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+		formatString: #,##0
+		displayFolder: FinanceExceptions
+		lineageTag: 48a0152f-e447-4295-87ea-cc8cff0a98a9
+
+	column EVENT_DAY
+		dataType: dateTime
+		lineageTag: 3ec82f5d-d07b-40e5-bf5e-dd06c0b1da16
+		sourceColumn: EVENT_DAY
+
+	column EVENT_MONTH
+		dataType: string
+		lineageTag: c28cb01e-69aa-44ae-b7de-b7ea52643571
+		sourceColumn: EVENT_MONTH
+
+	column EVENT_HOUR
+		dataType: int64
+		lineageTag: 1ae6c45a-45f0-4b05-ab05-1ceaa9761605
+		sourceColumn: EVENT_HOUR
+
+	column MODEL
+		dataType: string
+		lineageTag: 19cab490-b838-46a8-bb2a-aa18e377ec0c
+		sourceColumn: MODEL
+
+	column RUM_NAME
+		dataType: string
+		lineageTag: 1acc218e-f993-4ad5-97e6-b6ed188071d7
+		sourceColumn: RUM_NAME
+
+	column GL_ID
+		dataType: string
+		lineageTag: 48d1bc24-76ef-4063-b8f8-ab377e174250
+		sourceColumn: GL_ID
+
+	column REVENUE_TYPE
+		dataType: string
+		lineageTag: 8757ea4b-80c3-438b-84e4-13580d7b6ee5
+		sourceColumn: REVENUE_TYPE
+
+	column EVENT_COUNT
+		dataType: int64
+		lineageTag: 198cb7be-cc9f-4d97-b23d-433421fc743e
+		sourceColumn: EVENT_COUNT
+
+	column ACTIVE_ACCOUNTS
+		dataType: int64
+		lineageTag: 1f676140-83b4-4743-a068-d23cd1e5034f
+		sourceColumn: ACTIVE_ACCOUNTS
+
+	column PROMPTS
+		dataType: int64
+		lineageTag: e83d13a3-15d6-40ef-aa6e-9ff9bf12ff7c
+		sourceColumn: PROMPTS
+
+	column INPUT_TOKENS
+		dataType: int64
+		lineageTag: 65d6b449-e068-4af7-9dda-defe12417d8a
+		sourceColumn: INPUT_TOKENS
+
+	column OUTPUT_TOKENS
+		dataType: int64
+		lineageTag: 323e6998-3767-46de-a542-41bbb9451a0f
+		sourceColumn: OUTPUT_TOKENS
+
+	column TOTAL_TOKENS
+		dataType: int64
+		lineageTag: 3ac2ff58-b173-4ee8-bdd7-d5692706dc53
+		sourceColumn: TOTAL_TOKENS
+
+	column TOKEN_BLOCKS
+		dataType: double
+		lineageTag: b2a5dbab-befd-4173-a077-d9e157843e45
+		sourceColumn: TOKEN_BLOCKS
+
+	column USAGE_REVENUE
+		dataType: double
+		lineageTag: 0bf24460-2680-4b80-917c-ea915a2fef21
+		sourceColumn: USAGE_REVENUE
+
+	partition fact_group6_usage_daily = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(
+				    File.Contents("C:\Users\toan\Desktop\NextAI\reports-dashboard-pbi\data\extracts\fact_group6_usage_daily.csv"),
+				    [Delimiter = ",", Columns = 15, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				  ),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedType = Table.TransformColumnTypes(
+				    PromotedHeaders,
+				    {
+				      {"EVENT_DAY", type date},
+				      {"EVENT_MONTH", type text},
+				      {"EVENT_HOUR", Int64.Type},
+				      {"MODEL", type text},
+				      {"RUM_NAME", type text},
+				      {"GL_ID", type text},
+				      {"REVENUE_TYPE", type text},
+				      {"EVENT_COUNT", Int64.Type},
+				      {"ACTIVE_ACCOUNTS", Int64.Type},
+				      {"PROMPTS", Int64.Type},
+				      {"INPUT_TOKENS", Int64.Type},
+				      {"OUTPUT_TOKENS", Int64.Type},
+				      {"TOTAL_TOKENS", Int64.Type},
+				      {"TOKEN_BLOCKS", type number},
+				      {"USAGE_REVENUE", Currency.Type}
+				    }
+				  )
+				in
+				  ChangedType
+

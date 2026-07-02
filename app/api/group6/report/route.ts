@@ -2,22 +2,34 @@ import { NextResponse } from "next/server";
 import { getGroup6Dashboard } from "@/lib/brm-group6";
 import { runReadOnlyQuery } from "@/lib/oracle";
 import {
+  applyReportFilters,
   buildReportRows,
+  clampLimit,
+  computeRows,
   getReportDefinition,
   projectRows,
   reportFilename,
   selectedFields,
+  sortRows,
+  type FilterValue,
   type ReportRow,
+  type ReportSort,
   type ReportType,
 } from "@/lib/report-definitions";
 import { getGroup6Usage, classifyGl, type UsageRange } from "@/lib/group6-usage";
 import { group6AccountSubquery } from "@/lib/group6-scope";
+import { buildReportSql, MAX_CUSTOM_ROWS, type CustomSelection } from "@/lib/build-report-sql";
+import { catalogLabel } from "@/lib/metrics-catalog";
 
 type ReportRequest = {
+  mode?: "preset" | "custom";
   reportType?: string;
   fields?: string[];
   range?: Partial<UsageRange>;
-  filters?: Record<string, unknown>;
+  filters?: Record<string, FilterValue>;
+  sort?: { field?: string; dir?: string };
+  limit?: number;
+  selection?: CustomSelection;
 };
 
 type GlMetadata = {
@@ -46,17 +58,11 @@ function cleanFilterValue(value: unknown) {
   return String(value ?? "").trim().slice(0, 80);
 }
 
-function applyFilters(rows: ReportRow[], filters: Record<string, unknown> = {}) {
-  const accountId = cleanFilterValue(filters.accountId);
-  const model = cleanFilterValue(filters.model).toLowerCase();
-  const product = cleanFilterValue(filters.product).toLowerCase();
-
-  return rows.filter((row) => {
-    if (accountId && String(row.account_id ?? row.accountId ?? "") !== accountId) return false;
-    if (model && !String(row.model ?? "").toLowerCase().includes(model)) return false;
-    if (product && !String(row.product ?? "").toLowerCase().includes(product)) return false;
-    return true;
-  });
+function normalizeSort(input: ReportRequest["sort"]): ReportSort | null {
+  if (!input || typeof input !== "object") return null;
+  const field = String(input.field ?? "");
+  if (!field) return null;
+  return { field, dir: input.dir === "asc" ? "asc" : "desc" };
 }
 
 async function getGlMetadata(): Promise<GlMetadata> {
@@ -99,10 +105,10 @@ async function buildGlLookupRows(range: Partial<UsageRange>, filters: Record<str
   if (range.from) clauses.push(`e.start_t >= ${Math.floor(range.from)}`);
   if (range.to) clauses.push(`e.start_t <= ${Math.floor(range.to)}`);
 
-  const glId = cleanFilterValue(filters.glId);
+  const glId = cleanFilterValue(filters.gl_id);
   if (glId) clauses.push(`to_char(bi.${metadata.column}) = '${safeSqlLiteral(glId)}'`);
 
-  const accountId = Number(filters.accountId);
+  const accountId = Number(filters.account_id);
   if (Number.isFinite(accountId) && accountId > 0) clauses.push(`e.account_obj_id0 = ${Math.floor(accountId)}`);
 
   const result = await runReadOnlyQuery(
@@ -149,9 +155,62 @@ export async function GET() {
   });
 }
 
+// Custom mode: compile a validated catalog selection into a parameterized query.
+async function runCustomReport(body: ReportRequest, generatedAt: Date) {
+  let built;
+  try {
+    built = buildReportSql(body.selection ?? {}, parseRange(body.range));
+  } catch (error) {
+    // Invalid selection is a client error, not a server fault.
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Invalid custom report selection." },
+      { status: 400 },
+    );
+  }
+  const filename = `nextai-group6-custom-${generatedAt.toISOString().slice(0, 10)}.csv`;
+  const result = await runReadOnlyQuery(built.sql, MAX_CUSTOM_ROWS, built.binds);
+
+  if (!result) {
+    return NextResponse.json({
+      filename,
+      columns: built.columns,
+      columnLabels: Object.fromEntries(built.columns.map((id) => [id, catalogLabel(id)])),
+      rows: [],
+      generatedAt: generatedAt.toISOString(),
+      unavailableReason: "Oracle BRM is not reachable.",
+    });
+  }
+
+  const source = (result.rows ?? []) as OracleRow[];
+  const rows = source.map((row) => {
+    const projected: ReportRow = {};
+    for (const id of built.columns) {
+      const value = row[id.toUpperCase()] ?? row[id] ?? null;
+      projected[id] = value as ReportRow[string];
+    }
+    return projected;
+  });
+
+  return NextResponse.json({
+    filename,
+    columns: built.columns,
+    columnLabels: Object.fromEntries(built.columns.map((id) => [id, catalogLabel(id)])),
+    rows,
+    generatedAt: generatedAt.toISOString(),
+    totalRows: rows.length,
+    returnedRows: rows.length,
+  });
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ReportRequest;
+    const generatedAt = new Date();
+
+    if (body.mode === "custom") {
+      return await runCustomReport(body, generatedAt);
+    }
+
     const reportType = body.reportType as ReportType;
     const definition = getReportDefinition(reportType);
 
@@ -162,28 +221,33 @@ export async function POST(request: Request) {
     const range = parseRange(body.range);
     const fields = selectedFields(reportType, body.fields);
     const filters = body.filters ?? {};
-    const generatedAt = new Date();
+    const sort = normalizeSort(body.sort);
+    const limit = clampLimit(body.limit);
 
-    if (reportType === "glLookup") {
-      const gl = await buildGlLookupRows(range, filters);
+    // build -> compute derived columns -> filter -> sort -> limit -> project.
+    const finalize = (rawRows: ReportRow[], unavailableReason?: string) => {
+      const computed = computeRows(reportType, rawRows);
+      const filtered = applyReportFilters(reportType, computed, filters);
+      const sorted = sortRows(reportType, filtered, sort);
+      const limited = limit ? sorted.slice(0, limit) : sorted;
       return NextResponse.json({
         filename: reportFilename(reportType, generatedAt),
         columns: fields,
-        rows: projectRows(gl.rows, fields),
+        rows: projectRows(limited, fields),
         generatedAt: generatedAt.toISOString(),
-        unavailableReason: gl.unavailableReason,
+        totalRows: filtered.length,
+        returnedRows: limited.length,
+        unavailableReason,
       });
+    };
+
+    if (reportType === "glLookup") {
+      const gl = await buildGlLookupRows(range, filters);
+      return finalize(gl.rows, gl.unavailableReason);
     }
 
     const [dashboard, usage] = await Promise.all([getGroup6Dashboard(), getGroup6Usage(range)]);
-    const rows = projectRows(applyFilters(buildReportRows(reportType, usage, dashboard), filters), fields);
-
-    return NextResponse.json({
-      filename: reportFilename(reportType, generatedAt),
-      columns: fields,
-      rows,
-      generatedAt: generatedAt.toISOString(),
-    });
+    return finalize(buildReportRows(reportType, usage, dashboard));
   } catch (error) {
     return NextResponse.json(
       {

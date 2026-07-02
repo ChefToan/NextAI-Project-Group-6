@@ -1,0 +1,56 @@
+table dim_group6_account_service
+	lineageTag: d80edd62-a6d1-4391-96ef-e37564871265
+
+	column ACCOUNT_ID
+		dataType: int64
+		lineageTag: 365ce21d-2a2a-4be2-83f5-914754117ae4
+		sourceColumn: ACCOUNT_ID
+
+	column ACCOUNT_STATUS
+		dataType: int64
+		lineageTag: da893c15-554e-4015-b1c4-d9af39d676df
+		sourceColumn: ACCOUNT_STATUS
+
+	column ACCOUNT_CREATED_DAY
+		dataType: dateTime
+		lineageTag: f2c5ff3d-1715-4b3c-9db6-52d00949c067
+		sourceColumn: ACCOUNT_CREATED_DAY
+
+	column SERVICE_ID
+		dataType: int64
+		lineageTag: 90373f25-0f51-46b4-a83f-5fd03454dc4c
+		sourceColumn: SERVICE_ID
+
+	column SERVICE_LOGIN
+		dataType: string
+		lineageTag: 0b437c05-efec-4446-aace-523d9a669d9e
+		sourceColumn: SERVICE_LOGIN
+
+	column SERVICE_STATUS
+		dataType: int64
+		lineageTag: b320ef9d-a068-4af0-b0a7-ff318ecdb1b9
+		sourceColumn: SERVICE_STATUS
+
+	partition dim_group6_account_service = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(
+				    File.Contents("C:\Users\toan\Desktop\NextAI\reports-dashboard-pbi\data\extracts\dim_group6_account_service.csv"),
+				    [Delimiter = ",", Columns = 6, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				  ),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedType = Table.TransformColumnTypes(
+				    PromotedHeaders,
+				    {
+				      {"ACCOUNT_ID", Int64.Type},
+				      {"ACCOUNT_STATUS", Int64.Type},
+				      {"ACCOUNT_CREATED_DAY", type date},
+				      {"SERVICE_ID", Int64.Type},
+				      {"SERVICE_LOGIN", type text},
+				      {"SERVICE_STATUS", Int64.Type}
+				    }
+				  )
+				in
+				  ChangedType
+

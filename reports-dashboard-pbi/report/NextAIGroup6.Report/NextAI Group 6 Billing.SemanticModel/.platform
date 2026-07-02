@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "NextAI Group 6 Billing"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "27c888b3-ac70-46a2-8a73-849058d1fac9"
+  }
+}

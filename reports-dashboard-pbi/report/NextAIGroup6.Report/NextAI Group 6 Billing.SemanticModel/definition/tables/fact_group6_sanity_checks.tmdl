@@ -1,0 +1,32 @@
+table fact_group6_sanity_checks
+	lineageTag: b79288f4-e6a5-4160-91af-dd94d704304f
+
+	column METRIC
+		dataType: string
+		lineageTag: 7ea3cb6b-5ae7-42c9-a60a-12fe3c602342
+		sourceColumn: METRIC
+
+	column VALUE
+		dataType: double
+		lineageTag: 40504db3-262e-4e42-b244-fa40c849ad7b
+		sourceColumn: VALUE
+
+	partition fact_group6_sanity_checks = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(
+				    File.Contents("C:\Users\toan\Desktop\NextAI\reports-dashboard-pbi\data\extracts\fact_group6_sanity_checks.csv"),
+				    [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				  ),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedType = Table.TransformColumnTypes(
+				    PromotedHeaders,
+				    {
+				      {"METRIC", type text},
+				      {"VALUE", type number}
+				    }
+				  )
+				in
+				  ChangedType
+

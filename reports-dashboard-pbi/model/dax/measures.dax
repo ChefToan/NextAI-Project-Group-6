@@ -1,0 +1,31 @@
+-- Starter measures for the imported fact_group6_usage_daily table.
+-- Create these in Power BI Desktop or through pbi-cli after connecting to a model.
+
+Usage Events = SUM(fact_group6_usage_daily[EVENT_COUNT])
+
+Active Accounts = DISTINCTCOUNT(dim_group6_account_service[ACCOUNT_ID])
+
+Prompt Count = SUM(fact_group6_usage_daily[PROMPTS])
+
+Input Token Count = SUM(fact_group6_usage_daily[INPUT_TOKENS])
+
+Output Token Count = SUM(fact_group6_usage_daily[OUTPUT_TOKENS])
+
+Total Token Count = SUM(fact_group6_usage_daily[TOTAL_TOKENS])
+
+Token Block Count = SUM(fact_group6_usage_daily[TOKEN_BLOCKS])
+
+Usage Revenue USD = SUM(fact_group6_usage_daily[USAGE_REVENUE])
+
+Revenue per 1K Tokens = DIVIDE([Usage Revenue USD], [Token Block Count])
+
+Average Tokens per Event = DIVIDE([Total Token Count], [Usage Events])
+
+Unmapped GL Revenue USD =
+CALCULATE([Usage Revenue USD], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+
+Unmapped GL Usage Events =
+CALCULATE([Usage Events], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+
+Unmapped GL Token Count =
+CALCULATE([Total Token Count], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))

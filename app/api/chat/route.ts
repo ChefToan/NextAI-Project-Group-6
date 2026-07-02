@@ -2,11 +2,18 @@ import { baseDashboardContext, type DashboardContext } from "@/lib/dashboard-con
 import { getGroup6Dashboard, type Group6Dashboard } from "@/lib/brm-group6";
 import { getGroup6Usage, type Group6Usage, type UsageRange } from "@/lib/group6-usage";
 import { getOracleDashboardSummary } from "@/lib/oracle-summary";
+import {
+  callGemini,
+  callOpenRouter,
+  configured,
+  parseJsonBlock,
+  providerOrder,
+  type ProviderName,
+  type ProviderResult,
+} from "@/lib/ai-providers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-type ProviderName = "gemini" | "openrouter";
 
 type ChatHistoryItem = {
   role: "user" | "assistant";
@@ -37,37 +44,17 @@ type AssistantResponse = {
   errors: string[];
 };
 
-type ProviderResult = {
-  provider: ProviderName;
-  model: string;
-  text: string;
-};
-
 type StreamEvent =
   | { type: "status"; message: string }
   | { type: "result"; payload: AssistantResponse }
   | { type: "error"; payload: AssistantResponse };
 
-const CHAT_TIMEOUT_MS = 18_000;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_CHARS = 700;
 const SOURCE_KEYS = new Set(["kpis", "authChart", "decline", "segments", "usage", "catalog", "tax", "ar", "pricing", "exceptions"]);
 
 function trimText(value: unknown, max = 600) {
   return String(value ?? "").replace(/\s+/g, " ").trim().slice(0, max);
-}
-
-function configured(value: string | undefined): value is string {
-  return Boolean(value && value.trim() && !value.includes("your_") && !value.includes("your-"));
-}
-
-function providerOrder(): ProviderName[] {
-  const raw = process.env.AI_PROVIDER_ORDER || process.env.AI_PRIMARY_PROVIDER || "gemini,openrouter";
-  const order = raw
-    .split(",")
-    .map((item) => item.trim().toLowerCase())
-    .filter((item): item is ProviderName => item === "gemini" || item === "openrouter");
-  return order.length ? [...new Set(order)] : ["gemini", "openrouter"];
 }
 
 function pushWarning(warnings: string[], message: string) {
@@ -174,12 +161,6 @@ function buildPrompt(message: string, context: unknown, history: ChatHistoryItem
   ].join("\n");
 }
 
-function parseJsonBlock(text: string) {
-  const trimmed = text.trim();
-  const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  return JSON.parse(fenced ? fenced[1] : trimmed);
-}
-
 function normalizeBullets(value: unknown): AssistantBullet[] {
   if (!Array.isArray(value)) return [];
   return value.slice(0, 6).map((item) => {
@@ -251,85 +232,6 @@ function warningResponse(verdict: string, warnings: string[], errors: string[] =
     warnings,
     errors,
   };
-}
-
-async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs = CHAT_TIMEOUT_MS) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...init, signal: controller.signal });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function callGemini(prompt: string): Promise<ProviderResult> {
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
-  if (!configured(apiKey)) throw new Error("GEMINI_API_KEY is missing.");
-
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-
-  const response = await fetchWithTimeout(endpoint, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.2,
-        responseMimeType: "application/json",
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(`Gemini API error ${response.status}: ${detail.slice(0, 500)}`);
-  }
-
-  const json = await response.json();
-  const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) throw new Error("Gemini response did not include text content.");
-  return { provider: "gemini", model, text };
-}
-
-async function callOpenRouter(prompt: string): Promise<ProviderResult> {
-  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
-  if (!configured(apiKey)) throw new Error("OPENROUTER_API_KEY is missing.");
-
-  const model = process.env.OPENROUTER_MODEL || "nvidia/nemotron-3-ultra-550b-a55b:free";
-  const allowPaid = process.env.OPENROUTER_ALLOW_PAID === "true";
-  if (!allowPaid && !model.endsWith(":free")) {
-    throw new Error(`OpenRouter model "${model}" is blocked because it is not a :free model. Set OPENROUTER_MODEL to a :free slug or explicitly set OPENROUTER_ALLOW_PAID=true.`);
-  }
-
-  const headers: Record<string, string> = {
-    "content-type": "application/json",
-    authorization: `Bearer ${apiKey}`,
-  };
-  if (process.env.OPENROUTER_SITE_URL) headers["HTTP-Referer"] = process.env.OPENROUTER_SITE_URL;
-  if (process.env.OPENROUTER_APP_TITLE) headers["X-Title"] = process.env.OPENROUTER_APP_TITLE;
-
-  const response = await fetchWithTimeout("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      model,
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.2,
-      response_format: { type: "json_object" },
-    }),
-  });
-
-  if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(`OpenRouter API error ${response.status}: ${detail.slice(0, 500)}`);
-  }
-
-  const json = await response.json();
-  const text = json.choices?.[0]?.message?.content;
-  if (!text) throw new Error("OpenRouter response did not include message content.");
-  return { provider: "openrouter", model, text };
 }
 
 async function callProviders(prompt: string, emit: (event: StreamEvent) => void, warnings: string[]) {

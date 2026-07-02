@@ -18,13 +18,40 @@ export type ReportField = {
   group: string;
 };
 
+// A field whose value is derived from other fields in the same row. Users opt in
+// to these; they are computed after the base rows are built and before filtering.
+export type ComputedField = ReportField & {
+  deps: string[];
+  compute: (row: ReportRow) => string | number | null;
+};
+
+// Declarative, per-report filters rendered dynamically by the builder UI and
+// applied generically on the server. `field` is the row key the filter targets.
+export type ReportFilterKind = "text" | "id" | "enum" | "numberRange";
+export type ReportFilter = {
+  field: string;
+  label: string;
+  kind: ReportFilterKind;
+  options?: string[];
+  placeholder?: string;
+};
+
+// Text/id/enum filters carry a string; numberRange carries optional bounds.
+export type FilterValue = string | { min?: string; max?: string };
+
+export type ReportSort = { field: string; dir: "asc" | "desc" };
+
 export type ReportDefinition = {
   id: ReportType;
   label: string;
   description: string;
   fields: ReportField[];
   defaultFields: string[];
+  filters?: ReportFilter[];
+  computed?: ComputedField[];
 };
+
+export const MAX_REPORT_ROWS = 5000;
 
 export const REPORT_DEFINITIONS: ReportDefinition[] = [
   {
@@ -40,6 +67,14 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "cumulative_usage_usd", label: "Cumulative usage USD", group: "Revenue" },
     ],
     defaultFields: ["date", "prompts", "tokens", "token_blocks", "usage_revenue_usd", "cumulative_usage_usd"],
+    filters: [
+      { field: "prompts", label: "Prompts", kind: "numberRange", placeholder: "min / max" },
+      { field: "usage_revenue_usd", label: "Usage revenue USD", kind: "numberRange", placeholder: "min / max" },
+    ],
+    computed: [
+      { id: "revenue_per_prompt", label: "Revenue / prompt", group: "Derived", deps: ["prompts", "usage_revenue_usd"], compute: (row) => { const p = Number(row.prompts); return p > 0 ? Math.round((Number(row.usage_revenue_usd) / p) * 10000) / 10000 : 0; } },
+      { id: "tokens_per_prompt", label: "Tokens / prompt", group: "Derived", deps: ["prompts", "tokens"], compute: (row) => { const p = Number(row.prompts); return p > 0 ? Math.round((Number(row.tokens) / p) * 100) / 100 : 0; } },
+    ],
   },
   {
     id: "customerSummary",
@@ -65,6 +100,23 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "outstanding_usd", label: "Outstanding USD", group: "AR" },
     ],
     defaultFields: ["account_id", "login", "account_status", "product", "plan", "model", "billing_kind", "prompts", "token_blocks", "usage_revenue_usd", "recurring_revenue_usd", "billed_due_usd", "outstanding_usd"],
+    filters: [
+      { field: "account_id", label: "Account ID", kind: "id", placeholder: "Exact ID" },
+      { field: "login", label: "Login", kind: "text", placeholder: "Contains" },
+      { field: "account_status", label: "Account status", kind: "enum", options: ["Active", "Inactive", "Closed"] },
+      { field: "model", label: "Model", kind: "enum", options: ["3.0", "3.5"] },
+      { field: "billing_kind", label: "Billing kind", kind: "enum", options: ["Unlimited", "PAYG", "Monthly", "Other"] },
+      { field: "state", label: "State/region", kind: "text", placeholder: "Contains" },
+      { field: "product", label: "Product", kind: "text", placeholder: "Contains" },
+      { field: "plan", label: "Plan", kind: "text", placeholder: "Contains" },
+      { field: "outstanding_usd", label: "Outstanding USD", kind: "numberRange", placeholder: "min / max" },
+      { field: "usage_revenue_usd", label: "Usage revenue USD", kind: "numberRange", placeholder: "min / max" },
+    ],
+    computed: [
+      { id: "total_revenue_usd", label: "Total revenue USD", group: "Derived", deps: ["usage_revenue_usd", "recurring_revenue_usd"], compute: (row) => Math.round((Number(row.usage_revenue_usd || 0) + Number(row.recurring_revenue_usd || 0) + Number(row.unassigned_revenue_usd || 0)) * 100) / 100 },
+      { id: "collection_rate_pct", label: "Collection %", group: "Derived", deps: ["billed_due_usd"], compute: (row) => { const billed = Number(row.billed_due_usd); return billed > 0 ? Math.round((Number(row.received_usd) / billed) * 1000) / 10 : 0; } },
+      { id: "tokens_per_prompt", label: "Tokens / prompt", group: "Derived", deps: ["prompts", "token_blocks"], compute: (row) => { const p = Number(row.prompts); return p > 0 ? Math.round(((Number(row.token_blocks) * 1000) / p) * 100) / 100 : 0; } },
+    ],
   },
   {
     id: "revenueByGl",
@@ -79,6 +131,10 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "impacts", label: "Impacts", group: "Finance" },
     ],
     defaultFields: ["gl_id", "gl_account", "revenue_type", "usage_revenue_usd", "share_pct", "impacts"],
+    filters: [
+      { field: "revenue_type", label: "Revenue type", kind: "enum", options: ["recurring", "usage", "unassigned", "other"] },
+      { field: "gl_id", label: "GL ID", kind: "id", placeholder: "Exact GL" },
+    ],
   },
   {
     id: "revenueTaxAr",
@@ -92,6 +148,9 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "detail", label: "Detail", group: "Notes" },
     ],
     defaultFields: ["category", "metric", "value", "unit", "detail"],
+    filters: [
+      { field: "category", label: "Category", kind: "enum", options: ["Revenue", "Tax", "AR"] },
+    ],
   },
   {
     id: "pricing",
@@ -105,6 +164,10 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "usage_revenue_usd", label: "Usage revenue USD", group: "Revenue" },
     ],
     defaultFields: ["product", "unit", "list_price", "realized_price", "usage_revenue_usd"],
+    filters: [
+      { field: "product", label: "Product", kind: "text", placeholder: "Contains" },
+      { field: "unit", label: "Unit", kind: "enum", options: ["prompt", "1k-token block"] },
+    ],
   },
   {
     id: "dataQuality",
@@ -117,6 +180,9 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "detail", label: "Detail", group: "Notes" },
     ],
     defaultFields: ["check", "value", "severity", "detail"],
+    filters: [
+      { field: "severity", label: "Severity", kind: "enum", options: ["ok", "warning", "critical"] },
+    ],
   },
   {
     id: "glLookup",
@@ -133,6 +199,13 @@ export const REPORT_DEFINITIONS: ReportDefinition[] = [
       { id: "event_date", label: "Event date", group: "Time" },
     ],
     defaultFields: ["gl_id", "revenue_type", "event_type", "event_id", "account_id", "amount", "event_date"],
+    filters: [
+      { field: "account_id", label: "Account ID", kind: "id", placeholder: "Exact ID" },
+      { field: "gl_id", label: "GL ID", kind: "id", placeholder: "Exact GL" },
+      { field: "revenue_type", label: "Revenue type", kind: "enum", options: ["recurring", "usage", "unassigned", "other"] },
+      { field: "event_type", label: "Event type", kind: "text", placeholder: "Contains" },
+      { field: "amount", label: "Amount", kind: "numberRange", placeholder: "min / max" },
+    ],
   },
 ];
 
@@ -140,8 +213,84 @@ export function getReportDefinition(reportType: string) {
   return REPORT_DEFINITIONS.find((definition) => definition.id === reportType);
 }
 
+// Base fields plus any opt-in computed fields, for UI listing and validation.
+export function reportFields(reportType: string): ReportField[] {
+  const definition = getReportDefinition(reportType);
+  if (!definition) return [];
+  return [...definition.fields, ...(definition.computed ?? [])];
+}
+
 export function allowedFieldIds(reportType: string) {
-  return new Set(getReportDefinition(reportType)?.fields.map((field) => field.id) ?? []);
+  return new Set(reportFields(reportType).map((field) => field.id));
+}
+
+// Add computed columns to every row (cheap; projection later drops unused ones).
+export function computeRows(reportType: string, rows: ReportRow[]): ReportRow[] {
+  const computed = getReportDefinition(reportType)?.computed ?? [];
+  if (!computed.length) return rows;
+  return rows.map((row) => {
+    const next: ReportRow = { ...row };
+    for (const field of computed) {
+      const ready = field.deps.every((dep) => row[dep] !== undefined && row[dep] !== null && row[dep] !== "");
+      next[field.id] = ready ? field.compute(row) : "";
+    }
+    return next;
+  });
+}
+
+function matchFilter(cell: string | number | null | undefined, filter: ReportFilter, value: FilterValue): boolean {
+  if (filter.kind === "numberRange") {
+    const range = value && typeof value === "object" ? value : {};
+    const num = Number(cell);
+    const hasNum = Number.isFinite(num);
+    const min = range.min?.trim() ? Number(range.min) : null;
+    const max = range.max?.trim() ? Number(range.max) : null;
+    if (!hasNum) return min === null && max === null;
+    if (min !== null && Number.isFinite(min) && num < min) return false;
+    if (max !== null && Number.isFinite(max) && num > max) return false;
+    return true;
+  }
+  const text = String(value ?? "").trim();
+  if (!text) return true;
+  const cellText = String(cell ?? "");
+  if (filter.kind === "id") return cellText === text;
+  if (filter.kind === "enum") return cellText.toLowerCase() === text.toLowerCase();
+  return cellText.toLowerCase().includes(text.toLowerCase());
+}
+
+function isFilterActive(value: FilterValue | undefined): boolean {
+  if (value == null) return false;
+  if (typeof value === "string") return value.trim() !== "";
+  return Boolean(value.min?.trim() || value.max?.trim());
+}
+
+// Apply the report's declared filters to already-built (and computed) rows.
+export function applyReportFilters(
+  reportType: string,
+  rows: ReportRow[],
+  filters: Record<string, FilterValue> = {},
+): ReportRow[] {
+  const declared = getReportDefinition(reportType)?.filters ?? [];
+  const active = declared.filter((filter) => isFilterActive(filters[filter.field]));
+  if (!active.length) return rows;
+  return rows.filter((row) => active.every((filter) => matchFilter(row[filter.field], filter, filters[filter.field])));
+}
+
+export function sortRows(reportType: string, rows: ReportRow[], sort?: ReportSort | null): ReportRow[] {
+  if (!sort || !sort.field || !allowedFieldIds(reportType).has(sort.field)) return rows;
+  const dir = sort.dir === "asc" ? 1 : -1;
+  return [...rows].sort((a, b) => {
+    const av = a[sort.field];
+    const bv = b[sort.field];
+    if (typeof av === "number" && typeof bv === "number") return (av - bv) * dir;
+    return String(av ?? "").localeCompare(String(bv ?? ""), undefined, { numeric: true, sensitivity: "base" }) * dir;
+  });
+}
+
+export function clampLimit(value: unknown): number | null {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  return Math.min(Math.floor(n), MAX_REPORT_ROWS);
 }
 
 export function selectedFields(reportType: string, requested: unknown) {

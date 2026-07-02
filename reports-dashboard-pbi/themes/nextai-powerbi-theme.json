@@ -1,0 +1,54 @@
+{
+  "name": "NextAI Operations",
+  "dataColors": [
+    "#2563EB",
+    "#16A34A",
+    "#F97316",
+    "#9333EA",
+    "#0891B2",
+    "#DC2626",
+    "#475569",
+    "#CA8A04"
+  ],
+  "background": "#F8FAFC",
+  "foreground": "#0F172A",
+  "tableAccent": "#2563EB",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "fontFace": "Segoe UI Semibold",
+            "fontSize": 12,
+            "color": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            }
+          }
+        ],
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            },
+            "radius": 4
+          }
+        ]
+      }
+    }
+  }
+}

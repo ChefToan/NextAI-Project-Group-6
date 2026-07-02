@@ -16,7 +16,7 @@ const G6_ACCOUNTS = `select distinct a.poid_id0 from account_t a join service_t 
 // inserted before the WHERE clause (a JOIN after WHERE is invalid SQL).
 const USAGE_FROM = `event_t e join EVENT_SESSION_USAGE2_G6 u on u.OBJ_ID0 = e.poid_id0`;
 const USAGE_WHERE = `where e.poid_type = '/event/session/usagegr6' and e.account_obj_id0 in (${G6_ACCOUNTS})`;
-const USAGE_REV_JOIN = `join event_bal_impacts_t bi on bi.obj_id0 = e.poid_id0 and bi.resource_id = 840`;
+const USAGE_REV_JOIN = `join event_bal_impacts_t bi on bi.obj_id0 = e.poid_id0 and bi.resource_id = 840 and nvl(bi.rate_tag,'x') <> 'Tax'`;
 const USAGE_CACHE_TTL_MS = 60_000;
 const SLOW_QUERY_MS = 2_000;
 
@@ -263,8 +263,8 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
      union all select 'prompts', to_char(sum(case when e.rum_name = 'PromptG6' then 1 else 0 end)) from ${USAGE_FROM} ${W}
      union all select 'input_tokens', to_char(sum(u.input_tokens2_g6)) from ${USAGE_FROM} ${W}
      union all select 'output_tokens', to_char(sum(u.output_tokens2_g6)) from ${USAGE_FROM} ${W}
-     union all select 'usage_revenue', to_char(round((select sum(bi.amount) from event_bal_impacts_t bi join event_t e2 on e2.poid_id0 = bi.obj_id0 where e2.poid_type = '/event/session/usagegr6' and e2.account_obj_id0 in (${G6_ACCOUNTS}) and bi.resource_id = 840),2)) from dual
-     union all select 'revenue_due', to_char(round((select sum(total_due) from bill_t where account_obj_id0 in (${G6_ACCOUNTS})),2)) from dual
+     union all select 'usage_revenue', to_char(round((select sum(bi.amount) from event_bal_impacts_t bi join event_t e2 on e2.poid_id0 = bi.obj_id0 where e2.poid_type = '/event/session/usagegr6' and e2.account_obj_id0 in (${G6_ACCOUNTS}) and bi.resource_id = 840 and nvl(bi.rate_tag,'x') <> 'Tax'),2)) from dual
+     union all select 'revenue_due', to_char(round((select sum(current_total) from bill_t where bill_no is not null and account_obj_id0 in (${G6_ACCOUNTS})),2)) from dual
      union all select 'total_users', to_char((select count(*) from (${G6_ACCOUNTS}))) from dual
      union all select 'active_users', to_char((select count(*) from account_t where status = 10100 and poid_id0 in (${G6_ACCOUNTS}))) from dual
      union all select 'bills', to_char((select count(*) from bill_t where account_obj_id0 in (${G6_ACCOUNTS}))) from dual`,
@@ -337,7 +337,7 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     1000,
   );
   const acctBillRows = await rows(
-    `select account_obj_id0 acct, round(sum(total_due),2) due, round(sum(nvl(recvd,0)),2) recvd from bill_t where account_obj_id0 in (${G6_ACCOUNTS}) group by account_obj_id0`,
+    `select account_obj_id0 acct, round(sum(current_total),2) due, round(-sum(nvl(recvd,0)),2) recvd from bill_t where bill_no is not null and account_obj_id0 in (${G6_ACCOUNTS}) group by account_obj_id0`,
     1000,
   );
   const acctProductRows = await rows(
@@ -557,11 +557,17 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     .map((p) => ({ ...p, revenueDue: Math.round(p.revenueDue * 100) / 100 }))
     .sort((a, b) => b.users - a.users || b.revenueDue - a.revenueDue);
 
-  const ratedEventRows = await rows(
-    `select count(distinct e.poid_id0) rated
+  // Flat-fee plans (Unlimited / $120 monthly) have no usage rate: their events carry
+  // zero impacts by design and are not a rating gap.
+  const unratedRows = await rows(
+    `select count(*) unrated
        from ${USAGE_FROM}
-       join event_bal_impacts_t bi on bi.obj_id0 = e.poid_id0
-      ${W}`,
+      ${W}
+        and not exists (select 1 from event_bal_impacts_t bi where bi.obj_id0 = e.poid_id0)
+        and e.account_obj_id0 not in (
+          select pp.account_obj_id0 from purchased_product_t pp
+          join plan_t p on p.poid_id0 = pp.plan_obj_id0
+          where p.name like '%Unlimited%' or p.name like '%120 USD Monthly%')`,
     2,
   );
   const orphanRows = await rows(
@@ -575,12 +581,12 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
     `select count(*) overdue
        from bill_t
       where account_obj_id0 in (${G6_ACCOUNTS})
-        and total_due > 0
-        and nvl(recvd,0) < total_due`,
+        and bill_no is not null
+        and nvl(due,0) > 0.005`,
     2,
   );
   const exceptions = {
-    unratedUsage: Math.max(0, usageEvents - n(ratedEventRows[0]?.RATED)),
+    unratedUsage: n(unratedRows[0]?.UNRATED),
     orphanUsage: n(orphanRows[0]?.ORPHAN),
     failedTxns: n(overdueRows[0]?.OVERDUE),
     suspendedSubs,
@@ -588,7 +594,7 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
 
   const taxRows = await rows(
     `select 'base' k, to_char(round(nvl(sum(bi.amount),0),2)) v from event_bal_impacts_t bi where bi.account_obj_id0 in (${G6_ACCOUNTS}) and bi.resource_id = 840 and bi.tax_code = 'AIT' and nvl(bi.rate_tag,'x') <> 'Tax'
-     union all select 'collected', to_char(round(nvl((select sum(amount) from EVENT_BILLING_TAXES_T where account_obj_id0 in (${G6_ACCOUNTS}) and tax_code = 'AIT'),0),2)) from dual`, 5);
+     union all select 'collected', to_char(round(nvl(sum(bi.amount),0),2)) from event_bal_impacts_t bi where bi.account_obj_id0 in (${G6_ACCOUNTS}) and bi.resource_id = 840 and bi.rate_tag = 'Tax' and bi.tax_code = 'AIT'`, 5);
   const TAX: Record<string, number> = {};
   for (const r of taxRows) TAX[s(r.K)] = n(r.V);
   const aitBase = TAX.base ?? 0;
@@ -625,13 +631,14 @@ export async function getGroup6Usage(range: UsageRange = {}): Promise<Group6Usag
   };
 
   const arRows = await rows(
-    `select round(nvl(sum(total_due),0),2) billed, round(nvl(sum(recvd),0),2) received, round(nvl(sum(disputed),0),2) disputed,
-            round(nvl(sum(writeoff),0),2) writeoff, round(nvl(sum(adjusted),0),2) adjusted
-       from bill_t where account_obj_id0 in (${G6_ACCOUNTS})`, 2);
+    `select round(nvl(sum(current_total),0),2) billed, round(-nvl(sum(recvd),0),2) received, round(nvl(sum(disputed),0),2) disputed,
+            round(nvl(sum(writeoff),0),2) writeoff, round(nvl(sum(adjusted),0),2) adjusted,
+            round(nvl(sum(due),0),2) open_due
+       from bill_t where account_obj_id0 in (${G6_ACCOUNTS}) and bill_no is not null`, 2);
   const ar = {
     billed: n(arRows[0]?.BILLED), received: n(arRows[0]?.RECEIVED), disputed: n(arRows[0]?.DISPUTED),
     writeoff: n(arRows[0]?.WRITEOFF), adjusted: n(arRows[0]?.ADJUSTED),
-    outstanding: Math.round((n(arRows[0]?.BILLED) - n(arRows[0]?.RECEIVED)) * 100) / 100,
+    outstanding: n(arRows[0]?.OPEN_DUE),
   };
 
   // ---- revenue split by GL_ID (recurring vs usage, per finance guidance) ----

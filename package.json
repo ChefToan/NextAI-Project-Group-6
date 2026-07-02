@@ -6,10 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "db:tunnel": "powershell -ExecutionPolicy Bypass -File ./scripts/start-db-tunnel.ps1",
     "db:health": "node ./scripts/check-db-health.mjs",
-    "export:g6": "node ./scripts/export-group6-customer-usage.mjs"
+    "export:g6": "node ./scripts/export-group6-customer-usage.mjs",
+    "export:pbi": "node ./reports-dashboard-pbi/scripts/export-group6-powerbi.mjs",
+    "pbi:refresh": "node ./reports-dashboard-pbi/scripts/refresh-open-powerbi.mjs",
+    "pbi:export-refresh": "node ./reports-dashboard-pbi/scripts/refresh-open-powerbi.mjs --export"
   },
   "dependencies": {
     "next": "15.5.19",
@@ -24,7 +29,8 @@
     "@types/react-dom": "19.0.2",
     "eslint": "9.39.4",
     "eslint-config-next": "15.5.19",
-    "typescript": "5.7.2"
+    "typescript": "5.7.2",
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "postcss": "8.5.10"

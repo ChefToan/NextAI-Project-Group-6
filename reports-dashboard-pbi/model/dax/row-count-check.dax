@@ -1,0 +1,6 @@
+EVALUATE
+ROW(
+  "Fact Rows", COUNTROWS(fact_group6_usage_daily),
+  "Dim Rows", COUNTROWS(dim_group6_account_service),
+  "Check Rows", COUNTROWS(fact_group6_sanity_checks)
+)

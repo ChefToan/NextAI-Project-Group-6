@@ -1,0 +1,9 @@
+EVALUATE
+ROW(
+  "Usage Events", [Usage Events],
+  "Usage Revenue USD", [Usage Revenue USD],
+  "Active Accounts", [Active Accounts],
+  "Unmapped GL Revenue USD", [Unmapped GL Revenue USD],
+  "Unmapped GL Usage Events", [Unmapped GL Usage Events],
+  "Unmapped GL Token Count", [Unmapped GL Token Count]
+)

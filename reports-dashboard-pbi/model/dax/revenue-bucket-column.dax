@@ -1,0 +1,7 @@
+SWITCH(
+  TRUE(),
+  fact_group6_usage_daily[GL_ID] = "104", "Usage revenue (GL 104)",
+  fact_group6_usage_daily[GL_ID] = "102", "Recurring revenue (GL 102)",
+  fact_group6_usage_daily[GL_ID] = "0", "Unmapped / no posted GL",
+  "Other revenue GL " & fact_group6_usage_daily[GL_ID]
+)

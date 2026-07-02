@@ -36,6 +36,11 @@ Thumbs.db
 
 # docs
 docs/
+!docs/
+docs/*
+!docs/Infrastructure.md
+!docs/Data_and_reports.md
+!docs/G6_demo_opcode.md
 
 # agent instruction docs (personal, not app code)
 /CLAUDE.md
@@ -46,3 +51,14 @@ graphify-out/
 
 # local data snapshots (may contain account data)
 data/
+
+# generated Power BI artifacts and local OCI extracts
+!reports-dashboard-pbi/data/
+!reports-dashboard-pbi/data/sql/
+!reports-dashboard-pbi/data/sql/**
+!reports-dashboard-pbi/data/extracts/
+reports-dashboard-pbi/data/extracts/*
+!reports-dashboard-pbi/data/extracts/.gitkeep
+reports-dashboard-pbi/model/tmdl/*
+!reports-dashboard-pbi/model/tmdl/.gitkeep
+reports-dashboard-pbi/**/*.pbix

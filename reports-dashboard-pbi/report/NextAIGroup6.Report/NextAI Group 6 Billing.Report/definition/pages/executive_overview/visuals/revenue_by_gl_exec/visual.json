@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "revenue_by_gl_exec",
+  "position": {
+    "x": 450,
+    "y": 440,
+    "z": 9,
+    "height": 230,
+    "width": 380,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_usage_daily"
+                    }
+                  },
+                  "Property": "GL_ID"
+                }
+              },
+              "queryRef": "fact_group6_usage_daily.GL_ID",
+              "nativeQueryRef": "GL_ID",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_usage_daily"
+                    }
+                  },
+                  "Property": "Usage Revenue USD"
+                }
+              },
+              "queryRef": "fact_group6_usage_daily.Usage Revenue USD",
+              "nativeQueryRef": "Usage Revenue USD"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Revenue by GL ID (0 = unmapped)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "prompts_by_model",
+  "position": {
+    "x": 650,
+    "y": 160,
+    "z": 5,
+    "height": 245,
+    "width": 590,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_usage_daily"
+                    }
+                  },
+                  "Property": "MODEL"
+                }
+              },
+              "queryRef": "fact_group6_usage_daily.MODEL",
+              "nativeQueryRef": "MODEL",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_usage_daily"
+                    }
+                  },
+                  "Property": "Prompt Count"
+                }
+              },
+              "queryRef": "fact_group6_usage_daily.Prompt Count",
+              "nativeQueryRef": "Prompt Count"
+            }
+          ]
+        },
+        "Legend": {
+          "projections": []
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Prompts by model'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

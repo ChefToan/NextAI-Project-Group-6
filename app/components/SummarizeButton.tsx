@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // On-demand one-line AI summary for a single chart panel. Renders only after
 // the user asks, then keeps the control stable while showing the answer inline.
@@ -8,6 +8,12 @@ export function SummarizeButton({ panel, context }: { panel: string; context: un
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ text: string; source: "ai" | "computed" } | null>(null);
   const [error, setError] = useState(false);
+  const outputRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!result && !error) return;
+    outputRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [result, error]);
 
   async function run() {
     if (loading || result) return;
@@ -45,8 +51,8 @@ export function SummarizeButton({ panel, context }: { panel: string; context: un
         </span>
         {loading ? "Summarizing..." : done ? "Summary" : "Summarize"}
       </button>
-      {result ? <span key={result.text} className="summary-text">{result.text}</span> : null}
-      {error ? <span className="summary-error">Couldn&apos;t summarize. Try again.</span> : null}
+      {result ? <span key={result.text} className="summary-text" ref={outputRef}>{result.text}</span> : null}
+      {error ? <span className="summary-error" ref={outputRef}>Couldn&apos;t summarize. Try again.</span> : null}
     </div>
   );
 }

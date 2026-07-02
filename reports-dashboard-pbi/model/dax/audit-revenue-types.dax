@@ -1,0 +1,9 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+  fact_group6_usage_daily[REVENUE_TYPE],
+  fact_group6_usage_daily[GL_ID],
+  "Usage Events", [Usage Events],
+  "Usage Revenue USD", [Usage Revenue USD],
+  "Total Tokens", [Total Token Count]
+)
+ORDER BY [Usage Revenue USD] DESC

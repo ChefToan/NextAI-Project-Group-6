@@ -48,7 +48,11 @@ function assertReadOnly(sql: string) {
   }
 }
 
-export async function runReadOnlyQuery(sql: string, maxRows = 25) {
+export async function runReadOnlyQuery(
+  sql: string,
+  maxRows = 25,
+  binds: unknown[] | Record<string, unknown> = [],
+) {
   if (!oracleConfigured()) return null;
 
   assertReadOnly(sql);
@@ -57,7 +61,7 @@ export async function runReadOnlyQuery(sql: string, maxRows = 25) {
   const connection = await pool.getConnection();
 
   try {
-    const result = await connection.execute(sql, [], {
+    const result = await connection.execute(sql, binds, {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       maxRows,
     });

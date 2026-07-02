@@ -74,6 +74,7 @@ export function Group6Assistant({
     () => [
       "Compare Odyssey 3.0 and 3.5 for the selected usage period.",
       "Explain revenue, tax, AR, and unpaid bill risks.",
+      "What CSV report should I generate for usage revenue by model?",
       "Which products, plans, and usage buckets need attention?",
     ],
     [],
