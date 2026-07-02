@@ -1,0 +1,144 @@
+table fact_group6_customer_bills
+	lineageTag: 12a0f40b-7b66-43fb-9a8e-cc8a0f31f112
+
+	measure 'Customer Bill Count' = COUNTROWS(fact_group6_customer_bills)
+		formatString: #,##0
+		lineageTag: cdf9bda8-ff9e-459c-9952-8a582ad6632f
+
+	measure 'Paid Bill Count' = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Paid")
+		formatString: #,##0
+		lineageTag: 91c9a1f4-a455-4519-b307-b29e344d4644
+
+	measure 'Unpaid Bill Count' = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Unpaid")
+		formatString: #,##0
+		lineageTag: d54a0e5a-dfb1-484b-9d2b-a4f963cb6f34
+
+	measure 'Unbilled Customer Bill Count' = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Unbilled")
+		formatString: #,##0
+		lineageTag: e7baedb3-412a-4f47-b861-20be834a5c79
+
+	measure 'Customer Bills Billed USD' = SUM(fact_group6_customer_bills[BILLED_USD])
+		formatString: $#,##0.00
+		lineageTag: b552f696-ee52-4ed6-8f83-bbfeff1d1281
+
+	measure 'Customer Bills Received USD' = SUM(fact_group6_customer_bills[RECEIVED_USD])
+		formatString: $#,##0.00
+		lineageTag: f33dcf79-b7d5-4420-a9b8-b1bcb9eb5083
+
+	measure 'Customer Bills Outstanding USD' = SUM(fact_group6_customer_bills[OUTSTANDING_USD])
+		formatString: $#,##0.00
+		lineageTag: 8e03a492-c2a0-4753-a2b0-a8c9185c8a47
+
+	column BILL_ID
+		dataType: int64
+		lineageTag: 6e11e654-694a-4684-93e6-38bd3eca30ea
+		sourceColumn: BILL_ID
+
+	column BILL_REFERENCE
+		dataType: string
+		lineageTag: c08012bb-48ee-4503-9790-2e5c695d6041
+		sourceColumn: BILL_REFERENCE
+
+	column BILL_STATUS
+		dataType: string
+		lineageTag: fe4bbaee-131b-4c58-9bb6-1e64e5595581
+		sourceColumn: BILL_STATUS
+
+	column ACCOUNT_ID
+		dataType: int64
+		lineageTag: f434bfb1-04a2-4442-83a7-9e12181be20d
+		sourceColumn: ACCOUNT_ID
+
+	column CUSTOMER_NAME
+		dataType: string
+		lineageTag: 1612e8a0-8f3d-4b64-8799-e75bd03c858b
+		sourceColumn: CUSTOMER_NAME
+
+	column SERVICE_LOGIN
+		dataType: string
+		lineageTag: 4340c6bc-70c8-4a6e-8f86-c777d33f5de2
+		sourceColumn: SERVICE_LOGIN
+
+	column BILL_MONTH
+		dataType: string
+		lineageTag: 6b3139fe-df21-4598-9dd8-15c5cbb0622f
+		sourceColumn: BILL_MONTH
+
+	column BILL_START_DAY
+		dataType: dateTime
+		lineageTag: 967338d2-ecf3-4c79-a4ed-3513a3166940
+		sourceColumn: BILL_START_DAY
+
+	column BILL_END_DAY
+		dataType: dateTime
+		lineageTag: 24317131-5eaa-4a1e-808c-907b70fbdb91
+		sourceColumn: BILL_END_DAY
+
+	column DUE_DAY
+		dataType: dateTime
+		lineageTag: e52cc870-226f-44c8-bb44-18b45bb884d8
+		sourceColumn: DUE_DAY
+
+	column BILLED_USD
+		dataType: decimal
+		lineageTag: e2b3b53e-b109-4e8c-8a57-d4c35aee73ad
+		sourceColumn: BILLED_USD
+
+	column RECEIVED_USD
+		dataType: decimal
+		lineageTag: 16f2a2fe-bcb9-4239-a9eb-d1313440562a
+		sourceColumn: RECEIVED_USD
+
+	column OUTSTANDING_USD
+		dataType: decimal
+		lineageTag: 8934f377-b2ee-447b-9f11-e3bc5f151a66
+		sourceColumn: OUTSTANDING_USD
+
+	column DISPUTED_USD
+		dataType: decimal
+		lineageTag: 9eb4db22-152c-43d7-a341-87f6bbb89ca8
+		sourceColumn: DISPUTED_USD
+
+	column WRITEOFF_USD
+		dataType: decimal
+		lineageTag: 55e90d2a-9368-4be8-a846-7fbd25142bb1
+		sourceColumn: WRITEOFF_USD
+
+	column ADJUSTED_USD
+		dataType: decimal
+		lineageTag: 47439dcf-472c-44e7-b23f-4f7bac3fd18b
+		sourceColumn: ADJUSTED_USD
+
+	partition fact_group6_customer_bills = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(
+				    File.Contents("C:\Users\toan\Desktop\NextAI\reports-dashboard-pbi\data\extracts\fact_group6_customer_bills.csv"),
+				    [Delimiter = ",", Columns = 16, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				  ),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedType = Table.TransformColumnTypes(
+				    PromotedHeaders,
+				    {
+				      {"BILL_ID", Int64.Type},
+				      {"BILL_REFERENCE", type text},
+				      {"BILL_STATUS", type text},
+				      {"ACCOUNT_ID", Int64.Type},
+				      {"CUSTOMER_NAME", type text},
+				      {"SERVICE_LOGIN", type text},
+				      {"BILL_MONTH", type text},
+				      {"BILL_START_DAY", type date},
+				      {"BILL_END_DAY", type date},
+				      {"DUE_DAY", type date},
+				      {"BILLED_USD", Currency.Type},
+				      {"RECEIVED_USD", Currency.Type},
+				      {"OUTSTANDING_USD", Currency.Type},
+				      {"DISPUTED_USD", Currency.Type},
+				      {"WRITEOFF_USD", Currency.Type},
+				      {"ADJUSTED_USD", Currency.Type}
+				    }
+				  )
+				in
+				  ChangedType
+

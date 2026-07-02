@@ -55,7 +55,7 @@ This folder is the Power BI home for NextAI Group 6 dashboards. It is designed t
 
 ## Dashboard Design
 
-The PBIP report uses a three-page structure: Executive Overview, Usage Quality, and Finance Detail. Each page has a compact header, source note, refresh reminder, and slicers for `EVENT_MONTH`, `MODEL`, `RUM_NAME`, and `GL_ID`.
+The PBIP report uses four pages: Executive Overview, Usage Quality, Finance Detail, and Customer Bills. Finance Detail includes tax and AR visuals backed by `fact_group6_finance_monthly`: billed vs unbilled by month, AIT expected vs collected, unbilled bill count, GL revenue, and monthly tax/AR detail. Customer Bills is backed by `fact_group6_customer_bills` and shows which customer bills are paid, unpaid, or not finalized yet.
 
 Keep the dashboard business-focused. Do not add pie, donut, gauge, map, or decorative visuals unless a real billing workflow needs them. Prefer replacing weak visuals over adding more panels. Raw `REVENUE_TYPE` should stay out of visuals; use GL-based labels and the unmapped GL exception measures instead.
 

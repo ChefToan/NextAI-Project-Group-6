@@ -15,6 +15,8 @@ const DAX_DIR = path.join(WORKSPACE_ROOT, "model", "dax");
 
 const TABLES = [
   "fact_group6_usage_daily",
+  "fact_group6_finance_monthly",
+  "fact_group6_customer_bills",
   "dim_group6_account_service",
   "fact_group6_sanity_checks",
 ];
@@ -74,10 +76,14 @@ async function main() {
   const rows = runJson("pbi", ["--json", "dax", "execute", "--file", path.join(DAX_DIR, "row-count-check.dax")]);
   const row = rows.rows?.[0];
   const factRows = metric(row, "[Fact Rows]");
+  const financeRows = metric(row, "[Finance Rows]");
+  const customerBillRows = metric(row, "[Customer Bill Rows]");
   const dimRows = metric(row, "[Dim Rows]");
   const checkRows = metric(row, "[Check Rows]");
-  if (!factRows || !dimRows || checkRows !== 3) {
-    throw new Error(`Unexpected row counts: fact=${factRows}, dim=${dimRows}, checks=${checkRows}`);
+  if (!factRows || !financeRows || !customerBillRows || !dimRows || checkRows !== 3) {
+    throw new Error(
+      `Unexpected row counts: fact=${factRows}, finance=${financeRows}, customerBills=${customerBillRows}, dim=${dimRows}, checks=${checkRows}`,
+    );
   }
 
   const sanity = runJson("pbi", ["--json", "dax", "execute", "--file", path.join(DAX_DIR, "sanity-check.dax")]);
@@ -100,6 +106,8 @@ async function main() {
     [
       "Power BI refresh verified.",
       `Fact rows: ${factRows.toLocaleString()}`,
+      `Finance rows: ${financeRows.toLocaleString()}`,
+      `Customer bill rows: ${customerBillRows.toLocaleString()}`,
       `Dim rows: ${dimRows.toLocaleString()}`,
       `Usage events: ${usageEvents.toLocaleString()}`,
       `Usage revenue: $${usageRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,

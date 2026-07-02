@@ -1,0 +1,186 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "customer_bill_list",
+  "position": {
+    "x": 30,
+    "y": 455,
+    "z": 12000,
+    "height": 210,
+    "width": 1210,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "BILL_STATUS"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.BILL_STATUS",
+              "nativeQueryRef": "BILL_STATUS",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "SERVICE_LOGIN"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.SERVICE_LOGIN",
+              "nativeQueryRef": "SERVICE_LOGIN",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "BILL_REFERENCE"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.BILL_REFERENCE",
+              "nativeQueryRef": "BILL_REFERENCE",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "BILL_MONTH"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.BILL_MONTH",
+              "nativeQueryRef": "BILL_MONTH",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "DUE_DAY"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.DUE_DAY",
+              "nativeQueryRef": "DUE_DAY",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "Customer Bills Billed USD"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.Customer Bills Billed USD",
+              "nativeQueryRef": "Customer Bills Billed USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "Customer Bills Received USD"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.Customer Bills Received USD",
+              "nativeQueryRef": "Customer Bills Received USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_customer_bills"
+                    }
+                  },
+                  "Property": "Customer Bills Outstanding USD"
+                }
+              },
+              "queryRef": "fact_group6_customer_bills.Customer Bills Outstanding USD",
+              "nativeQueryRef": "Customer Bills Outstanding USD"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Customer bill payment list'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

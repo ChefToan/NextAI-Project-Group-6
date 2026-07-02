@@ -1,0 +1,112 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "ait_expected_vs_collected",
+  "position": {
+    "x": 650,
+    "y": 160,
+    "z": 6000,
+    "height": 245,
+    "width": 590,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "FINANCE_MONTH"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.FINANCE_MONTH",
+              "nativeQueryRef": "FINANCE_MONTH",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "Expected AIT USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.Expected AIT USD",
+              "nativeQueryRef": "Expected AIT USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "AIT Collected USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.AIT Collected USD",
+              "nativeQueryRef": "AIT Collected USD"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'AIT expected vs collected'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

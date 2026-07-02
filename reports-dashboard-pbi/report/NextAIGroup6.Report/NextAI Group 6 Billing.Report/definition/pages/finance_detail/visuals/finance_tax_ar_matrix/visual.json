@@ -1,0 +1,140 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "finance_tax_ar_matrix",
+  "position": {
+    "x": 870,
+    "y": 440,
+    "z": 8000,
+    "height": 230,
+    "width": 370,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "FINANCE_MONTH"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.FINANCE_MONTH",
+              "nativeQueryRef": "FINANCE_MONTH",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "Billed USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.Billed USD",
+              "nativeQueryRef": "Billed USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "Unbilled USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.Unbilled USD",
+              "nativeQueryRef": "Unbilled USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "AIT Gap USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.AIT Gap USD",
+              "nativeQueryRef": "AIT Gap USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "Outstanding USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.Outstanding USD",
+              "nativeQueryRef": "Outstanding USD"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly tax and AR detail'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -7,4 +7,6 @@ annotation PBI_ProTooling = ["DevMode"]
 ref table fact_group6_usage_daily
 ref table dim_group6_account_service
 ref table fact_group6_sanity_checks
+ref table fact_group6_finance_monthly
+ref table fact_group6_customer_bills
 

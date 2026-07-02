@@ -1,6 +1,8 @@
 EVALUATE
 ROW(
   "Fact Rows", COUNTROWS(fact_group6_usage_daily),
+  "Finance Rows", COUNTROWS(fact_group6_finance_monthly),
+  "Customer Bill Rows", COUNTROWS(fact_group6_customer_bills),
   "Dim Rows", COUNTROWS(dim_group6_account_service),
   "Check Rows", COUNTROWS(fact_group6_sanity_checks)
 )

@@ -29,3 +29,37 @@ CALCULATE([Usage Events], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usag
 
 Unmapped GL Token Count =
 CALCULATE([Total Token Count], FILTER(fact_group6_usage_daily, VALUE(fact_group6_usage_daily[GL_ID]) = 0))
+
+Billed USD = SUM(fact_group6_finance_monthly[BILLED_USD])
+
+Unbilled USD = SUM(fact_group6_finance_monthly[UNBILLED_USD])
+
+Collected USD = SUM(fact_group6_finance_monthly[COLLECTED_USD])
+
+Outstanding USD = SUM(fact_group6_finance_monthly[OUTSTANDING_USD])
+
+Billed Bill Count = SUM(fact_group6_finance_monthly[BILLED_BILL_COUNT])
+
+Unbilled Bill Count = SUM(fact_group6_finance_monthly[UNBILLED_BILL_COUNT])
+
+AIT Taxable Base USD = SUM(fact_group6_finance_monthly[AIT_TAXABLE_BASE_USD])
+
+AIT Collected USD = SUM(fact_group6_finance_monthly[AIT_COLLECTED_USD])
+
+Expected AIT USD = SUM(fact_group6_finance_monthly[EXPECTED_AIT_USD])
+
+AIT Gap USD = SUM(fact_group6_finance_monthly[AIT_GAP_USD])
+
+Customer Bill Count = COUNTROWS(fact_group6_customer_bills)
+
+Paid Bill Count = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Paid")
+
+Unpaid Bill Count = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Unpaid")
+
+Unbilled Customer Bill Count = CALCULATE([Customer Bill Count], fact_group6_customer_bills[BILL_STATUS] = "Unbilled")
+
+Customer Bills Billed USD = SUM(fact_group6_customer_bills[BILLED_USD])
+
+Customer Bills Received USD = SUM(fact_group6_customer_bills[RECEIVED_USD])
+
+Customer Bills Outstanding USD = SUM(fact_group6_customer_bills[OUTSTANDING_USD])

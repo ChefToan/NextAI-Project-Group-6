@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "finance_events_card",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "unbilled_bill_count_card",
   "position": {
-    "x": 340,
-    "y": 28,
-    "z": 1,
-    "height": 105,
-    "width": 280,
-    "tabOrder": 1
+    "x": 639.6044289826408,
+    "y": 77.305878821057092,
+    "z": 8000,
+    "height": 122.87566002083813,
+    "width": 285.62487859148462,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "card",
@@ -20,20 +20,19 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_customer_bills"
                     }
                   },
-                  "Property": "Usage Events"
+                  "Property": "Unbilled Customer Bill Count"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Usage Events",
-              "nativeQueryRef": "Usage Events"
+              "queryRef": "fact_group6_customer_bills.Unbilled Customer Bill Count",
+              "nativeQueryRef": "Unbilled Customer Bill Count"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -41,7 +40,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -67,13 +66,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Usage events'"
+                  "Value": "'Unbilled Rows'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

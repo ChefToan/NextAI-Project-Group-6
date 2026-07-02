@@ -1,16 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "events_by_rum",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "outstanding_by_month",
   "position": {
-    "x": 30,
-    "y": 440,
-    "z": 9,
-    "height": 230,
-    "width": 590,
-    "tabOrder": 9
+    "x": 445,
+    "y": 220,
+    "z": 11000,
+    "height": 205,
+    "width": 795,
+    "tabOrder": 11000
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "columnChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_customer_bills"
                     }
                   },
-                  "Property": "RUM_NAME"
+                  "Property": "BILL_MONTH"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.RUM_NAME",
-              "nativeQueryRef": "RUM_NAME",
+              "queryRef": "fact_group6_customer_bills.BILL_MONTH",
+              "nativeQueryRef": "BILL_MONTH",
               "active": true
             }
           ]
@@ -39,23 +39,19 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_customer_bills"
                     }
                   },
-                  "Property": "Usage Events"
+                  "Property": "Customer Bills Outstanding USD"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Usage Events",
-              "nativeQueryRef": "Usage Events"
+              "queryRef": "fact_group6_customer_bills.Customer Bills Outstanding USD",
+              "nativeQueryRef": "Customer Bills Outstanding USD"
             }
           ]
-        },
-        "Legend": {
-          "projections": []
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -89,13 +85,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Usage events by billing metric (RUM)'"
+                  "Value": "'Outstanding USD by bill month'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

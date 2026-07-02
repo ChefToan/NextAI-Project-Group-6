@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "finance_revenue_card",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "finance_outstanding_card",
   "position": {
-    "x": 30,
+    "x": 960,
     "y": 28,
-    "z": 0,
+    "z": 4000,
     "height": 105,
     "width": 280,
-    "tabOrder": 0
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "card",
@@ -20,20 +20,19 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_finance_monthly"
                     }
                   },
-                  "Property": "Usage Revenue USD"
+                  "Property": "Outstanding USD"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Usage Revenue USD",
-              "nativeQueryRef": "Usage Revenue USD"
+              "queryRef": "fact_group6_finance_monthly.Outstanding USD",
+              "nativeQueryRef": "Outstanding USD"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -41,7 +40,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -67,13 +66,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Usage revenue'"
+                  "Value": "'Outstanding USD'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,0 +1,9 @@
+EVALUATE
+ROW(
+  "Paid Bill Count", FORMAT([Paid Bill Count], "#,##0"),
+  "Unpaid Bill Count", FORMAT([Unpaid Bill Count], "#,##0"),
+  "Unbilled Bill Count", FORMAT([Unbilled Customer Bill Count], "#,##0"),
+  "Customer Bills Outstanding USD", FORMAT([Customer Bills Outstanding USD], "$#,##0.00"),
+  "Customer Bills Billed USD", FORMAT([Customer Bills Billed USD], "$#,##0.00"),
+  "Customer Bills Received USD", FORMAT([Customer Bills Received USD], "$#,##0.00")
+)

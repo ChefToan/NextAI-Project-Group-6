@@ -46,6 +46,32 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 0
+          },
+          "nodeIndex": "fact_group6_customer_bills",
+          "nodeLineageTag": "12a0f40b-7b66-43fb-9a8e-cc8a0f31f112",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 0
+          },
+          "nodeIndex": "fact_group6_finance_monthly",
+          "nodeLineageTag": "6ce3f7c0-b78b-45b7-9f83-89f4c26fb294",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",

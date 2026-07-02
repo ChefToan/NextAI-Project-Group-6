@@ -1,0 +1,10 @@
+EVALUATE
+ROW(
+  "Billed USD", FORMAT([Billed USD], "$#,##0.00"),
+  "Unbilled USD", FORMAT([Unbilled USD], "$#,##0.00"),
+  "AIT Collected USD", FORMAT([AIT Collected USD], "$#,##0.00"),
+  "Expected AIT USD", FORMAT([Expected AIT USD], "$#,##0.00"),
+  "AIT Gap USD", FORMAT([AIT Gap USD], "$#,##0.00"),
+  "Outstanding USD", FORMAT([Outstanding USD], "$#,##0.00"),
+  "Unbilled Bill Count", FORMAT([Unbilled Bill Count], "#,##0")
+)

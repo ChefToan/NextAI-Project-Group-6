@@ -1,58 +1,71 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "finance_matrix",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "billed_vs_unbilled_monthly",
   "position": {
-    "x": 650,
-    "y": 440,
-    "z": 7,
-    "height": 230,
+    "x": 30,
+    "y": 160,
+    "z": 5000,
+    "height": 245,
     "width": 590,
-    "tabOrder": 7
+    "tabOrder": 5000
   },
   "visual": {
-    "visualType": "pivotTable",
+    "visualType": "columnChart",
     "query": {
       "queryState": {
-        "Rows": {
+        "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_finance_monthly"
                     }
                   },
-                  "Property": "MODEL"
+                  "Property": "FINANCE_MONTH"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.MODEL",
-              "nativeQueryRef": "MODEL",
+              "queryRef": "fact_group6_finance_monthly.FINANCE_MONTH",
+              "nativeQueryRef": "FINANCE_MONTH",
               "active": true
             }
           ]
         },
-        "Values": {
+        "Y": {
           "projections": [
             {
               "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_finance_monthly"
                     }
                   },
-                  "Property": "Usage Revenue USD"
+                  "Property": "Billed USD"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Usage Revenue USD",
-              "nativeQueryRef": "Usage Revenue USD"
+              "queryRef": "fact_group6_finance_monthly.Billed USD",
+              "nativeQueryRef": "Billed USD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_group6_finance_monthly"
+                    }
+                  },
+                  "Property": "Unbilled USD"
+                }
+              },
+              "queryRef": "fact_group6_finance_monthly.Unbilled USD",
+              "nativeQueryRef": "Unbilled USD"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -86,13 +99,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Finance summary by model'"
+                  "Value": "'Billed vs unbilled by month'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "prompts_by_model",
   "position": {
     "x": 650,
     "y": 160,
-    "z": 5,
+    "z": 5000,
     "height": 245,
     "width": 590,
-    "tabOrder": 5
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -49,13 +49,9 @@
               "nativeQueryRef": "Prompt Count"
             }
           ]
-        },
-        "Legend": {
-          "projections": []
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -96,6 +92,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

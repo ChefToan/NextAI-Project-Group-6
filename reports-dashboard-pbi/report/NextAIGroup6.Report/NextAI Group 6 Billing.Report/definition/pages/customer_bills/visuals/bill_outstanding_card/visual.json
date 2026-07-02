@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "finance_rev_rate_card",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "bill_outstanding_card",
   "position": {
-    "x": 650,
-    "y": 28,
-    "z": 2,
-    "height": 105,
-    "width": 280,
-    "tabOrder": 2
+    "x": 944.75921380260309,
+    "y": 77.305878821057092,
+    "z": 9000,
+    "height": 122.87566002083813,
+    "width": 285.62487859148462,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "card",
@@ -20,20 +20,19 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_customer_bills"
                     }
                   },
-                  "Property": "Revenue per 1K Tokens"
+                  "Property": "Customer Bills Outstanding USD"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Revenue per 1K Tokens",
-              "nativeQueryRef": "Revenue per 1K Tokens"
+              "queryRef": "fact_group6_customer_bills.Customer Bills Outstanding USD",
+              "nativeQueryRef": "Customer Bills Outstanding USD"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -41,7 +40,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -67,13 +66,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Revenue per 1K tokens'"
+                  "Value": "'Outstanding USD'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

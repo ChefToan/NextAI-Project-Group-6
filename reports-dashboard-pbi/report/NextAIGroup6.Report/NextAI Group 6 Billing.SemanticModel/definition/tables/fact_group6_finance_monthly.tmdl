@@ -1,0 +1,148 @@
+table fact_group6_finance_monthly
+	lineageTag: 6ce3f7c0-b78b-45b7-9f83-89f4c26fb294
+
+	measure 'Billed USD' = SUM(fact_group6_finance_monthly[BILLED_USD])
+		formatString: $#,##0.00
+		lineageTag: 35b18b4c-8b83-4e2a-82d4-d6185728d668
+
+	measure 'Unbilled USD' = SUM(fact_group6_finance_monthly[UNBILLED_USD])
+		formatString: $#,##0.00
+		lineageTag: e71b2a7e-d2da-4b2b-a6fc-07fb8d0d9b2a
+
+	measure 'Collected USD' = SUM(fact_group6_finance_monthly[COLLECTED_USD])
+		formatString: $#,##0.00
+		lineageTag: bb8c9311-23c4-428e-a78e-e4a43e8a18b8
+
+	measure 'Outstanding USD' = SUM(fact_group6_finance_monthly[OUTSTANDING_USD])
+		formatString: $#,##0.00
+		lineageTag: ca11f1f2-d015-42fc-93df-812dba94c43a
+
+	measure 'Billed Bill Count' = SUM(fact_group6_finance_monthly[BILLED_BILL_COUNT])
+		formatString: #,##0
+		lineageTag: bb734f2c-af7b-4b8c-b358-3ff5041a18cb
+
+	measure 'Unbilled Bill Count' = SUM(fact_group6_finance_monthly[UNBILLED_BILL_COUNT])
+		formatString: #,##0
+		lineageTag: 2ed04bde-0c36-42e1-b7a9-dbde14cdd8f3
+
+	measure 'AIT Taxable Base USD' = SUM(fact_group6_finance_monthly[AIT_TAXABLE_BASE_USD])
+		formatString: $#,##0.00
+		displayFolder: Tax
+		lineageTag: edd65dd7-3c5f-4074-9f63-79b26ba21a34
+
+	measure 'AIT Collected USD' = SUM(fact_group6_finance_monthly[AIT_COLLECTED_USD])
+		formatString: $#,##0.00
+		displayFolder: Tax
+		lineageTag: 22e955c3-5046-4866-a7da-ea25829a83cf
+
+	measure 'Expected AIT USD' = SUM(fact_group6_finance_monthly[EXPECTED_AIT_USD])
+		formatString: $#,##0.00
+		displayFolder: Tax
+		lineageTag: b78e8d62-a050-45fe-bd77-1871ccb97a6e
+
+	measure 'AIT Gap USD' = SUM(fact_group6_finance_monthly[AIT_GAP_USD])
+		formatString: $#,##0.00
+		displayFolder: Tax
+		lineageTag: 49578a79-5b8e-4a54-8601-cddf248b9d03
+
+	column FINANCE_MONTH
+		dataType: string
+		lineageTag: 470fc2ab-dd95-4f2d-8827-2a7839b9caf2
+		sourceColumn: FINANCE_MONTH
+
+	column BILLED_BILL_COUNT
+		dataType: int64
+		lineageTag: 62c4113e-6284-4a44-9f9f-d27f6b389e48
+		sourceColumn: BILLED_BILL_COUNT
+
+	column UNBILLED_BILL_COUNT
+		dataType: int64
+		lineageTag: 4e6147c7-5866-41c5-ae8b-b15672460d63
+		sourceColumn: UNBILLED_BILL_COUNT
+
+	column BILLED_USD
+		dataType: decimal
+		lineageTag: e9f13556-0c0e-4f6a-ab19-f12a82089895
+		sourceColumn: BILLED_USD
+
+	column UNBILLED_USD
+		dataType: decimal
+		lineageTag: 424f5815-bc65-45d8-88bf-a20e73a6e452
+		sourceColumn: UNBILLED_USD
+
+	column COLLECTED_USD
+		dataType: decimal
+		lineageTag: 6f6de894-7004-4635-a72b-89a4415d6de8
+		sourceColumn: COLLECTED_USD
+
+	column OUTSTANDING_USD
+		dataType: decimal
+		lineageTag: 6c3ea00d-2a67-48ca-895f-bf558f0b9e74
+		sourceColumn: OUTSTANDING_USD
+
+	column DISPUTED_USD
+		dataType: decimal
+		lineageTag: 1e71184e-d4a1-4893-8f43-357e1d15cafd
+		sourceColumn: DISPUTED_USD
+
+	column WRITEOFF_USD
+		dataType: decimal
+		lineageTag: db18cd30-5d09-406f-8d72-0b51ee78c9f4
+		sourceColumn: WRITEOFF_USD
+
+	column ADJUSTED_USD
+		dataType: decimal
+		lineageTag: 479583f0-e161-4855-b494-63d559530f89
+		sourceColumn: ADJUSTED_USD
+
+	column AIT_TAXABLE_BASE_USD
+		dataType: decimal
+		lineageTag: 72006095-8206-420c-8b0e-d09d832256a2
+		sourceColumn: AIT_TAXABLE_BASE_USD
+
+	column AIT_COLLECTED_USD
+		dataType: decimal
+		lineageTag: a64ecfcd-6866-4880-b9eb-85be8a474dcf
+		sourceColumn: AIT_COLLECTED_USD
+
+	column EXPECTED_AIT_USD
+		dataType: decimal
+		lineageTag: 618f0ecb-8513-4b63-8f81-e99a959b6c62
+		sourceColumn: EXPECTED_AIT_USD
+
+	column AIT_GAP_USD
+		dataType: decimal
+		lineageTag: e5b1b6bb-9d40-4e57-9f3a-c06d35ced04e
+		sourceColumn: AIT_GAP_USD
+
+	partition fact_group6_finance_monthly = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(
+				    File.Contents("C:\Users\toan\Desktop\NextAI\reports-dashboard-pbi\data\extracts\fact_group6_finance_monthly.csv"),
+				    [Delimiter = ",", Columns = 14, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				  ),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedType = Table.TransformColumnTypes(
+				    PromotedHeaders,
+				    {
+				      {"FINANCE_MONTH", type text},
+				      {"BILLED_BILL_COUNT", Int64.Type},
+				      {"UNBILLED_BILL_COUNT", Int64.Type},
+				      {"BILLED_USD", Currency.Type},
+				      {"UNBILLED_USD", Currency.Type},
+				      {"COLLECTED_USD", Currency.Type},
+				      {"OUTSTANDING_USD", Currency.Type},
+				      {"DISPUTED_USD", Currency.Type},
+				      {"WRITEOFF_USD", Currency.Type},
+				      {"ADJUSTED_USD", Currency.Type},
+				      {"AIT_TAXABLE_BASE_USD", Currency.Type},
+				      {"AIT_COLLECTED_USD", Currency.Type},
+				      {"EXPECTED_AIT_USD", Currency.Type},
+				      {"AIT_GAP_USD", Currency.Type}
+				    }
+				  )
+				in
+				  ChangedType
+

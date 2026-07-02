@@ -3,7 +3,8 @@
   "pageOrder": [
     "executive_overview",
     "usage_quality",
-    "finance_detail"
+    "finance_detail",
+    "customer_bills"
   ],
-  "activePageName": "usage_quality"
+  "activePageName": "customer_bills"
 }

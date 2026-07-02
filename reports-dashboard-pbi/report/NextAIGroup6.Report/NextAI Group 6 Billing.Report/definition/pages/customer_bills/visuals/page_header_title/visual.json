@@ -1,38 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "finance_accounts_card",
+  "name": "page_header_title",
   "position": {
-    "x": 960,
-    "y": 28,
-    "z": 3,
-    "height": 105,
-    "width": 280,
-    "tabOrder": 3
+    "x": 30,
+    "y": 8,
+    "z": 0,
+    "height": 28,
+    "width": 330,
+    "tabOrder": 0
   },
   "visual": {
-    "visualType": "card",
-    "query": {
-      "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
-                    }
-                  },
-                  "Property": "Active Accounts"
-                }
-              },
-              "queryRef": "fact_group6_usage_daily.Active Accounts",
-              "nativeQueryRef": "Active Accounts"
-            }
-          ]
-        }
-      }
-    },
+    "visualType": "textbox",
     "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
@@ -41,7 +19,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -54,7 +32,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -67,7 +45,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Active accounts'"
+                  "Value": "'NextAI Group 6 Billing'"
                 }
               }
             }

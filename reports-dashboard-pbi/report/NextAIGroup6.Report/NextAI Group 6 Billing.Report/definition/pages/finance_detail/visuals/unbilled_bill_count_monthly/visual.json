@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "monthly_usage_revenue",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "unbilled_bill_count_monthly",
   "position": {
-    "x": 650,
-    "y": 160,
-    "z": 8,
-    "height": 245,
-    "width": 590,
-    "tabOrder": 8
+    "x": 450,
+    "y": 440,
+    "z": 7000,
+    "height": 230,
+    "width": 380,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "columnChart",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_finance_monthly"
                     }
                   },
-                  "Property": "EVENT_MONTH"
+                  "Property": "FINANCE_MONTH"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.EVENT_MONTH",
-              "nativeQueryRef": "EVENT_MONTH",
+              "queryRef": "fact_group6_finance_monthly.FINANCE_MONTH",
+              "nativeQueryRef": "FINANCE_MONTH",
               "active": true
             }
           ]
@@ -39,20 +39,19 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_group6_usage_daily"
+                      "Entity": "fact_group6_finance_monthly"
                     }
                   },
-                  "Property": "Usage Revenue USD"
+                  "Property": "Unbilled Bill Count"
                 }
               },
-              "queryRef": "fact_group6_usage_daily.Usage Revenue USD",
-              "nativeQueryRef": "Usage Revenue USD"
+              "queryRef": "fact_group6_finance_monthly.Unbilled Bill Count",
+              "nativeQueryRef": "Unbilled Bill Count"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "border": [
         {
@@ -86,13 +85,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Monthly usage revenue'"
+                  "Value": "'Unbilled bill count by month'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }
